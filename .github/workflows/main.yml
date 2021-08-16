@@ -40,10 +40,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="nightly"
+          TAG="latest"
           git tag -f "$TAG"
           hub release delete "$TAG"
-          hub release create -m "Nightly PDF build
+          hub release create -m "Latest PDF builds
           
           This release always contains the PDFs built from the latest .tex source. It is advised to only use the latest versions for actual exams, as old versions might contain factual errors." "$TAG" || true
           while IFS= read -r file; do
