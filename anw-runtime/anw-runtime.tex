@@ -5,13 +5,16 @@
 \usepackage{mathtools}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{amsmath}
 
-\title{\vspace*{-2cm}Big \(\bigO\)-notation for A\&W algorithms}
+\title{\vspace*{-2cm}Big \(\bigO\) Notation for A\&W Algorithms}
 \date{}
 
 \pagenumbering{gobble}
 
 \newcommand{\bigO}{\mathcal{O}}
+\DeclareMathOperator{\poly}{poly}
+\DeclareMathOperator{\polylog}{polylog}
 
 \begin{document}
     \maketitle
@@ -23,41 +26,42 @@
             Number of vertices in a graph & \(n\) \\
             Number of edges in a graph & \(m\) \\
             Highest capacity in network & \(U\) \\
-            Number of vertices at the edge of a convex hull & \(h\) \\
+            Number of vertices at the edge (corners) of a convex hull & \(h\) \\
             Variable chosen for desired accuracy of Monte-Carlo algorithms & \(\lambda\) \\
             \bottomrule
         \end{tabularx}
     \end{center}
 
-    \subsection*{Overview of algorithms}
+    \subsection*{Runtimes}
 
-    Some of the algorithms are randomized. They thus have their average runtime noted.
     \begin{center}
-    \begin{tabular}{lr}
+    \begin{tabularx}{\textwidth}{Xl}
         \toprule
+        Eulerian path in connected graph & \(\bigO(m)\) \\
+        Count Hamiltonian cycles in graph & \(\bigO(2^n \cdot n^{2.81} \log n)\) \\
+        Maximal (inklusionsmaximal) matching & \(\bigO(m)\) \\
+        Maximum (kardinalitätsmaximal) matching in bipartite graph (Hopcroft-Karp) & \(\bigO(n^\frac{1}{2} \cdot (n+m))\) \\
+        2-approximation of Metric TSP & \(\bigO(n^2)\) \\
+        1.5-approximation of Metric TSP & \(\bigO(n^3)\) \\
+        Perfect matching in \(2^k\)- or $k$-regular bipartite graph & \(\bigO(m)\) \\
+        Greedy coloring & \(\bigO(m)\) \\
+        \(\bigO(\sqrt{n})\)-coloring for 3-colorable graphs & \(\bigO(m)\) \\
+        Miller-Rabin prime test & \(\bigO(\log n)\) \\
+        Randomized Quicksort & \(\bigO(n \log n)\)\footnotemark \\
+        Colorful-Path with length \(\log n\) & \(\bigO(mn \log n)\) \\
+        Colorful-Path with length \(\bigO(\log n)\) & \(\bigO(\poly(n))\) \\
         Maximal flow (Ford-Fulkerson) & \(\bigO(mnU)\)\\
         Maximal flow (Capacity Scaling) & \(\bigO(mn(1 + \log U))\) \\
         Maximal flow (Dynamic Trees) & \(\bigO(mn\log n)\) \\
-        Smallest enclosing disc (naive) & \(\bigO(n^4)\) \\
-        Eulerian path in connected graph & \(\bigO(m)\) \\
-        Count Hamiltonian cycles in graph & \(\bigO(n^{2.81}\log n \cdot 2^n)\) \\
-        2-approximation of Metric TSP & \(\bigO(n^2)\) \\
-        1.5-approximation of Metric TSP & \(\bigO(n^3)\) \\
-        Maximal matching & \(\bigO(m)\) \\
-        Maximum matching in bipartite graph (Hopcroft-Karp) & \(\bigO(\sqrt{n}(n+m))\) \\
-        Perfect matching in \(2^k\)-regular bipartite graph & \(\bigO(m)\) \\
-        Greedy coloring & \(\bigO(m)\) \\
-        \(\bigO(\sqrt{n})\)-coloring for 3-colorable graphs & \(\bigO(m)\) \\
-        Convex hull (Jarvis-Wrap) & \(\bigO(nh)\) \\
-        Convex hull with \textit{sorted} points (LocalRepair) & \(\bigO(n)\) \\
-        QuickSelect & \(\bigO(n)\) \\
-        Miller-Rabin prime test & \(\bigO(\ln n)\) \\
-        Colorful-Path with length \(\log n\) & \(\bigO(mn \log n)\) \\
         Minimal cut (naive) & \(\bigO(\lambda n^4)\) \\
         Minimal cut (single bootstrapping) & \(\bigO(\lambda n^3)\) \\
-        Minimal cut (repeated bootstrapping) & \(\bigO(n^2\text{poly}(\log n))\) \\
-        Smallest enclosing disc (clever randomized) & \(\bigO(n \log n)\) \\
+        Minimal cut (repeated bootstrapping) & \(\bigO(n^2\polylog(n))\) \\
+        Smallest enclosing disc (naive deterministic or randomized) & \(\bigO(n^4)\)\footnotemark[\value{footnote}] \\
+        Smallest enclosing disc (clever randomized) & \(\bigO(n \log n)\)\footnotemark[\value{footnote}] \\
+        Convex hull (Jarvis-Wrap) & \(\bigO(nh)\) \\
+        Convex hull with \emph{sorted ($\bigO(n \log n)$)} points (LocalRepair) & \(\bigO(n)\) \\
         \bottomrule
-    \end{tabular}
+    \end{tabularx}
     \end{center}
+    \footnotetext{Randomized algorithm; expected runtime is given}
 \end{document}
