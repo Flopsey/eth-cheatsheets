@@ -4,10 +4,10 @@
 
 \usepackage{mathtools}
 \usepackage{booktabs}
-\usepackage{tabularx}
+\usepackage{ltablex}
 \usepackage{amsmath}
 
-\title{\vspace*{-2cm}Big \(\bigO\) Notation for A\&W Algorithms}
+\title{\vspace*{-4cm}Big \(\bigO\) Notation for A\&W Algorithms}
 \date{}
 
 \pagenumbering{gobble}
@@ -18,6 +18,7 @@
 
 \begin{document}
     \maketitle
+    \vspace*{-1.5cm}
     \renewcommand{\arraystretch}{1.25}
     \subsection*{Definitions}
     \begin{center}
@@ -37,17 +38,23 @@
     \begin{center}
     \begin{tabularx}{\textwidth}{Xl}
         \toprule
-        Find all cut vertices and edges in connected graph (extended DFS) & \(\bigO(m)\) \\
+        Find all cut vertices and edges in connected graph (DFS) & \(\bigO(m)\) \\
         Eulerian path in connected graph & \(\bigO(m)\) \\
-        Hamiltonian cycle in graph with $n \geq 3$ and $\text{minimum degree} \ \geq \frac{n}{2}$ & \(bigO(n^2)\) \\
+        Hamiltonian cycle in graph with $n \geq 3$ and $\text{minimum degree} \ \geq \frac{n}{2}$ & \(\bigO(n^2)\) \\
         Count Hamiltonian cycles in graph & \(\bigO(2^n \cdot n^{2.81} \log n)\) \\
-        Maximal (inklusionsmaximal) matching & \(\bigO(m)\) \\
-        Maximum (kardinalitätsmaximal) matching in bipartite graph (Hopcroft-Karp) & \(\bigO(n^\frac{1}{2} \cdot (n+m))\) \\
+        Hamiltonian cycle in general graph & NP-complete \\
+        Find augmenting path in bipartite graph (BFS) & \(\bigO(n + m)\) \\
+        Find augmenting path in general graph (Blossom) & \(\bigO(nm)\) \\
+        Maximal (inclusion) matching & \(\bigO(m)\) \\
+        Maximum (cardinality) matching in bipartite graph (Hopcroft-Karp) & \(\bigO(n^\frac{1}{2} \cdot (n+m))\) \\
         2-approximation of Metric TSP & \(\bigO(n^2)\) \\
         1.5-approximation of Metric TSP & \(\bigO(n^3)\) \\
-        Perfect matching in \(2^k\)- or $k$-regular bipartite graph & \(\bigO(m)\) \\
-        Greedy coloring & \(\bigO(m)\) \\
+        Perfect matching in \(2^k\)- (or $k$-) regular bipartite graph & \(\bigO(m)\) \\
+        Decide if $\chi(G) \leq k$ for $k \geq 3$ & NP-complete ($\bigO(2.2^n)$) \\
+        Greedy coloring ($(\Delta(G) + 1)$-coloring) & \(\bigO(m)\) \\
         \(\bigO(\sqrt{n})\)-coloring for 3-colorable graphs & \(\bigO(m)\) \\
+        Find duplicates (Hashmap) & \(\bigO(n \log n + |\text{Dupl}(\mathcal{S})|)\) \\
+        Find duplicates (Bloom-Filter) & \(\bigO(kn)\) \\
         Miller-Rabin prime test & \(\bigO(\log n)\) \\
         Randomized Quicksort & \(\bigO(n \log n)\)\footnotemark \\
         Colorful-Path with length \(\log n\) & \(\bigO(mn \log n)\) \\
