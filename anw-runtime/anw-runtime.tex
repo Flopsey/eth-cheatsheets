@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{ltablex}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 
 \title{\vspace*{-4cm}Big \(\bigO\) Notation for A\&W Algorithms}
 \date{}
@@ -40,18 +41,20 @@
         \toprule
         Find all cut vertices and edges in connected graph (DFS) & \(\bigO(m)\) \\
         Eulerian path in connected graph & \(\bigO(m)\) \\
+        Hamiltonian cycle in general graph & \(\bigO(n^2 \cdot 2^n)\) \\
         Hamiltonian cycle in graph with $n \geq 3$ and $\text{minimum degree} \ \geq \frac{n}{2}$ & \(\bigO(n^2)\) \\
-        Count Hamiltonian cycles in graph & \(\bigO(2^n \cdot n^{2.81} \log n)\) \\
+        Count Hamiltonian cycles in graph & \(\bigO(n^{2.81} \log n \cdot 2^n)\) \\
         Hamiltonian cycle in general graph & NP-complete \\
         Find augmenting path in bipartite graph (BFS) & \(\bigO(n + m)\) \\
         Find augmenting path in general graph (Blossom) & \(\bigO(nm)\) \\
-        Maximal (inclusion) matching & \(\bigO(m)\) \\
-        Maximum (cardinality) matching in bipartite graph (Hopcroft-Karp) & \(\bigO(n^\frac{1}{2} \cdot (n+m))\) \\
+        Maximal (inclusion) matching (greedy) & \(\bigO(m)\) \\
+        Maximum (cardinality) matching in bipartite graph (Hopcroft-Karp) & \(\bigO(\sqrt{n} \cdot (n+m))\) \\
         2-approximation of Metric TSP & \(\bigO(n^2)\) \\
-        1.5-approximation of Metric TSP & \(\bigO(n^3)\) \\
-        Perfect matching in \(2^k\)- (or $k$-) regular bipartite graph & \(\bigO(m)\) \\
+        $\frac{3}{2}$-approximation of Metric TSP & \(\bigO(n^3)\) \\
+        Perfect matching in \(2^k\)-regular bipartite graph & \(\bigO(m)\) \\
+        Perfect matching in complete graph with weight function $l: \: \binom{[n]}{2} \to \mathbb{N}_0$ & \(\bigO(n^3)\) \\
         Decide if $\chi(G) \leq k$ for $k \geq 3$ & NP-complete ($\bigO(2.2^n)$) \\
-        Greedy coloring ($(\Delta(G) + 1)$-coloring) & \(\bigO(m)\) \\
+        Greedy coloring with $C(G)$ colors ($\chi(G) \leq C(G) \leq \Delta(G) + 1$) & \(\bigO(m)\) \\
         \(\bigO(\sqrt{n})\)-coloring for 3-colorable graphs & \(\bigO(m)\) \\
         Find duplicates (Hashmap) & \(\bigO(n \log n + |\text{Dupl}(\mathcal{S})|)\) \\
         Find duplicates (Bloom-Filter) & \(\bigO(kn)\) \\
@@ -60,8 +63,8 @@
         Long path problem & NP-complete \\
         Colorful-Path with length \(\log n\) & \(\bigO(mn \log n)\) \\
         Colorful-Path with length \(\bigO(\log n)\) & \(\bigO(\poly(n))\) \\
-        Maximal flow (Ford-Fulkerson) & \(\bigO(mnU)\)\\
-        Maximal flow (Capacity Scaling) & \(\bigO(mn(1 + \log U))\) \\
+        Maximal flow (Ford-Fulkerson) with max. capacity $U$ & \(\bigO(mnU)\)\\
+        Maximal flow (Capacity Scaling) with max. capacity $U$ & \(\bigO(mn(1 + \log U))\) \\
         Maximal flow (Dynamic Trees) & \(\bigO(mn\log n)\) \\
         Minimal cut (naive) & \(\bigO(\lambda n^4)\) \\
         Minimal cut (single bootstrapping) & \(\bigO(\lambda n^3)\) \\
