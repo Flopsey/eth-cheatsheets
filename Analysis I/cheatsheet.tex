@@ -1,6 +1,5 @@
 % Basic stuff
 \documentclass[a4paper,10pt]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[nswissgerman]{babel}
 \usepackage{parskip}
 \usepackage{ragged2e}
@@ -15,7 +14,7 @@
 \Ncolumn{4}
 
 % define nice looking boxes
-\usepackage[most]{tcolorbox}
+\usepackage[many]{tcolorbox}
 
 % a base set, that is then customised
 \tcbset {
@@ -23,14 +22,13 @@
     boxrule=0mm,
     leftrule=1mm,
     left=1.75mm,
-    arc=0mm,
-    halign=left,
+    arc=0mm, 
     fonttitle=\bfseries, 
     colbacktitle=black!10!white, 
     coltitle=black, 
     toptitle=0.75mm, 
     bottomtitle=0.25mm,
-    title={#1},
+    title={#1}
   }
 }
 
@@ -92,21 +90,11 @@
 
 \maketitle
 
-% Not actually an abstract. We abuse it for licencing
-\renewcommand{\abstractname}{Lizenz}
-\begin{abstract}
- Dieses Dokument ist unter CC BY-SA 3.0 lizenziert. Es darf verbreitet oder verändert werden, solange der Urheber und die Lizenz erhalten bleibt. \\
-
- \begin{center}
- Der \LaTeX-Quelltext ist verfügbar auf \\ \href{https://github.com/XYQuadrat/eth-cheatsheets}{github.com/XYQuadrat/eth-cheatsheets}.
- \end{center}
-\end{abstract}
-
-\RaggedRight
+\input{../license.tex}
 
 \section{Folgen}
 \subsection{Konvergenz}
-Eine Folge $(a_n)_{n\in \mathbb{N}}$ konvergiert gegen L \\ $\iff \lim_{n \to \infty} a_n = L $ \\ $\iff \forall \epsilon > 0 \ \exists N_e \ \forall n \ge N_\epsilon : \ | a_n - L | < e$\\
+Eine Folge $(a_n)_{n\in \mathbb{N}}$ konvergiert gegen L \\ $\iff \lim_{n \to \infty} a_n = L $ \\ $\iff \forall \epsilon > 0 \ \exists N_\epsilon \ \forall n \ge N_\epsilon : \ | a_n - L | < \epsilon$\\
 
 $\epsilon$ ist durch Konstante $C \in \R$ beschränkt.
 Es gilt ausserdem:
@@ -137,7 +125,7 @@ $a_n$ monoton fallend und nach unten beschränkt $\implies$ $(a_n)_{n \geq 1}$ k
 \end{mainbox}
 
 \begin{mainbox}{Cauchy-Kriterium}
-Die Folge $(a_n)_{n \geq 1}$ ist genau dann konvergent, falls $\forall e > 0 \ \exists N \ge 1$ so dass $| a_n - a_m | < \epsilon \quad \forall n,m \ge N$.
+Die Folge $a_n$ ist genau dann konvergent, falls $\forall \epsilon > 0 \ \exists N \ge 1$ so dass $| a_n - a_m | < \epsilon \quad \forall n,m \ge N$.
 \end{mainbox}
 
 \subsubsection{Teilfolge}
