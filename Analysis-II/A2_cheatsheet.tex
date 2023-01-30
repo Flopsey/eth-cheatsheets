@@ -90,11 +90,11 @@
 
 \section{Differentialgleichungen}
 \begin{mainbox}{Definition lineare DGL}
-  Eine gewöhnliche lineare Differentialgleichung ist eine Gleichung, welche Ableitungen enthält. Sie hat die Form \[y^{(n)} + a_{n-1} y^{(n-1)} + \cdots + a_0y = b(x)\]
+  Eine gewöhnliche lineare Differentialgleichung ist eine Gleichung, welche Ableitungen enthält. Sie hat die Form \[y^{(n)} + a_{n-1} y^{(n-1)} + \ldots0 + a_1 y' + a_0y = b(x)\]
   wo die Koeffizienten \(a_0, \ldots, a_{n-1}\) komplexe Funktionen auf \(I \subset \R\) sind, welche von \(y\) abhängig sein können. Wenn \(b(x) = 0\) gilt, ist die DGL homogen.
 \end{mainbox}
-Die Menge \(S\) an Lösungen ist ein Subset des Raums der komplexen Funktionen auf \(I\) mit Dimension \(n\). \\
-\(S_0\) das Set der Lösungen zu einer homogenen DGL. Für ein \(b(x)\) ist die Menge der Lösungen \(S_b = \{f_h + f_p \mid f_h \in S_0\}\).
+Die Menge \(S\) an Lösungen ist eine Teilmenge des Raums der komplexen Funktionen auf \(I\) mit Dimension \(n\). \\
+\(S_0\) ist die Menge der Lösungen zu einer homogenen DGL. Für ein \(b(x)\) ist die Menge der Lösungen \(S_b = \{f_h + f_p \mid f_h \in S_0\}\).
 \subsubsection*{Lineare DGL erkennen}
 \begin{itemize}
   \item keine Koeffizienten vor der höchsten Ableitung
@@ -212,7 +212,7 @@ Variation der Konstanten funktioniert wie folgt (hier 2D):
 \begin{mainbox}{Definition Konvergenz}
   Sei \((x_k)_{k \in \mathbb{N}}, x_k \in \R^n\). Die folgenden Definitionen sind für \(\lim_{k\to\infty}x_k = y\) äquivalent:
   \begin{enumerate}
-    \item \(\forall \epsilon > 0 \exists N \ge 1\) so dass \(\forall k \ge N \ ||x_k - y|| < \epsilon\).
+    \item \(\forall \epsilon > 0\, \exists N \ge 1\) so dass \(\forall k \ge N \ ||x_k - y|| < \epsilon\).
     \item Für jedes \(i, 1 \le i \le n\) konvergiert die Folge \((x_{k,i})_k\) von reellen Zahlen nach \(y_i\).
     \item Die Folge der reellen Zahlen \(||x_k - y||\) konvergiert nach \(0\).
   \end{enumerate}
@@ -220,26 +220,26 @@ Variation der Konstanten funktioniert wie folgt (hier 2D):
 \subsection{Stetigkeit}
 Sei \(f: \X \subset \R^n \to \R^m\)  und \(x_0 \in \X\). \(f\) ist stetig in \(x_0\), falls eine der folgenden Bedingungen erfüllt ist:
 \begin{enumerate}
-  \item \(\forall \epsilon > 0 \exists \delta > 0\) so dass \(x \in \X ||x - x_0|| < \delta \implies ||f(x) - f(x_0)|| < \epsilon\).
-  \item \(\forall\) Folgen \((x_k)\) in \(X\) mit \(\lim x_k = x_0\) gilt \(\lim f(x_k) = f(\lim x_k)\).
+  \item \(\forall \epsilon > 0\, \exists \delta > 0\) so dass \(||x - x_0|| < \delta,\, x \in \X \implies ||f(x) - f(x_0)|| < \epsilon\).
+  \item Für alle Folgen \((x_k)\) in \(X\) mit \(\lim x_k = x_0\) gilt \(\lim f(x_k) = f(\lim x_k)\).
 \end{enumerate}
 \(f\) ist stetig in \(\X\) falls \(f\) für jeden Punkt \(x_0 \in \X\) stetig ist. Es gilt:
 \begin{enumerate}
   \item \(f(x = x_1, \ldots, x_n) \mapsto (f_1(x),\ldots,f_m(x))\) und \(f_i: \R^n \to \R\) stetig \(\iff \forall i = 1, \ldots, m \ f_i\) stetig.
   \item Lineare Funktionen \(x \mapsto Ax\) sind stetig.
   \item Polynome sind stetig.
-  \item Summen + Produkte von stetigen Funktionen sind stetig.
+  \item Summen und Produkte von stetigen Funktionen sind stetig.
   \item Funktionen unterschiedlicher Variablen sind stetig, falls alle Variablen stetig sind.
   \item Verknüpfungen stetiger Funktionen sind stetig.
 \end{enumerate}
 \begin{mainbox}{Sandwich-Lemma}
-  Wenn \(f, g, h: \R^n \to \R\) Funktionen mit \(f(x) < g(x) < h(x) \forall x \in \R^n\) sind, dann gilt
+  Wenn \(f, g, h: \R^n \to \R\) Funktionen mit \(f(x) < g(x) < h(x)\; \forall x \in \R^n\) sind, dann gilt
   \[\lim_{x\to a} f(x) = \lim_{x \to a} h(x) = L \implies \lim_{x\to a} g(x) = L\]
 \end{mainbox}
 \subsection{Eigenschaften von Mengen}
 Eine Menge \(\X \subset \R^n \) ist
 \begin{itemize}
-  \item \textbf{beschränkt}, falls die Menge \(\{ ||x|| \mid x \in \X \}\) in \(\R\) beschränkt ist (d.h. \(\exists R \ge 0, \forall x \in \X: ||x|| \le R\)).
+  \item \textbf{beschränkt}, falls die Menge \(\{ ||x|| \mid x \in \X \}\) in \(\R\) beschränkt ist (d.h. \(\exists R \ge 0\, \forall x \in \X:\: ||x|| \le R\)).
   \item \textbf{abgeschlossen}, falls jede Folge \((x_k)_{k\in \N} \subset \X\), die in \(\R^n\) konvergiert, zu einem Punkt in \(y \in \X\) konvergiert. Dies kann mit einem Ball visualisiert werden. Gegenbeispiele: \(\frac{1}{k}, <\).
   \item \textbf{kompakt}, falls sie beschränkt und abgeschlossen ist.
   \item \textbf{offen}, falls ihr Komplement \(\R^n \setminus \X\) abgeschlossen ist.
@@ -257,7 +257,7 @@ Beispiele:
   Jede beschränkte Folge in \(\R^n\) hat eine konvergente Teilfolge.
 \end{subbox}
 \begin{subbox}{Min-Max-Theorem}
-  Sei \(\X \subset \R^n, \X \ne \varnothing\) eine kompakte Menge und \(f: \X \to \R\) eine stetige Funktion. Dann ist \(f\) beschränkt und ein Maximum \(x^+\)/Minimum \(x^-\)existieren, so dass
+  Sei \(\X \subset \R^n, \X \ne \varnothing\) eine kompakte Menge und \(f: \X \to \R\) eine stetige Funktion. Dann ist \(f\) beschränkt und ein Maximum \(x^+\) und ein Minimum \(x^-\) existieren, so dass
   \[f(x^+) = \sup_{x\in \X} f(x) \quad f(x^-) = \inf_{x \in \X} f(x)\]
 \end{subbox}
 \subsection{Partielle Ableitungen}
@@ -318,16 +318,16 @@ Die Ableitung einer Funktion ist gegeben durch
 Sei \(\X \subset \R^n\) offen, \(f: \X \mapsto \R^m\). \(f\) ist eine Funktion der Klasse \(C^1\) falls \(f\) auf \(\X\) differenzierbar ist und alle partiellen Ableitungen stetig sind. \\
 Allgemein gilt \(f \in \C^k\) für \(k \ge 2\) wenn \(f\) differenzierbar ist und für alle partiellen Ableitungen \(\partial_{x_i} f \in C^{k-1}\) gilt. \\
 \(f\) ist glatt oder in \(C^\infty\) falls \(\forall k: f \in C^k \). Alle Polynome sind glatt.
-
-Partielle Ableitungen bis zur Ordnung \(k\) sind kommutativ:
-$$\pdv{f}{x_i, x_j} = \pdv{f}{ x_j, x_i}$$
-
+\begin{subbox}{Satz von Schwarz}
+  Partielle Ableitungen bis zur Ordnung \(k\) sind kommutativ:
+  \[\pdv{f}{x_i, x_j} = \pdv{f}{ x_j, x_i}\]
+\end{subbox}
 \begin{mainbox}{Hesse-Matrix}
   Die Hesse-Matrix ist eine \(n \times n\) symmetrische Matrix, welche die zweite Ableitung definiert:
   \[\text{Hess}_f(x_0) := \left(\pdv{f(x_0)}{x_i, x_j}\right)_{1\le i,j \le n}\] 
 \end{mainbox}
 \subsection{Taylorpolynome}
-Sei \(k \le 1\) und \(f: \X \mapsto \R\) ist eine Funktion der Klasse \(C^k\) auf \(\X\). Sei \(x_0 \in \X\) fix. Das \(k\)-te Taylorpolynom von \(f\) am Punkt \(x_0\) ist das Polynom in \(n\) Variablen vom Grad \(\le k\):
+Sei \(k \le 1\) und sei \(f: \X \mapsto \R\) eine Funktion der Klasse \(C^k\) auf \(\X\). Sei \(x_0 \in \X\) fix. Das \(k\)-te Taylorpolynom von \(f\) am Punkt \(x_0\) ist das Polynom in \(n\) Variablen vom Grad \(\le k\):
 \begin{align*}
   &T_k f(y; x_0) = f(x_0) + \sum_{i=1}^n \partial_i f(x_0) \cdot y_i + \dots \\
   &+ \sum_{m_1 + \cdots + m_n = k} \frac{1}{m_1! \cdots m_n!} \pdv{^k f(x_0) }{x_1^{m_1} \cdots \partial x_n^{m_n}} \cdot y_1^{m_1} \cdots y_n^{m_n}
@@ -339,7 +339,7 @@ Sei \(k \le 1\) und \(f: \X \mapsto \R\) ist eine Funktion der Klasse \(C^k\) au
   T_2 f(\vec{x}; x_0) &:= T_1f + \frac{1}{2} \cdot \vec{x}^\top \cdot \text{Hess}_f(x_0) \cdot \vec{x}
 \end{align*}
 
-\subsection{Definit}
+\subsection{Definitheit}
 Eine symmetrische Matrix ist
 \begin{itemize}
   \item \textbf{positiv definit}, falls alle Eigenwerte positiv sind.
@@ -369,7 +369,14 @@ Eigenwerte können mit dem charakteristischen Polynom gefunden werden:
 \end{align*}
 Für nichtsymmetrische Matrizen müssen wir für jeden Vektor \(v\) testen, ob \(v^\top A v > 0\) (bzw. \(< 0\)) gilt.
 \subsubsection*{Determinante in drei Dimensionen}
-\begin{align*}
+\begin{multline*}
+  \text{det}
+  \begin{pmatrix}
+      a & b & c\\
+      d & e & f\\
+      g & h & i
+  \end{pmatrix}
+  =\\
   a \cdot \text{det}
   \begin{pmatrix}
     e & f\\
@@ -385,12 +392,14 @@ Für nichtsymmetrische Matrizen müssen wir für jeden Vektor \(v\) testen, ob \
     d & e\\
     g & h
   \end{pmatrix}
-\end{align*}
+\end{multline*}
 \subsection{Extrema}
 \subsubsection*{Lokale Extrema}
-Sei \(f: \X \subset \R^n \mapsto \R\) differenzierbar und \(\X\) eine offene Menge. Dann ist \(x_0 \in \X\) ein lokales Maximum (Minimum) falls wir eine Umgebung \(B_r(x_0) = \{x\in \R^n \mid ||x-x_0|| < r \} \subset \X\) finden können, wo gilt:
-\[\forall x \in B_r(x_0): f(x) \le (\ge) f(x_0)\]
-Wenn \(x_0 \in \X\) ein lokales Extrema ist, dann gilt ausserdem \(\nabla f(x_0) = 0\).
+Sei \(f: \X \subset \R^n \mapsto \R\) differenzierbar und \(\X\) eine offene Menge. Dann ist \(x_0 \in \X\) ein lokales Minimum bzw. Maximum falls wir eine Umgebung \(B_r(x_0) = \{x\in \R^n \mid ||x-x_0|| < r \} \subset \X\) finden können, für die
+\[\forall x \in B_r(x_0)\: f(x) \ge f(x_0)\]
+bzw.
+\[\forall x \in B_r(x_0)\: f(x) \le f(x_0)\]
+gilt. Wenn \(x_0 \in \X\) ein lokales Extremum ist, dann gilt ausserdem \(\nabla f(x_0) = 0\).
 
 \subsubsection*{Kritische Punkte}
 Ein Punkt \(x_0 \in \X\) wo \(\nabla f(x_0) = 0\) gilt ist ein kritischer Punkt. Wenn \(\det(\text{Hess}_f(x_0)) \ne 0\), dann ist \(x_0\) nicht-degeneriert.
@@ -411,10 +420,10 @@ Sei \(f: \X \subseteq \R^n \mapsto \R, \X\) offen und \(f\in C^2\). Sei \(x_0\) 
 \end{enumerate}
 Dies funktioniert nicht, wenn \(x_0\) ein degenerierter kritischer Punkt ist. In einem solchen Fall müssen die Vorzeichen überprüft werden.
 \subsubsection*{Kritische Punkte mit Nebenbedingungen}
-Wenn wir Minimas/Maximas einer Funktion \(f: \X \mapsto \R\) mit einer Nebenbedingung \(g(x) = 0, g: \X \mapsto \R\) bestimmen wollen, können wir dafür Lagrange-Multiplikatoren verwenden.
+Wenn wir Minimas/Maximas einer Funktion \(f: \X \mapsto \R\) mit einer Nebenbedingung \(g(x) = 0,\, g: \X \mapsto \R\) bestimmen wollen, können wir dafür Lagrange-Multiplikatoren verwenden.
 \begin{subbox}{Lagrange-Multiplikator}
-  Sei \(\X \subset \R^n\) offen und \(f,g: \X \mapsto \R\) Funktionen der Klasse \(C^1\). Wenn \(Y = \{x \in \X \mid g(x) = 0\) ist, dann ist \(x_0 \in Y\) ein lokales Extrema, welches die Nebenbedingung erfüllt, falls 
-  \[\exists \delta > 0, f(y) \le (\ge) f(x_0), \quad \forall y \in B_\delta(x_0) \cap Y\]
+  Sei \(\X \subset \R^n\) offen und \(f,g: \X \mapsto \R\) Funktionen der Klasse \(C^1\). Wenn \(Y = \{x \in \X \mid g(x) = 0\) ist, dann ist \(x_0 \in Y\) ein lokales Extremum, welches die Nebenbedingung erfüllt, falls 
+  \[\exists \delta > 0, f(y) \ge (\le) f(x_0), \quad \forall y \in B_\delta(x_0) \cap Y\]
   gilt. Nun ist entweder \(\nabla g(x_0) = 0\) oder \(\exists \lambda \in \R, \nabla f(x_0) = \lambda \cdot \nabla g(x_0)\), wobei \(\lambda\) dann Lagrange-Multiplikator gennant wird.
 \end{subbox}
 \section{Integrale in \texorpdfstring{\(\R^n\)}{Rⁿ}}
@@ -433,7 +442,7 @@ Für \(f: \R \mapsto \R^n\) ist das Integral definiert als
 \end{mainbox}
 \subsection{Wegintegrale}
 Sei \(\gamma : \left[a,b\right] \mapsto \R^n\) eine parametrisierte Kurve und \(\X \subset \R^n\) eine Menge, welche das Bild von \(\gamma\) beinhaltet. Sei \(f : \X \mapsto \R^n\) eine stetige Funktion. Dann ist ein Wegintegral (auch: Kurvenintegral) definiert als:
-\[\int_\gamma f(s) ds = \int_a^b f(\gamma(t)) \cdot \gamma'(t) dt\]
+\[\int_\gamma f(s) \mathop{ds} = \int_a^b f(\gamma(t)) \cdot \gamma'(t) \mathop{dt}\]
 
 Wegintegrale haben folgende Eigenschaften:
 \begin{enumerate}
@@ -475,8 +484,11 @@ Sei \(\X\) offen und \(f: \X \subset \R^n \mapsto \R^n\) ein stetiges Vektorfeld
   \item Ein Potential für \(f\) existiert.
 \end{enumerate}
 Es gilt ausserdem folgende notwendige, aber nicht ausreichende Bedingung:
-\[f \text{ ist konservativ }\implies \pdv{f_i}{x_j} = \pdv{f_j}{x_i}\]
-
+\begin{align*}
+  \text{für $\R^2$: }&\pdv{f_1}{x_2} = \pdv{f_2}{x_1}\\
+  \text{für $\R^3$: }&\pdv{f_1}{x_2} = \pdv{f_2}{x_1} \land \pdv{f_1}{x_3} = \pdv{f_3}{x_1} \land \pdv{f_2}{x_3} = \pdv{f_3}{x_2}\\
+  \text{allgemein: }&\pdv{f_i}{x_j} = \pdv{f_j}{x_i}\; \text{für alle $i,j \in \{1,\dots,n\}$}
+\end{align*}
 \begin{subbox}{Wegzusammenhängend}
   Sei \(\X \subset \R^n\) offen. \(\X\) ist wegzusammenhängend, falls für jedes Paar an Punkten \(x, y \in \X\) ein Pfad \(\gamma : \left(0,1\right] \mapsto \X\) existiert, der in \(C^1\) ist und \(\gamma(0) = x, \gamma(1) = y\) hält.
 \end{subbox}
@@ -536,7 +548,7 @@ Sei \(f,g : A \subset R \mapsto \R\) auf \(A\) integrierbar, dann gilt folgendes
 
 
 \begin{mainbox}{Satz von Fubini}
-  Für eine Region \(D \subset \R^2 := \{\left(x,y\right) \mid a \le x \le b, g(x) < y < h(x)\}\) gilt:
+  Für eine Region \(D \subset \R^2 := \{\left(x,y\right) \mid a \le x \le b,\, g(x) < y < h(x)\}\) gilt:
   \[\int_D f(x,y)\mathop{dx} \mathop{xy} = \int_a^b \left(\int_{g(x)}^{h(x)} f(x,y) \mathop{dy}\right)\mathop{dx}\]
   Für eine Region \(D \subset \R^2 := \{ \left(x,y\right) \mid c \le y \le d, G(y) < x < H(y)\) gilt:
   \[\int_D f(x,y) \mathop{dx} \mathop{dy} = \int_c^d \left(\int_{G(y)}^{H(y)} f(x,y)\mathop{dx}\right) \mathop{dy}\]
