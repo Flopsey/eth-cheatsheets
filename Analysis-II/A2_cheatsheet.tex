@@ -81,6 +81,7 @@
 \def\N{\mathbb{N}}
 \def\X{\mathcal{X}}
 \def\dx{\text{ d}x}
+\DeclareMathOperator{\curl}{curl}
 
 \begin{document}
 
@@ -703,7 +704,7 @@ Um Flächen mit dem Satz von Green zu berechnen, benutzen wir ein Vektorfeld mit
 \begingroup
 \renewcommand*{\arraystretch}{2}
 
-\begin{mainbox}{Wichtige Werte}
+\begin{subbox}{Wichtige Werte}
   \begin{center} 
     \begin{tabular}{c|cccccc}
       deg & 0° & 30° & 45° & 60° & 90° & 180° \\
@@ -714,7 +715,7 @@ Um Flächen mit dem Satz von Green zu berechnen, benutzen wir ein Vektorfeld mit
       tan & 0 & $\frac{1}{\sqrt{3}}$ & 1 & $\sqrt{3}$ & $+\infty$ & 0 \\
     \end{tabular}
   \end{center}
-\end{mainbox}
+\end{subbox}
 
 \begin{center}
   \includegraphics[width=\linewidth]{Einheitskreis.png}
@@ -786,6 +787,95 @@ Um Flächen mit dem Satz von Green zu berechnen, benutzen wir ein Vektorfeld mit
 
 % end of larger array spacing
 \endgroup
+\section{Aufgaben}
+\subsection{Wahr-Falsch-Aufgaben}
+\begin{enumerate}
+    \item The function $x \mapsto \frac{1}{1 + x^2}$ is a solution of the differential equation $x^2y' + 2xy + y' = 0$. \textbf{True}
+    \item The function $f: \R^2 \rightarrow \R$ given by
+    \[f(x,y) = 
+    \begin{cases}
+        \frac{x^2 - y^2}{x^2 + y^2} &\text{if } (x, y) \neq (0, 0)\\
+        0 &\text{if } (x, y) = (0, 0)
+    \end{cases}
+    \]
+    is \textbf{not} continuous at $(0, 0)$. \textbf{True}
+    \item Although $\lim_{(x, y) \to (0, 0)} \sin \left(\frac{1}{x^2 + |y|}\right)$ does not exist, the limit
+    \[\lim_{(x, y) \to (0, 0)} x^4 \sin \left(\frac{1}{x^2 + |y|}\right)\]
+    exists and is finite. \textbf{True}
+    \item There exists a function $f: \R^2 \to \R$ so that for every point $(x, y) \in \R^2$, the gradient of $f$ at $(x, y)$ is equal to $(-y, x)$. \textbf{False}
+    \item Let
+    \[F(x, y) = (F_1, F_2)(x, y) = \left(\frac{-y}{x^2 + y^2}, \frac{x}{x^2 + y^2}\right)\]
+    and let $\gamma$ be the standard parametrization of the unit circle centered at the origin and oriented counter-clockwise. Since $\pdv{F_2}{x} = \pdv{F_1}{y}$, by Green's theorem it holds that $\int_\gamma F \cdot d \Vec{s} = 0$. \textbf{False}
+    \item If all the first order partial derivatives of a differentiable function $f: \R^2 \to \R$ vanish at the point $(1, 2)$, then $(1, 2)$ is a local minimum or local maximum of $f$. \textbf{False}
+    \item It holds that
+    \[\int_0^1 \int_0^{3x} e^{x^2} \mathop{dy} \mathop{dx} = \int_0^3 \int_{\frac{y}{3}}^1 e^{x^2} \mathop{dx} \mathop{dy} \text{.}\]
+    \textbf{True}
+    \item Let $f: \R^2 \to \R$ be a smooth function such that its gradient at the point $(3, 4)$, $\nabla f(3, 4)$, is equal to $(5, 6)$. Then:
+    \begin{enumerate}
+        \item $f$ increases at $(3, 4)$ the most in the direction of the vector $(5, 6)$. \textbf{True}
+        \item The directional derivative of $f$ at the point $(3, 4)$ in the direction of the vector $\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)$ is equal to $\frac{7}{\sqrt{2}}$. \textbf{False}
+        \item If $\gamma$ parametrizes some curve in $\Gamma = \{(x, y): f(x, y) = f(3, 4)\}$, then $\left.\mathop{\frac{d}{dt}} (f(\gamma(t))\right|_{t = 0} = (5, 6) \cdot \gamma(0)$. \textbf{False}
+    \end{enumerate}
+\end{enumerate}
+\subsection{Kurzfragen}
+\begin{enumerate}
+    \item \textbf{Q: } Evaluate the double integral
+    \[\int \int_A \frac{\log \sqrt{x^2 + y^2}}{x^2 + y^2} \mathop{dx} \mathop{dy} \text{,}\]
+    where $A$ is the annulus $A = \{(x, y) \in \R^2: 1 \le x^2 + y^2 \le 4\}$.\\
+    \textbf{A:} $\pi (\log 2)^2$. In polar coordinates we obtain:
+    \begin{multline*}
+        \int_D \frac{\log \sqrt{x^2 + y^2}}{x^2 + y^2} \mathop{dx} \mathop{dy} = \int_0^{2 \pi} \int_1^2 \frac{\log r}{r^2} r \mathop{dr} \mathop{d \theta}\\
+        = 2 \pi \int_1^2 \frac{\log r}{r} \mathop{dr} = \pi \left[(\log r)^2\right]_1^2 \text{.}
+    \end{multline*}
+    \item \textbf{Q:} Let $g: \R^2 \to \R$ be a smooth function so that
+    \[\nabla g(1, 1, \sqrt{2}) = (3, 2, -1) \text{.}\]
+    Compute
+    \[\pdv{g}{\phi} (\rho, \theta, \phi) \text{ at } (\rho, \theta, \phi) = \left(2, \frac{\pi}{4}, \frac{\pi}{4}\right) \text{,}\]
+    where $x = \rho \cos \theta \sin \phi$, $y = \rho \sin \theta \sin \phi$ and $z = \rho \cos \phi$ are the spherical coordinates.\\
+    \textbf{A:} $5 + \sqrt{2}$. As a consequence of the chain rule, we have
+    \begin{align*}
+        &\pdv{g}{\phi} (\rho, \theta, \phi)\\
+        = &\pdv{}{\phi} \bigl(g(\rho \cos \theta \sin \phi,\, \rho \sin \theta \sin \phi,\, \rho \cos \phi)\bigr)\\
+        = &\pdv{g}{x} \rho \cos \theta \cos \phi + \pdv{g}{y} \rho \sin \theta \cos \phi - \pdv{g}{z} \rho \sin \phi \text{.}
+    \end{align*}
+    Since
+    \begin{multline*}
+        \bigl(2 \cos \left(\frac{\pi}{4}\right) \sin \left(\frac{\pi}{4}\right),\,\bigr.\\
+        \bigl.2 \sin \left(\frac{\pi}{4}\right) \sin \left(\frac{\pi}{4}\right),\, 2 \cos \left(\frac{\pi}{4}\right)\bigr) = (1, 1, \sqrt{2}) \text{,}
+    \end{multline*}
+    we then deduce
+    \begin{align*}
+        &\pdv{g}{\phi} \left(2, \frac{\pi}{4}, \frac{\pi}{4}\right)\\
+        =& 3 \cdot 2 \cos \left(\frac{\pi}{4}\right) \cos \left(\frac{\pi}{4}\right) + 2 \cdot \sin \left(\frac{\pi}{4}\right) \cos \left(\frac{\pi}{4}\right) + 1 \cdot 2 \cos \left(\frac{\pi}{4}\right)\\
+        =& 5 + \sqrt{2} \text{.}
+    \end{align*}
+    \item \textbf{Q:} Evaluate the double integral
+    \[\int \int_R \frac{\sin x}{x} \mathop{dx} \mathop{dy} \text{,}\]
+    where $R$ is the triangle in the $xy$-plane bounded by the $x$-axis and the lines $y = 2x$ and $x = \frac{\pi}{4}$.\\
+    \textbf{A:} $2 - \sqrt{2}$. The domain $R$ is defined by $0 \le x \le \frac{\pi}{4}$ and $0 \le y \le 2x$, thus the integral is
+    \begin{multline*}
+        \int_0^{\frac{\pi}{4}} \int_0^{2x} \frac{\sin x}{x} \mathop{dy} \mathop{dx} = \int_0^{\frac{\pi}{4}} \frac{\sin x}{x} 2x \mathop{dx}\\
+        = 2 \left[- \cos x\right]_0^{\frac{\pi}{4}} = 2 - \sqrt{2} \text{.}
+    \end{multline*}
+    \item \textbf{Q:} What is the line integral of the vector field
+    \[F: \R^2 \to \R^2,\; F(x, y) = (1 - y + 2xy,\, x^2 + y^2) \text{,}\]
+    along the boundary of the region between the circle of radius $2$ and the triangle whose vertices are at $(0, 0)$, $(1, 0)$ and $(0, 1)$? The boundary is oriented so that the region is to the left.\\
+    \textbf{A:} $4 \pi - \frac{1}{2}$. Since $\curl F = 1$, by Green's theorem we get
+    \begin{multline*}
+        \int_{\partial R} F \cdot d \Vec{s} = - \int_R \mathop{dx} \mathop{dy}\\
+        = \text{Area}(\text{Disk}) - \text{Area}(\text{Triangle}) = 4 \pi - \frac{1}{2} \text{.}
+    \end{multline*}
+    \item \textbf{Q:} Let $f: \R^2 \to \R$ be the function given by
+    \[f(x, y) = 1 + ye^{xy} \text{.}\]
+    Find the best approximating affine function $A: \R^2 \to \R$ (that is, $A = a_0 + L$ where $a_0$ is a constant and $L: \R^2 \to \R$ is linear) for $f$ at the point $(2, 0)$.\\
+    \textbf{A:} $1 + y$. The theory tells that A is given by the 1st order Taylor polynomial:
+    \begin{align*}
+        &A(x, y)\\
+        =& f(2, 0) + \partial_x f(2, 0) x + \partial_y f(2, 0) y\\
+      =& 1 + \left[y^2 e^{xy}\right]_{(x, y) = (2, 0)} x + \left[(1 + xy) e^{xy}\right]_{(x, y) = (2, 0)} y\\
+      =& 1 + y \text{.}
+    \end{align*}
+\end{enumerate}
 \section{Quellen}
 Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
 \end{document}
