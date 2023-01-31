@@ -24,7 +24,8 @@
     coltitle=black, 
     toptitle=0.75mm, 
     bottomtitle=0.25mm,
-    title={#1}
+    title={#1},
+    breakable
   }
 }
 
@@ -82,6 +83,7 @@
 \def\X{\mathcal{X}}
 \def\dx{\text{ d}x}
 \DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Hess}{Hess}
 
 \begin{document}
 
@@ -653,6 +655,7 @@ Um Flächen mit dem Satz von Green zu berechnen, benutzen wir ein Vektorfeld mit
  \end{enumerate}
 \end{mainbox}
 
+\small
 \section{Trigonometrie}
 
 \subsection{Regeln}
@@ -875,6 +878,166 @@ Um Flächen mit dem Satz von Green zu berechnen, benutzen wir ein Vektorfeld mit
       =& 1 + \left[y^2 e^{xy}\right]_{(x, y) = (2, 0)} x + \left[(1 + xy) e^{xy}\right]_{(x, y) = (2, 0)} y\\
       =& 1 + y \text{.}
     \end{align*}
+\end{enumerate}
+\subsection{Probleme}
+\begin{enumerate}
+    \item Consider the differential equation
+    \[y'' - y' + y = (t + 1) e^t \text{.} \tag{\star}\]
+    \begin{enumerate}
+        \item \textbf{Q:} Find the general solution of the homogeneous equation associated to $(\star)$.\\
+        \textbf{A:} The characteristic polynomial is $\lambda^2 - \lambda + 1$, whose roots are $\frac{1 \pm \sqrt{3}i}{2}$. Consequently the general solution of the homogeneous equation is
+        \[y_h(t) = e^{\frac{1}{2}t} \left(C_1 \cos \left(\frac{\sqrt{3}}{2} t\right) + C_2 \sin \left(\frac{\sqrt{3}}{2} t\right)\right) \text{.}\]
+        \item \textbf{Q:} Find the general solution of $(\star)$.\\
+        \textbf{A:} We just need to find a particular solution. Since $1$ is not a root of the characteristic polynomial, we make the Ansatz
+        \[y_p(t) = (At + B) e^t \text{.}\]
+        Substituting this in the equation one finds that
+        \[At + A + B \overset{!}{=} t + 1 \text{,}\]
+        hence $A = 1$ and $B = 0$. Thus the general solution is
+        \begin{multline*}
+            y(t) = y_h(t) + t_p(t) =\\
+            e^{\frac{1}{2} t} \left(C_1 \cos \left(\frac{\sqrt{3}}{2} t \right) + C_2 \sin \left(\frac{\sqrt{3}}{2} t\right)\right) + te^t \text{.}
+        \end{multline*}
+        \item \textbf{Q:} Find the solution of $(\star)$ satisfying the conditions $y(0) = 0,\, y'(0) = 1$.\\
+        \textbf{A:} Replacing the given conditions in the above formula yields
+        \begin{align*}
+            y(0) = 0 &\implies C_1 = 0,\\
+            y'(0) = 0 &\implies C_2 = 0 \text{,}
+        \end{align*}
+        which means that the required solution is $y(t) = te^t$.
+    \end{enumerate}
+    \item Let $f: \R^2 \to \R$ be given by
+    \[f(x, y) = x^4 + y^4 - 2x^2 -2y^2 + 2 \text{.}\]
+    \begin{enumerate}
+        \item \textbf{Q:} Determine the critical points of $f$ and their type (local min, local max, saddle).\\
+        \textbf{A:} We have
+        \begin{align*}
+            \pdv{f}{x}(x, y) &= 4x^3 - 4x,\\
+            \pdv{f}{y}(x, y) &= 4y^3 - 4y \text{.}
+        \end{align*}
+        Hence the critical points are determined by
+        \[
+        \begin{cases}
+            x(x^2 - 1) = 0\\
+            y(y^2 - 1) = 0 \text{,}
+        \end{cases}
+        \]
+        and thus are 9:
+        \[(0, 0),\, (\pm 1, 0),\, (0, \pm 1),\, (\pm 1, \pm 1) \text{,}\]
+        with all possible choices of sign. The Hessian of $f$ is
+        \[\Hess f(x, y) =
+        \begin{pmatrix*}
+            12 x^2 - 4 & 0\\
+            0 & 12 y^2 - 4
+        \end{pmatrix*}
+        \text{,}\]
+        consequently
+        \begin{align*}
+            \Hess f(0, 0) &=
+            \begin{pmatrix*}
+                -4 & 0\\
+                0 & -4
+            \end{pmatrix*}
+            ,\,\\
+            \Hess f(\pm 1, 0) &=
+            \begin{pmatrix*}
+                8 & 0\\
+                0 & -4
+            \end{pmatrix*}
+            ,\,\\
+            \Hess f(0, \pm 1) &=
+            \begin{pmatrix}
+                -4 & 0\\
+                0 & 8
+            \end{pmatrix}
+            ,\,\\
+            \Hess f(\pm 1, \pm 1) &=
+            \begin{pmatrix*}
+                8 & 0\\
+                0 & 8
+            \end{pmatrix*}
+            \text{,}
+        \end{align*}
+        and so we see that $(0, 0)$ is a local maximum, $(\pm 1, \pm 1)$ are local minima and $(0, \pm 1)$, $(\pm 1, 0)$ are saddles.
+        \item \textbf{Q:} Does $f$ attain global maximum and global minimum? If so, at which points?\\
+        \textbf{A:} Since
+        \[\lim_{(x, y) \to \infty} f(x, y) = +\infty \text{,}\]
+        $f$ does not have a global maximum.
+        For the same reason however, (or because $f \ge 0$ and $f(\pm 1, \pm 1) = 0$) it must attain its global minimum and thus from the above this is attained at the points $(\pm 1, \pm 1)$.
+    \end{enumerate}
+    \item Consider the integral
+    \[\int \int_D (y - x)^2 (x + y)^{2020} \mathop{dx} \mathop{dy} \text{,}\]
+    where $D$ is the region bounded by the coordinate axes and the line $x + y = 2$.
+    \begin{enumerate}
+        \item \textbf{Q:} Consider the change of variables defined by
+        \[u = y - x \text{ and } v = x + y \text{.}\]
+        Find the region $R$ in the $uv$-plane which corresponds to $D$ in the $xy$-plane.\\
+        \textbf{A:} The inverse of the transformation is given by
+        \[x = \frac{1}{2} (-u + v) \text{ and } y = \frac{1}{2} (u + v) \text{,}\]
+        Thus, since $D$ is defined by
+        \[
+        \begin{cases}
+            0 \le x \le 2,\\
+            0 \le y \le 2 - x \text{,}
+        \end{cases}
+        \]
+        we deduce that $R$ is expressed as
+        \[
+        \begin{cases}
+            u + v \le u - v + 4,\\
+            -u + v \ge 0,\\
+            -u + v \le 4,\\
+            u + v \ge 0
+        \end{cases}
+        \iff
+        \begin{cases}
+            v \le 2,\\
+            v \ge u,\\
+            v \le u + 4,\\
+            v \ge -u \text{,}
+        \end{cases}
+        \]
+        which we may rewrite as
+        \[
+        \begin{cases}
+            0 \le v \le 2,\\
+            -v \le u \le v \text{.}
+        \end{cases}
+        \]
+        \item \textbf{Q:} Evaluate the above integral using the change of variables given in $(a)$.\\
+        \textbf{A:} Since the determinant of the Jacobi matrix of the transformation is $- \frac{1}{2}$, the integral becomes
+        \begin{align*}
+            &\int \int_D (x - y)^2 (x + y)^{2020} \mathop{dx} \mathop{dy}\\
+            = &\frac{1}{2} \int \int_R u^2v^{2020} \mathop{du} \mathop{dv}\\
+            = &\frac{1}{2} \left(\int_0^2 v^{2020} \left[\frac{u^3}{3}\right]_{-v}^v \mathop{du}\right) = \frac{1}{3} \int_0^2 v^{2023} \mathop{du} = \frac{2^2024}{3 \cdot 2024} \text{.}
+        \end{align*}
+    \end{enumerate}
+    \item Let $F: \R^3 \to \R^3$ be the vector field given by
+    \[F(x, y, z) = (z \cos x,\, 1 + z^2e^{yz^2},\,\sin x + 2yze^{yz^2}) \text{.}\]
+    \begin{enumerate}
+        \item \textbf{Q:} Show that $F$ is conservative.\\
+        \textbf{A:} One checks directly that
+        \[\pdv{}{x_i} F_j = \pdv{}{x_j} F_i\; \text{for } i, j = 1, 2, 3 \text{,}\]
+        hence since $\R^3$ is star-shaped, $F$ is conservative.
+        \item \textbf{Q:} Find a potential $g: \R^3 \to \R$ for $F$.\\
+        \textbf{A:} The function $g$ needs to be so that
+        \begin{align*}
+            \pdv{}{x} g &= z \cos x,\\
+            \pdv{}{y} g &= 1 + z^2 e^{yz^2},\\
+            \pdv{}{z} g &= \sin x + 2yze^{yz^2} \text{.}
+        \end{align*}
+        A moment of thought yields that one such $g$ is
+        \[g(x, y, z) = z \sin x + y + e^{yz^2} \text{.}\]
+        \item \textbf{Q:} Find the value of the line integral $\int_\gamma F \cdot d \Vec{s}$, where $\gamma: [0, \pi] \to \R^3$ is the coil-shaped curve given by
+        \begin{multline*}
+            \gamma(t) = (\sin(200t),\, (2 + \cos(200t)) \cos(t),\,\\
+            (2 + \cos(200t)) \sin(t)) \text{.}
+        \end{multline*}\\
+        \textbf{A:} Since $F$ is conservative, with (b) we get that
+        \begin{multline*}
+            \int_\gamma F \cdot d \Vec{s} = g(\gamma(\pi)) - g(\gamma(0))\\
+            = g(0, -3, 0) - g(0, 3, 0) = -6 \text{.}
+        \end{multline*}
+    \end{enumerate}
 \end{enumerate}
 \section{Quellen}
 Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
