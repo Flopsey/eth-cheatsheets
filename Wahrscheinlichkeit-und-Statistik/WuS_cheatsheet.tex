@@ -88,8 +88,8 @@
 \input{../license.tex}
 
 \section{Grundbegriffe}
-\begin{subbox}{Definition Wahrscheinlichkeitraum}
-	Ein Wahrscheinlichkeitraum ist ein Tupel \((\Omega, \F, \P)\):
+\begin{subbox}{Definition Wahrscheinlichkeitsraum}
+	Ein Wahrscheinlichkeitsraum ist ein Tupel \((\Omega, \F, \P)\):
 	\begin{itemize}
 		\item Die Menge \(\Omega\) nenen wir \textbf{Grundraum}. Ein \(\omega \in \Omega\) nennen wir Elementarereignis.
 		\item \(\F \subseteq \P(\Omega)\) ist eine \textbf{Sigma-Algebra}.
@@ -99,7 +99,7 @@
 \end{subbox}
 
 \subsection{Sigma-Algebra}
-Eine Sigma-Algebra ist ein Subset \(\F \subseteq \mathcal{P}(\Omega)\) mit den folgenden Eigenschaften:
+Eine Sigma-Algebra ist eine Teilmenge \(\F \subseteq \mathcal{P}(\Omega)\) mit den folgenden Eigenschaften:
 \begin{enumerate}
 	\item \(\Omega \in \F\)
 	\item \(A \in \F \implies A^\complement \in \F\)
@@ -109,7 +109,7 @@ Eine Sigma-Algebra ist ein Subset \(\F \subseteq \mathcal{P}(\Omega)\) mit den f
 	\item \(A, B \in \F \implies A \cup B \in \F\)
 	\item \(A, B \in \F \implies A \cap B \in \F\)
 \end{enumerate}
-Nützlich ist ausserdem die De-Morgan-Regel: \[(\cup_{i=1}^\infty A_i)^\complement = \cap_{i=1}^\infty(A_i)^\complement\]
+Nützlich ist ausserdem die De-Morgan-Regel: \[(\bigcup_{i=1}^\infty A_i)^\complement = \bigcap_{i=1}^\infty(A_i)^\complement\]
 
 \subsection{Wahrscheinlichkeitsmass}
 Ein Wahrscheinlichkeitsmass \(\P\) ist eine Abbildung
@@ -131,16 +131,16 @@ mit den Eigenschaften
 Wenn \(A_1, \ldots A_n\) paarweise disjunkt sind, gilt:
 \[\P[A_1 \cup \ldots \cup A_n] = \P[A_1] + \ldots + \P[A_n]\]
 
-\subsection{Bedingte Wahrscheinlichkeiten}
+\subsection{Bedingte Wahrscheinlichkeit}
 Sei \((\Omega, \F, \P)\) ein Wahrscheinlichkeitsraum mit \(A, B \in \F\) und \(\P[B] > 0\). Die bedingte Wahrscheinlichkeit von \(A\) gegeben \(B\) ist definiert als:
 \[\P[A|B] = \frac{\P[A\cap B]}{\P[B]}\]
 \begin{subbox}{Totale Wahrscheinlichkeit}
 	Sei \(B_1, \ldots, B_n \in \F\) eine Partition von \(\Omega\) mit \(\P[B_i] > 0\) für alle \(1 \le i \le n\). Dann gilt:
-	\[\forall A \in \F \quad \P[A] = \sum_{i=1}^{n} \P[A|B_i] \ \P[B_i]\]
+	\[\forall A \in \F \: \P[A] = \sum_{i=1}^{n} \P[A|B_i] \ \P[B_i]\]
 \end{subbox}
 \begin{mainbox}{Satz von Bayes}
-	Sei \(B_1, \ldots, B_n \in \F\) eine Partition von \(\Omega\) mit \(\P[B_i] > 0\) für jedes \(i\). Für jeden Event \(A\) mit \(\P[A] > 0\) gilt:
-	\[\forall i = 1,\ldots, n \quad \P[B_i|A] = \frac{\P[A|B_i] \ \P[B_i]}{\sum_{k=1}^n \P[A|B_k] \ \P[B_k]}\]
+	Sei \(B_1, \ldots, B_n \in \F\) eine Partition von \(\Omega\) mit \(\P[B_i] > 0\) für jedes \(i\). Für jedes Ereignis \(A\) mit \(\P[A] > 0\) gilt:
+	\[\forall i = 1,\ldots, n \: \P[B_i|A] = \frac{\P[A|B_i] \ \P[B_i]}{\sum_{k=1}^n \P[A|B_k] \ \P[B_k]}\]
 \end{mainbox}
 
 \subsection{Unabhängigkeit}
@@ -157,17 +157,17 @@ Sei \((\Omega, \F, \P)\) ein Wahrscheinlichkeitsraum mit \(A, B \in \F\) und \(\
 \end{itemize}
 \subsubsection*{Unabhängigkeit für mehrere Ereignisse}
 Seien \(A_1, \ldots, A_n \in F\), dann sind die Ereignisse unabhängig, falls gilt:
-\[\forall I \subseteq \{1, \ldots, n\} \quad \P[\bigcap_{i\in I}A_i] = \prod_{i\in I} \P[A_i]\]
+\[\forall I \subseteq \{1, \ldots, n\} \: \P[\bigcap_{i\in I}A_i] = \prod_{i\in I} \P[A_i]\]
 
 \section{Zufallsvariablen}
 Eine Zufallsvariable ist eine Abbildung \(X: \Omega \mapsto \R\) mit
-\[\forall x \in \R \quad \{\omega \in \Omega \mid X(\omega) \leq x\} \in \F\]
+\[\forall x \in \R \: \{\omega \in \Omega \mid X(\omega) \leq x\} \in \F\]
 Dabei lassen wir das \(\omega\) oft weg und schreiben nur \(X\).
 
 \subsection{Verteilungsfunktion}
 \begin{mainbox}{Definition Verteilungsfunktion}
 	Die Verteilungsfunktion ist die Abbildung \(F_X: \ \R \mapsto [0,1]\) definiert durch
-	\[\forall x \in \R \quad F_X(x) = \P[X \le x]\]
+	\[\forall x \in \R \: F_X(x) = \P[X \le x]\]
 \end{mainbox}
 Die Verteilungsfunktion hat folgende Eigenschaften:
 \begin{enumerate}
@@ -180,16 +180,16 @@ Die Verteilungsfunktion hat folgende Eigenschaften:
 Die Definition der Linksstetigkeit ist
 \[F(x-) = \lim_{t\to 0} F(x-t)\]
 Es gilt allerdings \textit{nicht} immer \(F(x-) = F(x)\), d.h. nicht jede Verteilungsfunktion ist linksstetig. Allerdings gilt:
-\[\forall x \in \R \quad F(x) - F(x-) = \P[X=x]\]
+\[\forall x \in \R \: F(x) - F(x-) = \P[X=x]\]
 Daraus lässt sich für stetige ZV \(P[X=x] = 0\) folgern.
 \subsection{Unabhängigkeit}
 Die Zufallsvariablen \(X_1, \ldots, X_n\) sind unabhängig, falls:
 \begin{align*}
-	\forall x_1, \ldots, x_n \in \R: \quad & \P[X_1 \le x_1, \ldots, X_n \le x_n] =             \\
+	\forall x_1, \ldots, x_n \in \R \quad & \P[X_1 \le x_1, \ldots, X_n \le x_n] =             \\
 	                                       & \P[X_1 \le x_1] \cdot \ldots \cdot \P[X_n \le x_n]
 \end{align*}
 Eine Folge von Zufallsvariablen \(X_1, X_2, \ldots\) ist unabhängig, falls \(
-\forall n \ X_1, \ldots X_n\) unabhängig sind. Sie ist zusätzlich identisch verteilt (uiv.), falls ausserdem \(\forall i,j \quad F_{X_i} = F_{X_j}\) gilt.
+\forall n \: X_1, \ldots X_n\) unabhängig sind. Sie ist zusätzlich identisch verteilt (uiv.), falls ausserdem \(\forall i,j \: F_{X_i} = F_{X_j}\) gilt.
 \subsection{Transformationen}
 Sei \(\varphi: \ \R \mapsto \R\) und \(X\) eine Zufallsvariable, so ist
 \[\varphi(X) = \varphi \circ X\]
@@ -203,16 +203,16 @@ Gegeben eine Verteilungsfunktion \(F_X\) wollen wir die entsprechende ZV \(X\) k
 	Es existiert \((\Omega, \F,\P)\) und ZVs \( X_1, X_2, \ldots\), sodass \(X_1, X_2, \ldots\) uiv. Bernoullivariablen mit \(p = 0.5\) sind.
 \end{subbox}
 
-Sei \(X_1, X_2,\ldots \sim \text{Ber}(1/2)\) eine unendliche Folge, dann ist
+Sei \(X_1, X_2,\ldots \sim \text{Ber}(\frac{1}{2})\) eine unendliche Folge, dann ist
 \[U = \sum_{n = 1}^\infty 2^{-n}\cdot X_n\]
 gleichverteilt auf \([0,1]\).
 
-Aufgrund der Eigenschaften der Verteilungsfunktion \(F\) wissen wir, dass eine eindeutige Inverse $F^{-1}$ existiert. Wir können die generalisierte Inverse definieren als: \[\forall \alpha \in [0,1] \quad F^{-1}(\alpha) = \inf \{x \in \R \mid F(x) \geq \alpha\}\]
+Aufgrund der Eigenschaften der Verteilungsfunktion \(F\) wissen wir, dass eine eindeutige Inverse $F^{-1}$ existiert. Wir können die generalisierte Inverse definieren als: \[\forall \alpha \in [0,1] \: F^{-1}(\alpha) = \inf \{x \in \R \mid F(x) \geq \alpha\}\]
 
 Sei nun \(F\) eine Verteilungsfunktion und \(U\) eine gleichverteilte ZV in \([0,1]\). Dann besitzt \(X = F^{-1}(U)\) genau die Verteilungsfunktion \(F_X = F\).
 
 \begin{subbox}{Fast sichere Ereignisse}
-	Ein Ereignis \(A \in \F\) tritt fast sicher (f.s) ein, falls \(\P[A] = 1\). Seien \(X, Y\) ZV, so schreiben wir \(X \le Y \text{ f.s.} \iff \P[X\le Y] = 1\).
+	Ein Ereignis \(A \in \F\) tritt fast sicher (f.s.) ein, falls \(\P[A] = 1\). Seien \(X, Y\) ZV, so schreiben wir \(X \le Y \text{ f.s.} \iff \P[X\le Y] = 1\).
 \end{subbox}
 
 \subsection{Diskrete Zufallsvariablen}
@@ -222,25 +222,37 @@ Sei nun \(F\) eine Verteilungsfunktion und \(U\) eine gleichverteilte ZV in \([0
 \noindent Die Verteilungsfunktion einer diskreten ZV ist:
 \[(p(x))_{x \in W} \text{ wobei } \sum_{x\in W} p(x) = 1\]
 Die Gewichtsfunktion einer diskreten ZV ist:
-\[\forall x \in W \quad p(x) = \P[X=x]\]
+\[\forall x \in W \: p(x) = \P[X=x]\]
 
 \subsection{Diskrete Verteilungen}
-\textbf{Bernoulli-Verteilung} (\(X \sim \text{Ber}(p)\)): Hat nur die Ereignisse \(\{0,1\}\). Sie ist definiert als
-\[\P[X=0] = 1-p \text{ und } \P[X=1]=p\]
+\begin{mainbox}{Bernoulli-Verteilung (\(X \sim \text{Ber}(p)\))}
+    Hat nur die Ereignisse \(\{0,1\}\). Sie ist definiert als
+    \[\P[X=0] = 1-p \text{ und } \P[X=1]=p\]
+\end{mainbox}
+Beispiel Bernoulli-Verteilung: Ergebnis eines Münzwurfs (Kopf oder Zahl).
 
-\noindent \textbf{Binomialverteilung} (\(X \sim \text{Bin}(n,p)\)): Die Wiederholung von Bernoulli-Experimenten. Sie ist definiert als
-\[\forall k \in \{0, \ldots, n\} \quad \P[X=k] = \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k}\]
+\begin{mainbox}{Binomialverteilung (\(X \sim \text{Bin}(n,p)\))}
+    Die Wiederholung von Bernoulli-Experimenten. Sie ist definiert als
+    \[\forall k \in \{0, \ldots, n\} \: \P[X=k] = \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k}\]
+\end{mainbox}
+Beispiel Binomialverteilung: Anzahl der erfolgreichen Münzwürfe (Köpfe) in einer bestimmten Anzahl von Versuchen.
 
-\noindent \textbf{Geometrische Verteilung} (\(X \sim \text{Geom}(p)\)): Beschreibt das erste Auftreten eines Erfolges. Sie ist definiert als
-\[\forall k \in \mathbb{N} - \{0\} \quad \P[X=k]=(1-p)^{k-1}\cdot p\]
+\begin{mainbox}{Geometrische Verteilung (\(X \sim \text{Geom}(p)\))}
+    Beschreibt das erste Auftreten eines Erfolges. Sie ist definiert als
+    \[\forall k \in \mathbb{N} - \{0\} \: \P[X=k]=(1-p)^{k-1}\cdot p\]
+\end{mainbox}
+Beispiel geometrische Verteilung: Anzahl der Münzwürfe, die benötigt werden, um den ersten Erfolg (Kopf) zu erzielen.
 
-\noindent \textbf{Poisson-Verteilung} (\(X \sim \text{Poisson}(\lambda)\)): Annäherung an die Binomialverteilung für grosse \(n\) und kleine \(p\) (d.h. rare Ereignisse). Sie ist definiert als
-\[\forall k \in \mathbb{N}, \lambda > 0 \quad \P[X=k]=\frac{\lambda^k}{k!}\cdot e^{-\lambda}\]
+\begin{mainbox}{Poisson-Verteilung (\(X \sim \text{Poisson}(\lambda)\))}
+    Annäherung an die Binomialverteilung für grosse \(n\) und kleine \(p\) (d.h. rare Ereignisse). Sie ist definiert als
+    \[\forall k \in \mathbb{N}, \lambda > 0 \: \P[X=k]=\frac{\lambda^k}{k!}\cdot e^{-\lambda}\]
+\end{mainbox}
+Beispiel Poisson-Verteilung: Anzahl der Anrufe, die ein Call-Center pro Stunde erhält. Die Poisson-Verteilung wird oft verwendet, um seltene Ereignisse in einem festen Zeitintervall zu modellieren.
 
 \subsection{Stetige Zufallsvariablen}
 \begin{subbox}{Definition stetige ZV}
 	Eine ZV \(X\) heisst stetig, wenn ihre Verteilungsfunktion \(F_X\) wie folgt geschrieben werden kann:
-	\[\forall x \in \R \quad F_X(x) = \int_{-\infty}^x f(y) \mathop{dy}\]
+	\[\forall x \in \R \: F_X(x) = \int_{-\infty}^x f(y) \mathop{dy}\]
 \end{subbox}
 Hierbei ist \(f: \R \mapsto \R_+\) die Dichte von X. Für die Dichte gilt:
 \[\int_{-\infty}^{+\infty}f(y) \mathop{dy} = 1\]
@@ -252,25 +264,30 @@ Es gelten folgende Eigenschaften:
 \end{enumerate}
 
 \subsection{Stetige Verteilungen}
-\textbf{Gleichverteilung} (\(X \sim \mathcal{U}[a,b]\)): Jedes Ereignis hat die gleiche Wahrscheinlichkeit. Sie ist definiert als
-\[f_{a,b}(x) = \begin{cases}
-		0             & x \notin [a,b] \\
-		\frac{1}{b-a} & x \in [a,b]
-	\end{cases}\]
+\begin{mainbox}{Gleichverteilung (\(X \sim \mathcal{U}[a,b]\))}
+    Jedes Ereignis hat die gleiche Wahrscheinlichkeit. Sie ist definiert als
+    \[f_{a,b}(x) = \begin{cases}
+    		0             & x \notin [a,b] \\
+    		\frac{1}{b-a} & x \in [a,b]
+    \end{cases}\]
+\end{mainbox}
 
-\noindent \textbf{Exponentialverteilung} (\(X \sim \text{Exp}(\lambda)\)): Das stetige Gegenstück zur Geometrischen Verteilung. Sie ist definiert als
-\[f_{a,b}(x) = \begin{cases}
+\begin{mainbox}{Exponentialverteilung (\(X \sim \text{Exp}(\lambda)\))}
+    Das stetige Gegenstück zur Geometrischen Verteilung. Sie ist definiert als
+    \[f_{a,b}(x) = \begin{cases}
 		0                            & x < 0    \\
 		\lambda \cdot e^{-\lambda x} & x \geq 0
 	\end{cases}\]
+\end{mainbox}
 \begin{itemize}
 	\item Wenn \(Y\sim \text{Exp}(\lambda)\), dann ist \(c \cdot Y \sim \text{Exp}(\frac{\lambda}{c})\)
 	\item \(X_1, X_2 \sim \mathcal{N}(0,1)\) uiv. \(\implies \chi_2 = X_1^2 +X_2^2 \sim \text{Exp}(\frac{1}{2})\)
 \end{itemize}
 
-\noindent \textbf{Normalverteilung} (\(X \sim \mathcal{N}(m, \sigma^2)\)): Die wohl wichtigste Verteilung. Sie ist definiert als
-\[f_{m, \sigma}(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \cdot e^{-\frac{(x-m)^2}{2 \sigma^2}}\]
-
+\begin{mainbox}{Normalverteilung (\(X \sim \mathcal{N}(m, \sigma^2)\))}
+    Die wohl wichtigste Verteilung. Sie ist definiert als
+    \[f_{m, \sigma}(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \cdot e^{-\frac{(x-m)^2}{2 \sigma^2}}\]
+\end{mainbox}
 \(X \sim \mathcal{N}(0,1)\) wird auch Standardnormalverteilung genannt. Für eine standardnormalverteilte ZV \(X\) gilt
 \[Z = m +\sigma \cdot X \sim \mathcal{N}(m, \sigma^2)\]
 
@@ -297,10 +314,10 @@ Sei \(X\) eine stetige ZV mit Dichtefunktion \(f\). Sei \(\phi :\R\mapsto \R\) e
 Die Definition für \(\phi = \) id ist analog zum diskreten Fall.
 \subsubsection{\texorpdfstring{Bestimmen der Dichte von \(f(X)\)}{Bestimmen der Dichte von f(X)}}
 \begin{enumerate}
-	\item Sei \(\phi: \R \mapsto \R\) stückweise beschränkt und stetig.
+	\item Sei \(\phi: \R \mapsto \R\) stückweise beschränkt und stetig
 	\item \(\E[\phi(Y)] = \E[\phi(f(X))] = \E[\tau(X)]\)
-	\item Dichte von \(X\) in vorheriger Gleichung einsetzen.
-	\item Variablenwechsel \(u = f(x)\) \& Grenzen anpassen
+	\item Dichte von \(X\) in vorheriger Gleichung einsetzen
+	\item Variablenwechsel \(u = f(x)\) und Grenzen anpassen
 \end{enumerate}
 
 \subsection{Rechnen mit Erwartungswerten}
@@ -321,9 +338,12 @@ Für Divison hingegen gilt:
 	Seien \(X_1, \ldots, X_n\) diskrete ZV. Dann sind folgende Aussagen äquivalent:
 	\begin{enumerate}
 		\item \(X_1, \ldots, X_n\) sind unabhängig.
-		\item Für jedes \(\phi_1, \ldots, \phi_n: \R \mapsto\R\) beschränkt gilt:
+		\item Für jedes \(\phi_1, \ldots, \phi_n: \R \mapsto \R\) beschränkt gilt:
+        \begin{multline*}
+            \E[\phi_1(X_1)\cdot\ldots\cdot\phi_n(X_n)] =\\
+            \E[\phi_1(X_1)] \cdot\ldots\cdot \E[\phi_n(X_n)]
+        \end{multline*}
 	\end{enumerate}
-	\[\E[\phi_1(X_1)\cdot\ldots\cdot\phi_n(X_n)] = \E[\phi_1(X_1)] \cdot\ldots\cdot \E[\phi_n(X_n)]\]
 \end{subbox}
 
 \subsection{Extremwertformel}
@@ -382,12 +402,12 @@ Wir können mit der Kovarianz die Abhängigkeit von zwei Zufallsvariablen messen
 \end{subbox}
 
 Seien \(X_1,\ldots,X_n\) diskrete ZV mit \(X_i \in W_i\) f.s. für \(W_i \subset \R\) und \(\phi: \R^n \mapsto \R\), so ist \(Z = \phi(X_1, \ldots, X_n)\) eine diskrete ZV mit Werten in \(W = \phi(W_1 \times \ldots \times W_n)\) und folgender Verteilung:
-\[\forall z \in W. \ \P[Z = z] = \sum_{\substack{\phi(x_1, \ldots, x_n) \\= z}} \P[X_1 = x_1, \ldots, X_n = x_n]\]
+\[\forall z \in W. \: \P[Z = z] = \sum_{\substack{\phi(x_1, \ldots, x_n) \\= z}} \P[X_1 = x_1, \ldots, X_n = x_n]\]
 
-Seien \(X_1,\ldots,X_n\) diskrete ZV mit \(X_i \in W_i\) f.s. mit GV \(p\). Dann ist die Randverteilung \(\forall z \in W_i\):
+Seien \(X_1,\ldots,X_n\) diskrete ZV mit \(X_i \in W_i\) f.s. mit GV \(p\). Dann ist die \emph{Randverteilung} \(\forall z \in W_i\):
 \[\P[X_i = z] = \sum_{\substack{x_1, \ldots, x_{i-1}, \\x_{i+1},\ldots,x_n}} p(x_1, \ldots, x_{i-1}, z, x_{i+1},\ldots,x_n)\]
 
-Seien \(X_1,\ldots,X_n\) diskrete ZV mit GV \(p\) und \(\phi : \R^n \mapsto \R\). Dann ist der Erwartungswert definiert als:
+Seien \(X_1,\ldots,X_n\) diskrete ZV mit GV \(p\) und \(\phi : \R^n \mapsto \R\). Dann ist der \emph{Erwartungswert} definiert als:
 \[\E[\phi(X_1, \ldots, X_n)] = \sum_{x_1,\ldots,x_n} \phi(x_1,\ldots,x_n) \cdot p(x_1,\ldots,x_n)\]
 
 Seien \(X_1,\ldots,X_n\) diskrete ZV mit GV \(p\), dann sind die folgenden Aussagen äquivalent:
@@ -403,22 +423,24 @@ Die gemeinsame Verteilung von \(X_1, \ldots, X_n\) erfüllt
 \subsection{Stetige gemeinsame Verteilungen}
 \begin{subbox}{Definition gemeinsame Verteilung}
 	Seien \(X_1, \ldots, X_n\) stetige ZV, so haben sie eine gemeinsame Verteilung, falls eine Funktion \(f: \R^n \mapsto \R_+\) existiert, die für jedes \(a_1, \ldots, a_n \in \R\) folgende Eigenschaft erfüllt:
-	\begin{align*}
-		\P[X_1 \le a_1, \ldots, X_n \le a_n] \\= \int_{-\infty}^{a_1} \cdots \int_{-\infty}^{a_n} f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
-	\end{align*}
+	\begin{multline*}
+		\P[X_1 \le a_1, \ldots, X_n \le a_n] = \\
+        \int_{-\infty}^{a_1} \cdots \int_{-\infty}^{a_n} f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
+	\end{multline*}
 	Dann ist \(f\) die \textbf{gemeinsame Dichte}.
 \end{subbox}
 
 Seien \(X_1, \ldots, X_n\) stetige ZV mit einer gemeinsamen Dichte \(f\) und \(\phi: \R^n \mapsto \R\). Dann ist der Erwartungswert definiert als
-\begin{align*}
-	\E[\phi(X_1, \ldots, X_n)] \\= \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty \phi(x_1, \ldots, x_n) f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
-\end{align*}
+\begin{multline*}
+	\E[\phi(X_1, \ldots, X_n)] = \\
+    \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty \phi(x_1, \ldots, x_n) f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
+\end{multline*}
 
 Falls \(X_1, \ldots, X_n\) eine gemeinsame Dichte \(f\) besitzen, ist die Randverteilung
-\begin{align*}
+\begin{multline*}
 	f_i(z) = \int_{x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n \in \R^{n-1}}               \\
 	f(x_1, \ldots, x_{i-1}, z, x_{i+1}, \ldots, x_n) \mathop{dx_n} \ \ldots \mathop{dx_1} \\
-\end{align*}
+\end{multline*}
 
 Wenn \(X_1, \ldots, X_n\) stetige ZV mit Dichten \(f_1, \ldots, f_n\) sind, dann sind die folgenden Aussagen äquivalent:
 \begin{enumerate}
@@ -458,7 +480,7 @@ wobei \(Z \sim \mathcal{N}(0,1)\). Für normalverteilte ZV \(X_1, \ldots, X_n\) 
 \section{Schätzer}
 Wir treffen folgende Annahmen:
 \begin{itemize}
-	\item Parameterraum \(\theta \subset \R\)
+	\item Parameterraum \(\Theta \subset \R\)
 	\item Familie von Wahrscheinlichkeitsmassen \((\P_\theta)_{\theta \in \Theta}\) auf \((\Omega, \F)\); für jedes Element im Parameterraum existiert ein Wahrscheinlichkeitsmodell
 	\item Zufallsvariablen \(X_1, \ldots, X_n\) auf \((\Omega, \F)\)
 	\item Wir nennen die Gesamtheit der beobachteten Daten \(x_1, \ldots, x_n\) oder der ZV \(X_1, \ldots, X_n\) Stichprobe
@@ -467,9 +489,9 @@ Wir treffen folgende Annahmen:
 	Ein Schätzer ist eine Zufallsvariable \(T: \Omega \mapsto \R\) von der Form
 	\[T = t(X_1, \ldots, X_n), \quad t: \R^n \mapsto \R\]
 \end{mainbox}
-Ein Schätzer \(T\) ist \textbf{erwartungstreu}, falls für alle \(\theta \in \Theta\) gilt:
+Ein Schätzer \(T\) ist \emph{erwartungstreu}, falls für alle \(\theta \in \Theta\) gilt:
 \[\E_\theta [T] = \theta\]
-Sei \(\theta \in \Theta\) und \(T\) ein Schätzer. Der \textbf{Bias} (erwartete Schätzfehler) von \(T\) im Modell \(\P_\theta\) ist definiert als:
+Sei \(\theta \in \Theta\) und \(T\) ein Schätzer. Der \emph{Bias} (erwartete Schätzfehler) von \(T\) im Modell \(\P_\theta\) ist definiert als:
 \[\E_\theta[T]-\theta\]
 Der mittlere quadratische Schätzfehler (MSE) von \(T\) im Modell \(\P_\theta\) ist definiert als:
 \begin{align*}
@@ -501,7 +523,7 @@ Unter dem gefundenen \(\theta\) ist die Likelihood-Funktion maximal.
 \section{Konfidenzintervalle}
 \begin{mainbox}{Definition Konfidenzintervall}
 	Sei \(\alpha \in [0,1]\). Ein Konfidenzintervall für \(\theta\) mit Niveau \(1 - \alpha\) ist ein Zufallsintervall \(I=[A,B]\), sodass gilt
-	\[\forall \theta \in \Theta \quad \P_\theta[A\le \theta \le B] \ge 1- \alpha\]
+	\[\forall \theta \in \Theta \: \P_\theta[A\le \theta \le B] \ge 1- \alpha\]
 
 	wobei \(A\) und \(B\) Zufallsvariablen der Form \(A = a(X_1, \ldots, X_n), B = b(X_1, \ldots, X_n)\) mit \(a,b: \R^n \to \R\) sind.
 \end{mainbox}
@@ -558,7 +580,7 @@ Wir wollen nun anhand der Daten \((X_1(\omega), \ldots, X_n(\omega))\) entscheid
 \end{subbox}
 \subsection{Signifikanzniveau und Macht}
 Ein Test hat Signifikanzniveau \(a \in [0,1]\) falls
-\[\forall \theta \in \Theta_0 \quad \P_\theta[T \in K] \le a\]
+\[\forall \theta \in \Theta_0 \: \P_\theta[T \in K] \le a\]
 Es ist meist unser primäres Ziel, die Fehler 1. Art zu minimieren.
 
 Das sekundäre Ziel ist, Fehler 2. Art zu vermeiden. Hierfür definieren wir die Macht eines Tests als Funktion:
