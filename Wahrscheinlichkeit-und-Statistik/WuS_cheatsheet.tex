@@ -538,17 +538,17 @@ Hierbei gilt:
 wobei \(Z = \sqrt{n}(T-m)\) ist.
 
 \subsection{Häufige Fälle}
-\subsubsection*{\texorpdfstring{Normalverteilt - \(\mu\) unbekannt, \(\sigma^2\) bekannt (z-Test)}{Normalverteilt - μ unbekannt, σ² bekannt (z-Test)}}
+\subsubsection*{\texorpdfstring{Normalverteilt -- \(\mu\) unbekannt, \(\sigma^2\) bekannt (z-Test)}{Normalverteilt -- μ unbekannt, σ² bekannt (z-Test)}}
 Erwartungstreuer Schätzer: \(\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\)\\
 Verteilung unter \(\P_\theta: \frac{\overline{X}_n - \theta_0}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
 \begin{enumerate}
 	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_\theta\)
 	\item Hypothesen \(H_0 : \theta = \theta_0\), z.B. \(H_A : \theta \ne \theta_0\)
 	\item Test \(T = \frac{\overline{X}_n - \mu}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
-	\item Verwerfungsbereich \(]-\infty, -c[ \ \cup \ ] c, \infty\) für \(c\ge 0\)
+	\item Verwerfungsbereich \((-\infty, -c) \ \cup \ (c, \infty)\) für \(c\ge 0\)
 \end{enumerate}
 
-\subsubsection*{\texorpdfstring{Normalverteilt - \(\mu\), \(\sigma^2\) unbekannt (t-Test)}{Normalverteilt - μ, σ² unbekannt (t-Test)}}
+\subsubsection*{\texorpdfstring{Normalverteilt -- \(\mu\), \(\sigma^2\) unbekannt (t-Test)}{Normalverteilt --< μ, σ² unbekannt (t-Test)}}
 Wir definieren \(\vec{\theta} = (\mu, \sigma^2)\) und den Varianz-Schätzer \(S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X}_n)^2\).
 \begin{enumerate}
 	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_{\vec{\theta}}\)
