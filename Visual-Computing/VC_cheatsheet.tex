@@ -1,6 +1,6 @@
 % Basic stuff
 \documentclass[a4paper,10pt]{article}
-\usepackage[nswissgerman]{babel}
+\usepackage[english]{babel}
 \usepackage{lmodern}
 
 % 3 column landscape layout with fewer margins
@@ -30,7 +30,7 @@
     }
 }
 
-\definecolor{brandblue}{rgb}{0.34, 0.7, 1}
+\definecolor{brandblue}{rgb}{0.169, 0.404, 0.886}
 \newtcolorbox{mainbox}[1]{
 	colframe=brandblue, 
 	base={#1}
@@ -74,6 +74,9 @@
 \usepackage[compact]{titlesec}
 \titleformat{\subsubsection}[runin]{\bfseries}{}{0pt}{}[]
 
+% Nice quotes
+\usepackage{dirtytalk}
+
 % Metadata
 \title{Cheatsheet\\ Visual Computing}
 \author{Julian Steinmann}
@@ -96,35 +99,158 @@
 \end{abstract}
 
 \section{Computer Vision}
-\subsection{The digital image}
-An image is a representation of a continuous function. A pixel is a discrete sample of that function.
-
-Digital images have many challenges: transmission interference, compression artifacts, spilling, scratches, sensor noise, bad contrast / resolution, motion blur.
-
-\begin{subbox}{Charge Coupled Device (CCD)}
-    An array of photosites capture photons and hold a charge proportional to the light intensity.
-    We measure the charge with an analog-digital converter (ADC) line by line.
+\subsection{Digital Images and Sensors}
+Digital images have many challenges: transmission interference, compression artifacts, spilling, scratches, sensor noise, bad contrast, bad resolution, motion blur, etc.
+\begin{subbox}{CCD}
     \begin{itemize}
-        \bad Blooming: finite bucket capacity, oversaturation causes bright vertical line
-        \bad Bleeding/smearing: happens only with electronic shutters, worse for shorter shutter times
-        \bad Dark current: thermally generated charges yield noise despite darkness, worsens with age
+        \good Mature technology
+        \bad Specific technology
+        \bad High production cost
+        \bad High power consumption
+        \good Higher fill rate
+        \bad Blooming
+        \bad Sequential readout
+    \end{itemize}
+\end{subbox}{}
+\begin{subbox}{CMOS}
+    \begin{itemize}
+        \item More recent technology
+        \good Standard IC technology
+        \good Cheap
+        \good Low power
+        \bad Less sensitive
+        \good Per pixel amplification
+        \good Random pixel access
+        \good Smart pixels
+        \good On chip integration with other components
     \end{itemize}
 \end{subbox}
 
-\begin{subbox}{CMOS}
-    Every sensor has its own amplifier, otherwise similar to CCD.
-    Is cheaper, lower power, has random pixel access and no blooming but is less sensitive and has more noise.
-    Rolling shutter can be an issue if we read out line by line.
+\subsubsection{Bilinear interpolation}
+Let \((i, j)\), \((i + 1, j)\), \((i + 1, j + i)\), \((i, j + 1)\) be the nearest pixels enclosing the point \((x, y)\). Then \(a = x - i\) and \(b = y - j\).
+\begin{align*}
+    f(x, y) &= (1 - a)(1 - b) \cdot f[i, j]\\
+    &+ a(1 - b) \cdot f[i + 1, j]\\
+    &+ ab \cdot f[i + 1, j + 1]\\
+    &+ (1 - a)b \cdot f[i, j + 1]
+\end{align*}
+
+\subsubsection{Nyquist Frequency}
+(a.k.a. Nyquist-Shannon sampling theorem)
+\begin{itemize}
+    \item Half the sampling frequency of a discrete signal processing system
+    \item Signal's max frequency (bandwidth) must be \emph{smaller} than this
+\end{itemize}
+
+\subsubsection{Resolution}
+\begin{itemize}
+    \item Image resolution: How many pixels in image
+    \item Geometric resolution: How many pixels per area
+    \item Radiometric resolution: How many bits per pixel
+\end{itemize}
+
+\subsubsection{Image Noise}
+There is \emph{additive noise} (\(I(x, y) = f(x, y) + c\)) and \emph{multiplicative noise} (\(I(x, y) = f(x, y) + f(x, y) \cdot c\)) where c is one of
+\begin{itemize}
+    \item Gaussian noise: \(c \sim N(0, \sigma^2)\), so that \(p(c) = (2 \pi \sigma^2)^{-1} e^\frac{-c^2}{2 \sigma^2}\)
+    \item Poisson noise (shot noise): \(p(k) = \frac{\lambda^k e^{-\lambda}}{k!}\)
+    \item Rician noise (appears in MRI): \(p(I) = \frac{I}{\sigma^2} \exp{\left(\frac{-(I^2 + f^2)}{2 \sigma^2}\right)} I_0 \frac{If}{\sigma^2}\)
+\end{itemize}
+The \emph{signal to noise ratio (SNR)} \[s = \frac{F}{\sigma} \text{, where } F = \frac{1}{XY} \sum_{x = 1}^X \sum_{y = 1}^Y f(x, y)\] is an index of image quality. Often used instead: \emph{Peak Signal to Noise Ratio (PSNR)} \[s_\text{peak} = \frac{F_\text{max}}{\sigma}\]
+
+\subsection{Image Segmentation and Morphology}
+\begin{subbox}{Gestalt Phenomena}
+    The Gestalt phenomena are: figure-ground, proximity, similarity, continuation, closure, common fate, symmetry
 \end{subbox}
 
-\begin{mainbox}{Nyquist-Shannon sampling theorem}
-    The sample rate must be at least twice as big as the largest frequency of the sampled signal to avoid aliasing.
-\end{mainbox}
+\subsubsection{Thresholding}
+labels each pixel \emph{in} or \emph{out} of the region of interest by comparison of the greylevel with a threshold \(T\):
+\[B(x, y) = \begin{cases} 1 & \text{if } I(x, y) \geq T\\ 0 & \text{if } I(x, y) < T\end{cases}\]
 
-Bilinear interpolation: \(f(x,y) = (1-a)(1-b) \cdot f(i,j) + a(1-b) \cdot f(i+1,j) + ab \cdot f(i+1, j+1) + (1-a)b \cdot f(i,j+1)\) \\
-Geometric resolution: \# of pixels per area \\
-Radiometric resolution: \# of bits per pixel 
+\subsubsection{Chromakeying}
+\say{Plain} distance measure \(I_\alpha = |I - g| > T\) with threshold \(T\) and root color \(g = (c_r, c_g, c_b)\) is simplest variant of chromakeying, however it does not account for different variations in the individual channels and produces a hard alpha mask. Instead define distance as ellipsoid in RGB space.
+\begin{subbox}{Normalized color}
+    \[I = R + G + B\]
+    \[(r, g, b) = \left(\frac{R}{I}, \frac{G}{I}, \frac{B}{I}\right)\]
+\end{subbox}
+\begin{subbox}{Mixed Pixels}
+    \[I_\text{comp} = I_\alpha I_a + (1 - I_\alpha) I_b\]
+\end{subbox}
 
+\subsubsection{ROC Curve}
+Characterizes error trade-off in binary classification tasks. Plots sensitivity \(\frac{\text{TP}}{\text{P} = \text{TP} + \text{FN}}\) on the \(y\)-axis against 1-specitivity \(\frac{\text{FP}}{\text{N} = \text{FP} + \text{TN}}\) on the \(x\)-axis. An ROC curve always passes through \((0, 0)\) and \((1, 1)\). Choose an \emph{operating point} with gradient \(\beta = \frac{\text{N}}{\text{P}} \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}}\). For simplicity, we often set \(V_\text{TN} = V_\text{TP} = 0\).
+
+\subsubsection{Pixel Neighborhoods, Pixel Paths, and Connected Regions} There are \emph{4-neighborhoods} and \emph{8-neighborhoods}. A \emph{4-connected path} between pixels \(p_1\) and \(p_n\) is a sequence of pixels \([p_1, p_2, \dots, p_n]\) such that \(p_i\) is a 4-neighborhood of \(p_{i + 1}\), \(i = 1, \dots, n - 1\). In an \emph{8-connected path}, \(p_i\) is an 8-neighbor of \(p_{i + 1}\). A region is \emph{4- or 8-connected} if it contains a 4- or 8-connected path between any two of its pixels.
+
+\subsubsection{Labelling} \emph{Connected components labelling} labels each connected component of a binary image with a separate number. \emph{Foreground labelling} only extracts the connected components of the foreground.
+
+\subsubsection{Region Growing} Start from seed point or region, add neighboring pixels according to certain criteria defining a region (e.g. Mahalanobis distance), repeat. Variations:
+\begin{itemize}
+    \item Seed selection
+    \begin{itemize}
+        \item Point and click
+        \item Seed region
+        \begin{itemize}
+            \item By hand
+            \item Automatically, e.g. from conservative thresholding
+        \end{itemize}
+        \item Multiple seeds
+    \end{itemize}
+    \item Inclusion criteria
+    \begin{itemize}
+        \item Greylevel thresholding
+        \item Greylevel distribution model
+        \item Color or texture information
+    \end{itemize}
+    \item Snakes (minimizes energy function \(E = E_\text{tension} + E_\text{stiffness} + E_\text{image}\))
+\end{itemize}
+
+\subsubsection{Distance Measures}
+Plain background subtraction metric:
+\[I_\alpha = |I - I_\text{bg}| > T\]
+Or better, the Mahalanobis distance:
+\[I_\alpha\ = \sqrt{(I - I_\text{bg})^T \Sigma^{-1} (I - I_\text{bg})} > T\]
+where \(\Sigma\) is the covariant matrix \(\Sigma_{ij} = \mathbb{E}[(X_i - (I_\text{bg})_i)(X_j - (I_\text{bg})_j)]\).
+
+\subsubsection{Morphological Operations}
+Local pixel transformations which take two arguments: a binary image and a structuring element. They compare the structuring element to the neighborhood of each pixel. We say
+\begin{itemize}
+    \item \(S\) \emph{fits} \(I\) at \(\vec{x}\) if \(\{\vec{y}:\: \vec{y} = \vec{x} + \vec{s},\, \vec{s} \in S\} \subset I\)
+    \item \(S\) \emph{hits} \(I\) at \(\vec{x}\) if \(\{\vec{y}:\: \vec{y} = \vec{x} - \vec{s},\, \vec{s} \in S\} \cap I \neq \emptyset\)
+    \item \(S\) \emph{misses} \(I\) at \(\vec{x}\) if \(\{\vec{y}:\: \vec{y} = \vec{x} - \vec{s},\, \vec{s} \in S\} \cap I = \emptyset\)
+\end{itemize}
+Then, we can define the following morhological operations:
+\begin{itemize}
+    \item Erosion \(E = I \ominus S\): \(E(\vec{x}) = \begin{cases}
+        1 & \text{if } S \text{ fits } I \text{ at } \vec{x}\\
+        0 & \text{otherwise}
+    \end{cases}\)
+    \item Dilation \(D = I \oplus S\): \(D(\vec{x}) = \begin{cases}
+        1 & \text{if } S \text{ hits } I \text{ at } \vec{x}\\
+        0 & \text{otherwise}
+    \end{cases}\)
+\end{itemize}
+
+\subsection{Convolution and Image Features}
+\subsection{Fourier Transform and Image Compression}
+\subsection{Warping, Optical Flow and Video Compression}
+\subsection{Convolutional Neuronal Networks (CNN)}
+\subsection{Radon Transform}
+\section{Computer Graphics}
+\subsection{Graphics Pipeline}
+\subsection{Light and Colors}
+\subsection{Transformations}
+\subsection{Lighting and Shading}
+\subsection{Geometry and Textures}
+\subsection{Processing Conversion}
+\subsection{Scan Conversion}
+\subsection{Bézier Curves, B-Spline Curves and Tensor Product Surfaces (Rational Curves)}
+\subsection{Subdivision Surfaces}
+\subsection{Visibility and Shadows}
+\subsection{Ray Tracing}
+
+\pagebreak
+\section{Computer Vision}
 \subsection{Image Segmentation}
 \subsubsection{Complete partition} 
 Finite set of non-overlapping regions \( R_1, \dots, R_n \) s.t. \( I = \bigcup_{i=1}^N R_i \) (covers the whole image). 
