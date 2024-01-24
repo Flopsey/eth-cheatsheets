@@ -103,30 +103,15 @@
 \section{Computer Vision}
 \subsection{Digital Images and Sensors}
 Digital images have many challenges: transmission interference, compression artifacts, spilling, scratches, sensor noise, bad contrast, bad resolution, motion blur, etc.
-\begin{subbox}{CCD}
-    \begin{itemize}
-        \good Mature technology
-        \bad Specific technology
-        \bad High production cost
-        \bad High power consumption
-        \good Higher fill rate
-        \bad Blooming
-        \bad Sequential readout
-    \end{itemize}
-\end{subbox}{}
-\begin{subbox}{CMOS}
-    \begin{itemize}
-        \item More recent technology
-        \good Standard IC technology
-        \good Cheap
-        \good Low power
-        \bad Less sensitive
-        \good Per pixel amplification
-        \good Random pixel access
-        \good Smart pixels
-        \good On chip integration with other components
-    \end{itemize}
-\end{subbox}
+
+\subsubsection{CCD}
+\underline{Pros:} mature technology, higher fill rate \quad
+\underline{Cons:} specific technology, high production cost, high power consumption, blooming, sequential readout
+
+\subsubsection{CMOS}
+More recent technology \quad
+\underline{Pros:} standard IC technology, cheap, low power, per pixel amplification, random pixel access, smart pixels, on-chip intergration with other components \quad
+\underline{Cons:} Less sensitive
 
 \subsubsection{Bilinear interpolation}
 Let \((i, j)\), \((i + 1, j)\), \((i + 1, j + i)\), \((i, j + 1)\) be the nearest pixels enclosing the point \((x, y)\). Then \(a = x - i\) and \(b = y - j\).
@@ -161,16 +146,15 @@ There is \emph{additive noise} (\(I(x, y) = f(x, y) + c\)) and \emph{multiplicat
 The \emph{signal to noise ratio (SNR)} \[s = \frac{F}{\sigma} \text{, where } F = \frac{1}{XY} \sum_{x = 1}^X \sum_{y = 1}^Y f(x, y)\] is an index of image quality. Often used instead: \emph{Peak Signal to Noise Ratio (PSNR)} \[s_\text{peak} = \frac{F_\text{max}}{\sigma}\]
 
 \subsection{Image Segmentation and Morphology}
-\begin{subbox}{Gestalt Phenomena}
-    The Gestalt phenomena are: figure-ground, proximity, similarity, continuation, closure, common fate, symmetry
-\end{subbox}
+\subsubsection{Gestalt Phenomena}
+figure-ground, proximity, similarity, continuation, closure, common fate, symmetry
 
 \subsubsection{Thresholding}
 labels each pixel \emph{in} or \emph{out} of the region of interest by comparison of the greylevel with a threshold \(T\):
 \[B(x, y) = \begin{cases} 1 & \text{if } I(x, y) \geq T\\ 0 & \text{if } I(x, y) < T\end{cases}\]
 
 \subsubsection{Chromakeying}
-\say{Plain} distance measure \(I_\alpha = |I - g| > T\) with threshold \(T\) and root color \(g = (c_r, c_g, c_b)\) is simplest variant of chromakeying, however it does not account for different variations in the individual channels and produces a hard alpha mask. Instead define distance as ellipsoid in RGB space.
+See also: Distance measures
 \begin{subbox}{Normalized color}
     \[I = R + G + B\]
     \[(r, g, b) = \left(\frac{R}{I}, \frac{G}{I}, \frac{B}{I}\right)\]
@@ -223,145 +207,144 @@ Local pixel transformations which take two arguments: a binary image and a struc
 \end{itemize}
 Then, we can define the following morhological operations:
 \begin{itemize}
-    \item Erosion \(E = I \ominus S\): \(E(\vec{x}) = \begin{cases}
+    \item \emph{Erosion} \(E = I \ominus S\): \(E(\vec{x}) = \begin{cases}
         1 & \text{if } S \text{ fits } I \text{ at } \vec{x}\\
         0 & \text{otherwise}
     \end{cases}\)
-    \item Dilation \(D = I \oplus S\): \(D(\vec{x}) = \begin{cases}
+    \item \emph{Dilation} \(D = I \oplus S\): \(D(\vec{x}) = \begin{cases}
         1 & \text{if } S \text{ hits } I \text{ at } \vec{x}\\
         0 & \text{otherwise}
     \end{cases}\)
+    \item \emph{Opening} of \(I\) by \(S\): \(I \circ S = (I \ominus S) \oplus S\)
+    \item \emph{Closing} of \(I\) by \(S\): \(I \bullet S = (I \oplus S) \ominus S\) 
+    \item \emph{Hit-and-miss transform} (exact match) \(H = I \otimes S\)
+    \item \emph{Thinning} of \(I\) by \(S\): \(I \oslash S = I \setminus (I \otimes S)\)
+    \item \emph{Thickening} of \(I\) by \(S\): \(I \odot S = I \cup (I \otimes S)\)
 \end{itemize}
+Thinning and thicking are dual operations: \((I \odot S)^\complement = I^\complement \oslash S\)
+
+\subsubsection{Skeletonization and Medial Axis Transform (MAT)}
+Start grassfire at boundary of region. The \emph{skeleton} is set of points at which two fire fronts meet. Alternative definition: Union of centres of maximal discs within region. The \emph{MAT} is the skeleton with maximal disc radius retained at each point.\\
+Use structuring element \(B = \begin{bsmallmatrix}0&1&0\\1&1&1\\0&1&0\end{bsmallmatrix}\).\\
+\(n\)-th skeleton subset: \(S_n(X) = (X \ominus_n B) \setminus ((X \ominus_n B) \circ B)\).\\
+Skeleton is the union of all skeleton subsets: \(S(X) = \bigcup_{n=1}^\infty S_n(X)\).\\
+Reconstruction: \(X = \bigcup_{n=0}^\infty S_n(X) \oplus_n B\). \(X\) can be reconstructed from the MAT but not from \(S(X)\).
 
 \subsection{Convolution and Image Features}
-\subsection{Fourier Transform and Image Compression}
-\subsection{Warping, Optical Flow and Video Compression}
-\subsection{Convolutional Neuronal Networks (CNN)}
-\subsection{Radon Transform}
-\section{Computer Graphics}
-\subsection{Graphics Pipeline}
-\subsection{Light and Colors}
-\subsection{Transformations}
-\subsection{Lighting and Shading}
-\subsection{Geometry and Textures}
-\subsection{Processing Conversion}
-\subsection{Scan Conversion}
-\subsection{Bézier Curves, B-Spline Curves and Tensor Product Surfaces (Rational Curves)}
-\subsection{Subdivision Surfaces}
-\subsection{Visibility and Shadows}
-\subsection{Ray Tracing}
-
-\pagebreak
-\section{Computer Vision}
-\subsection{Image Segmentation}
-\subsubsection{Complete partition} 
-Finite set of non-overlapping regions \( R_1, \dots, R_n \) s.t. \( I = \bigcup_{i=1}^N R_i \) (covers the whole image). 
-
-\subsubsection{Thresholding} 
-label pixel in or out by comparing with a threshold \( T \in \mathbb{R} \) (\( \lVert (r,g,b) - (c_r,c_g,c_b) \rVert_2 \le T \) with \( c = (c_r,c_g,c_b) \) being a \textit{root color} for color images)
-
-\subsubsection{Chromakeying}
-use special background color if segmentation is desired 
-
-\subsubsection{Mahalanobis distance} 
-more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix with \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate it from \( n \) data points (at least 3 needed): \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \mu)(x_i - \mu)^\top \)
-
-\subsubsection{ROC curve} 
-Describes performance of binary classifier. X-axis is \( \text{FPR} = \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \text{TPR} = \sfrac{\text{TP}}{\text{TP} + \text{FN}} \). We can choose a good operating point with gradient \( \beta = \frac{N}{P} \cdot \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}} \) with \( V \) being value and \( C \) being cost.
-
-\subsubsection{Pixel neighbourhoods}
-To improve segmentation: consider local pixels. Either 4-neighb. (horizontally/vertically adjacent) or 8-neighb. (+ diagonals)
-
-\subsubsection{Region growing}
-Start from seed point, add neighbouring pixels with shared property (e.g. small Mahalanobis distance), then iterate
-
-\subsubsection{Background subtraction}
-Simple: \( I_\alpha = \left| I - I_{bg} \right| \), better: \( I_\alpha = \sqrt{(I-I_{bg})^\top \Sigma^{-1} (I-I_{bg})}  \)
-
-\subsubsection{Morphological operators} 
-Logical transformations: \textit{erode} (delete FG pixels with 8-conn. BG pixels), \textit{dilate} (add FG pixel to every 8-connected FG pixel), combination useful for smoothing / removing noise
-
-\subsection{Image Filtering}
-\begin{itemize}
-    \item \textbf{linear} -- if \( L(\alpha I_{1} + \beta I_{2}) = \alpha L(I_{1}) + \beta L(I_{2}) \) holds
-    \item \textbf{separable} -- kernel can be written as a product of two independent filters \( \to  \) computationally faster
-    \item \textbf{shift invariant} -- kernel does the same for all pixels
-    \item \textbf{filter at edges} -- clip to black, wrap around, copy edge, reflect across edge, vary filter near edge
-\end{itemize}
-\begin{mainbox}{Correlation}
-    Compare how similar \( I'(x,y) = \sum_{(i,j) \in N(x,y)} K(i,j) \cdot I(x+i,y+j) \) patch is to correlation mask (template matching).
+\begin{subbox}{Linear filter}
+    For input \(I\), output \(I'\), kernel \(K\) and neighborhood of \((m, n)\) \(N(m, n)\)
+    \[I'(x, y) = \sum_{(i, j) \in N(x, y)} K(x, y; i, j) I(i, j)\]
+\end{subbox}
+Operations are \emph{shift-invariant} if \(K\) does not depend on \((x, y)\), i.e. using same weights everywhere.
+\begin{mainbox}{Correlation \small (e.g. template matching)}
+    \[I' = K \circ I\]
+    \[I'(x, y) = \sum_{j = -k}^k \sum_{i = -k}^k K(i, j) I(x + i, y + j)\]
 \end{mainbox}
-
-\begin{mainbox}{Convolution}
-    \( I'(x,y) = \sum_{(i,j) \in N(x,y)} K(i,j) \cdot I(x-i, y-j) \)\\
-    For the continous case:\\\( g(x) = f(x) * k(x) = \int_\mathbb{R} f(a) k(x-a) \mathop{da}  \)\\
-    Convolution is linear, associative, shift-invariant and commutative if the dimensions are identical.
+\begin{mainbox}{Convolution \small (e.g. point spread function)}
+    \[I' = K * I\]
+    \[I'(x, y) = \sum_{j = -k}^k \sum_{i = -k}^k K(i, j) I(x - i, y - i)\]
 \end{mainbox}
+Same as correlation, but with kernel reversed. If \(K(i, j) = K(-i, -j)\) then correlation and convolution are equivalent.
 
-\subsection{Kernel examples}
+\subsubsection{Low-pass filters} \hfill \break
 \bgroup
 \setlength{\tabcolsep}{0.2em}
 \begin{tabularx}{\linewidth}{lllX}
-    Low-pass & \( \frac{1}{9} \left[\begin{smallmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \) & 
-    High-pass & \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ -1 & 8 & -1 \\ -1 & -1 & -1 \end{smallmatrix}\right]  \) \\
-    Laplacian & \( \left[\begin{smallmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{smallmatrix}\right]  \) &
-    Prewitt (y-dir) & \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \) \\
-    Sobel (y-dir) & \( \left[\begin{smallmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{smallmatrix}\right]  \) &
-    Band-pass & high \(*\) low \\
-    Diff. (x) & \( \left[\begin{smallmatrix} -1 & 1 \end{smallmatrix}\right] \) &
-    Roberts (y-dir) & \( \left[\begin{smallmatrix} 0 & 1 \\ -1 & 0 \end{smallmatrix}\right] \) \\
-    Diff. (y) & \( \left[\begin{smallmatrix} -1 \\ 1 \end{smallmatrix}\right] \) &
+    mean filter & \( \frac{1}{9} \left[\begin{smallmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \) & 
     Gaussian (\( G_\sigma \))  & \( \frac{1}{2\pi \sigma^2} e^{-\frac{x^2+y^2}{2\sigma^2}} \) \\
 \end{tabularx}
 \egroup
-The Gaussian kernel is rot. symmetric, single lobe, FT is again Gaussian, separable.
+The Gaussian kernel is rotationally symmetric, has a single lobe, Fourier transform is again Gaussian, separable.
 
-\subsection{Edge detection}
-An edge is a sudden change in brightness. The location is the max. of the first derivative.
-\subsubsection{Approximating the gradient} Approximate \( \frac{\partial I}{\partial x}(x,y) = \lim_{\Delta x \to 0} \frac{I(x + \Delta x, y) - I(x,y)}{\Delta x} \) by assuming \( \Delta x = 1 \). Then \( \approx I(x+1, y) - I(x,y) = ([1,[-1]] * I)(x,y) \). Same steps for \( \frac{\partial I}{\partial y} \)
-\subsubsection{Laplacian zero-crossings} Find 0's in \( I'' \) by applying Laplacian kernel to \( I \). This yields very noisy but thin and uninterrupted edges. Very sensitive, so blur first (Laplacian of Gaussian) or suppress edges with low gradient magnitude
-\subsubsection{Canny edge detector} Has thin interrupted edges that are extended more than with simple thresholding
-    \begin{enumerate}
+\subsubsection{High-pass filters} \hfill \break
+\bgroup
+\setlength{\tabcolsep}{0.2em}
+\begin{tabularx}{\linewidth}{lllX}
+    High-pass & \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ -1 & 8 & -1 \\ -1 & -1 & -1 \end{smallmatrix}\right]  \) &
+    Laplacian & \( \left[\begin{smallmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{smallmatrix}\right]  \) \\
+\end{tabularx}
+\egroup
+
+\subsubsection{Band-pass filters}
+high \(*\) low \\
+
+\subsubsection{Differential filters} \hfill \break
+\bgroup
+\setlength{\tabcolsep}{0.2em}
+\begin{tabularx}{\linewidth}{lllX}
+    difference (x-dir) & \( \left[\begin{smallmatrix} -1 & 1 \end{smallmatrix}\right] \) &
+    central diff. (x-dir) & \( \left[\begin{smallmatrix} -1 & \left[0\right] & 1 \end{smallmatrix}\right] \) \\
+    Prewitt (x-dir) & \( \left[\begin{smallmatrix} -1 & 0 & 1 \\ -1 & \left[0\right] & 1 \\ -1 & 0 & 1 \end{smallmatrix}\right]  \) &
+    Sobel (x-dir) & \( \left[\begin{smallmatrix} -1 & 0 & 1 \\ -2 & \left[0\right] & 2 \\ -1 & 0 & 1 \end{smallmatrix}\right]  \) \\
+    Roberts (x-dir) & \( \left[\begin{smallmatrix} \left[1\right] & 0 \\ 0 & -1 \end{smallmatrix}\right] \) & Roberts (y-dir) & \( \left[\begin{smallmatrix} \left[0\right] & 1 \\ -1 & 0 \end{smallmatrix}\right] \) \\
+\end{tabularx}
+\egroup
+
+\subsubsection{Laplacian zero-crossings}
+Find zeroes in \(I''\) by applying Laplacian kernel to \(I\). This yields very noisy but thin and uninterrupted edges. Very sensitive, so blur first (Laplacian of Gaussian) or suppress edges with low gradient magnitude.
+
+\subsubsection{Canny edge detector}
+Has thin interrupted edges that are extended more than with simple thresholding.
+\begin{enumerate}
 	\item Smooth image with Gaussian
 	\item Compute grad. mag. and orientation (Sobel, Prewitt)
-	\item Non-maxima suppresion: quantize edge normal to one of four dirs, if magnitude \( <\) either neighbour then suppress, else keep
-	\item Double thresholding: given \( T_{high}, T_{low} \), strong pixel if \( \ge T_{high} \) and weak pixel if \( \ge T_{low} \) 
+	\item Non-maxima suppression: quantize edge normal to one of four directions, if magnitude is less than either neighbour then suppress, else keep
+	\item Double thresholding: given \(T_\text{high}, T_\text{low} \), strong pixel if \(\ge T_\text{high}\) and weak pixel if \(\ge T_\text{low}\) 
 	\item Reject weak pixels not 8-connected through weak pixels to a strong pixel
-    \end{enumerate}
-\subsubsection{Hough transform} Fits straight lines to edge pixels (\( y = mx + c \))
-    \begin{enumerate}
-	\item Subdivide \( (m, c) \)-space into discrete bins with value 
-	\item Draw a line in \( (m,c) \)-space for each edge pixel and increment bins by 1 along line
+\end{enumerate}
+
+\subsubsection{Hough transform}
+Fits straight lines (\( y = mx + c \)) to edge pixels
+\begin{enumerate}
+	\item Subdivide \((m, c)\)-space into discrete bins with value 
+	\item Draw a line in \((m,c)\)-space for each edge pixel and increment bins by 1 along line
 	\item Detect peaks, e.g. by thresholding after non-maximum suppresion
-    \end{enumerate}
-    Infinite slopes are a problem, so reparametrize line with \( (\theta , p): \; x \cos (\theta ) + y \cdot \sin (\theta ) = \rho  \). For detecting circles with known radius use \( (x-a)^2+(y-b)^2 = r^2 \)
-\subsubsection{Harris corner detection} Scan picture with a given window size and compute the second moment matrix \[ M = \left[\begin{smallmatrix}\sum I_x(x,y)^2 & \sum I_x(x,y)\cdot I_y(x,y) \\ \sum I_x(x,y)\cdot I_y(x,y) & \sum I_y(x,y)^2 \end{smallmatrix}\right] \] Then compute \( C(x,y) = \det(M) - k\cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2 \) and mark as corner if \( C(x,y) > T \). Do non-maximum suppression to avoid duplicate detections and for better localization, add gaussian weighting to all terms in \( M \): \( G(x-x_0, y-y_0, \sigma) \). Invariant to shift, rotation and brightness offset but not scaling
-\subsubsection{Scale Invariant Feature Transform (SIFT)} Find corresponding feature points in two images. Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring grad. mag. because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale \& orientation, we can compare gradient histograms to find matching points \[
-	\text{DoG}(x,y) = \sfrac{1}{k} \cdot  e^{\frac{x^2+y^2}{(k\sigma)^2}} - e^{-\frac{x^2+y^2}{\sigma ^2}}, \quad \text{e.g. } k=\sqrt{2} 
-\] 
+\end{enumerate}
+Infinite slopes are a problem, so reparametrize line with \((\theta, p): \: x \cos (\theta) + y \cdot \sin (\theta) = \rho\). For detecting circles with known radius use \((x - a)^2 + (y - b)^2 = r^2\).
 
-\subsection{Fourier Transform}
+\subsubsection{Harris corner detection}
+Scan picture with a given window size and compute the second moment matrix \(M\).
+\[M = \begin{bmatrix}
+    \sum I_x(x, y)^2 & \sum I_x(x, y) \cdot I_y(x, y) \\
+    \sum I_x(x, y) \cdot I_y(x, y) & \sum I_y(x, y)^2
+\end{bmatrix}\]
+Then compute \(C(x, y) = \det(M) - k \cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2\) and mark as corner if \(C(x,y) > T\). Do non-maximum suppression to avoid duplicate detections, and, for better localization, add Gaussian weighting to all terms in \(M\): \(G(x - x_0, y - y_0, \sigma)\). Invariant to shift, rotation and brightness offset but not to scaling.
 
-\begin{mainbox}{The Fourier Transform}	
-    The Fourier Transform (FT) represents a signal \( f \) in terms of amplitudes and phases of its constituent sinusoids.\\
-    1D:
+\subsubsection{Scale Invariant Feature Transform (SIFT)}
+Find corresponding feature points in two images. Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring magnitude because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale and orientation, we can compare gradient histograms to find matching points.
+\begin{multline*}
+    \text{DoG}(x, y) = \frac{1}{k} \cdot \exp\left(\frac{x^2 + y^2}{(k \sigma)^2}\right) - \exp\left(-\frac{x^2 + y^2}{\sigma^2}\right) \text{,} \\ \text{e.g. } k = \sqrt{2}
+\end{multline*}
+
+\subsection{Fourier Transform and Image Compression}
+The Fourier transform makes use of the basis vectors
+\[e^{-i 2 \pi (ux + vy)} = \cos (2 \pi (ux + vy)) + i \cdot \sin(2 \pi (ux + vy))\]
+\begin{mainbox}{Fourier transform}	
+    1-dimensional:
     \begin{align*}
-	F(u) &= \int_\mathbb{R} f(x) \cdot e^{-i2\pi ux} \mathop{dx} \\
-	f(x) &= \int_\mathbb{R} F(u) e^{i 2\pi ux} \mathop{du} \tag{inverse}
+	   F(u) &= \int_\mathbb{R} f(x) e^{-i 2 \pi ux} \mathop{dx} \\
+	   f(x) &= \int_\mathbb{R} F(u) e^{i 2 \pi ux} \mathop{du} \tag{inverse}
     \end{align*}
-    2D: 
+    2-dimensional: 
     \begin{align*}
-	F(u,v) &= \iint_{\mathbb{R}^2} f(x,y) \cdot e^{-i2\pi(ux + vy)} \mathop{dx} \mathop{dy} \\
-	F(u,v) &= \frac{1}{N} \sum^{N-1}_{x=0} \sum^{N-1}_{y=0} f(x,y) \cdot e^{-i2\pi (\frac{ux+vy}{N})} \mathop{dx}\mathop{dy} \\
-	f(x,y) &= \iint_{\mathbb{R}^2} F(u,v) e^{i 2\pi (ux+vy)} \mathop{du}\mathop{dv} \tag{inverse}
-    \end{align*} 
-    \( e^{-i2\pi (ux+vy)} = \cos (2\pi (ux+vy)) + i \cdot \sin(2\pi (ux + vy)) \)
+	   F(u, v) &= \iint_{\mathbb{R}^2} f(x, y) e^{-i 2 \pi (ux + vy)} \mathop{dx} \mathop{dy} \\
+	   f(x, y) &= \iint_{\mathbb{R}^2} F(u, v) e^{i 2 \pi (ux + vy)} \mathop{du} \mathop{dv} \tag{inverse}
+    \end{align*}
 \end{mainbox}
-Relevant trigonometric properties:
-\[\cos(x) = \frac{e^{ix} + e^{-ix}}{2},\; \sin(x) = \frac{e^{ix}-e^{-ix}}{2} \]
-Dirac-Delta: \( F(\delta(x-x_{0}))(u) = e^{-i 2\pi ux_{0}} \)
+\begin{mainbox}{Discrete Fourier transform}
+    1-dimensional:
+    \begin{align*}
+        F(u) &= \sum_{x = 0}^{N - 1} f(x) e^{-i 2 \pi \frac{ux}{N}} \\
+        f(x) &= \frac{1}{N} \sum_{u = 0}^{N - 1} F(u) e^{i 2 \pi \frac{ux}{N}} \tag{inverse}
+    \end{align*}
+    2-dimensional:
+    \begin{align*}
+        F(u, v) &= \sum_{x = 0}^{N - 1} \sum_{y = 0}^{N - 1} f(x, y) e^{-i 2 \pi \frac{ux + vy}{N}} \\
+        f(x, y) &= \frac{1}{N^2} \sum_{u = 0}^{N - 1} \sum_{v = 0}^{N - 1} F(u, v) e^{i 2 \pi \frac{ux + vy}{N}} \tag{inverse}
+    \end{align*}
+\end{mainbox}
 
-\subsubsection{Properties of the FT}
+\subsubsection{Properties of the Fourier Transform}
 \begin{center}
     {\renewcommand{\arraystretch}{1.2}
     \begin{tabularx}{\linewidth}{Xll}
@@ -380,11 +363,31 @@ Dirac-Delta: \( F(\delta(x-x_{0}))(u) = e^{-i 2\pi ux_{0}} \)
     \end{tabularx}
     }
 \end{center}
-
 \begin{center}
     \includegraphics[width=\linewidth]{fourier-transforms.png}
 \end{center}
 
+\subsection{Warping, Optical Flow and Video Compression}
+\subsection{Convolutional Neuronal Networks (CNN)}
+\subsection{Radon Transform}
+\section{Computer Graphics}
+\subsection{Graphics Pipeline}
+\subsection{Light and Colors}
+\subsection{Transformations}
+\subsection{Lighting and Shading}
+\subsection{Geometry and Textures}
+\subsection{Processing Conversion}
+\subsection{Scan Conversion}
+\subsection{Bézier Curves, B-Spline Curves and Tensor Product Surfaces (Rational Curves)}
+\subsection{Subdivision Surfaces}
+\subsection{Visibility and Shadows}
+\subsection{Ray Tracing}
+
+%%%%% ORIGINAL BELOW %%%%%
+
+\pagebreak
+\section{Computer Vision}
+\subsection{Fourier Transform}
 \subsubsection{Restoration / Deconvolution} Given image \( g = f * h \) where \( f \) is the original and \( h \) is a filter, it holds that \( G = F \cdot G \) and we can use the inverse of the filter \( H^{-1} \) to get \( F = G \cdot H^{-1} \) and apply inverse FT to restore \( f \). If noise \( n \) is present (\( g = f * h + n \)), we use a pseudoinverse with limited maximal value \( \tilde{H} = \frac{H}{|H|^2+\epsilon } \), where \( \epsilon  \) is a small number. Done because the noise might dominate in some frequencies and the restoration would be incorrect
 
 \subsection{PCA (also: KL transform)}
