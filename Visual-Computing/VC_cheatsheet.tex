@@ -367,6 +367,40 @@ The Fourier transform makes use of the basis vectors
     \includegraphics[width=\linewidth]{fourier-transforms.png}
 \end{center}
 
+\subsubsection{Restoration / Deconvolution}
+Given image \(g = f * h\) where \(f\) is the original and \(h\) is a filter, we can use the inverse of the filter \(H\) to get \(F = GH^{-1}\) and apply inverse Fourier transform to restore \(f\). If noise \(n\) is present (\(g = f * h + n\)), we use a pseudoinverse with limited maximal value \(\tilde{H} = \frac{H}{|H|^2 + \epsilon}\). Without this, noise might dominate in some frequencies and the restoration would be incorrect.
+
+\subsubsection{Principal Component Analysis (PCA)}
+Given data \(x \in A\) we want to compress it to lower-dimensional space \(B\) with a compressor \(f: \: A \to B\) s.t. \(\text{size}(f(x)) \ll \text{size}(x)\). Minimize reconstruction error \(E = \Vert x - f^{-1}(f(x)) \Vert\) and maximize the variance of our encoding. Given \(N\) data samples \(x_i \in \mathbb{R}^d\):
+\begin{enumerate}
+    \item Normalize to remove brightness variations: \( x'_i = \frac{x_i}{\Vert x_i\Vert} \)
+    \item Center data by subtracting mean: \( x''_i = x'_i - \mu, \quad \mu = \frac{1}{N}\sum_{i=1}^N x'_i  \)
+    \item Compute covariance matrix: \( \Sigma = \frac{1}{N-1}\cdot \sum (x''_i)\cdot (x''_i)^\top \)
+    \item Compute eigendecomp. of \( \Sigma \) by solving \( \Sigma e = \lambda e \) with e.g. SVD
+    \item Define \( U_k \) as the first \( k \) eigenvectors of \( \Sigma = \left[u_{1}, \ldots, u_k\right] \)
+    \item \( \text{PCA}(x_i) = U^\top_k \cdot x''_i \)
+\end{enumerate}
+To decompress, use \(\text{PCA}^{-1}(y_i) = U_k y_i + \mu\). \\
+PCA can be used for
+\begin{itemize}
+    \item Face recognition: compare in projected space and find nearest neighbour
+    \item Face location: compute reconstruction error for every small patch, pick patch with minimal error
+    \item Data compression and visualization
+\end{itemize}
+
+\subsubsection{Eigenfaces / Fisherfaces}
+Eigenfaces struggle with different lighting conditions. Fisherfaces perform better by trying to maximize between-class scatter and minimizing within-class scatter.
+
+\subsubsection{JPEG Compression}
+\begin{enumerate}
+    \item Conversion RGB \(\to\) YUV
+    \item Compress colors with chroma subsampling
+    \item For each YUV component apply 2D DCT to every \(8 \times 8\) block \(\rightarrow\) 64 values, from low to high frequency
+    \item Integer division with weighting matrix \(\rightarrow\) compress low-right
+    \item Zig-zag run length encoding followed by Huffman compression
+\end{enumerate}
+JPEG2000 achieves better results by using the \emph{Haar transform} globally on a successively downsampled image.
+
 \subsection{Warping, Optical Flow and Video Compression}
 \subsection{Convolutional Neuronal Networks (CNN)}
 \subsection{Radon Transform}
@@ -387,38 +421,6 @@ The Fourier transform makes use of the basis vectors
 
 \pagebreak
 \section{Computer Vision}
-\subsection{Fourier Transform}
-\subsubsection{Restoration / Deconvolution} Given image \( g = f * h \) where \( f \) is the original and \( h \) is a filter, it holds that \( G = F \cdot G \) and we can use the inverse of the filter \( H^{-1} \) to get \( F = G \cdot H^{-1} \) and apply inverse FT to restore \( f \). If noise \( n \) is present (\( g = f * h + n \)), we use a pseudoinverse with limited maximal value \( \tilde{H} = \frac{H}{|H|^2+\epsilon } \), where \( \epsilon  \) is a small number. Done because the noise might dominate in some frequencies and the restoration would be incorrect
-
-\subsection{PCA (also: KL transform)}
-Given data \( x \in A \), e.g. an image, we want to compress it to a lower-dimensional space \( B \) with a compressor \( f: A \to B \) s.t. \( \text{size}(f(x)) \ll \text{size}(x) \). Minimize reconstruction error \( E = \Vert x - f^{-1}(f(x)) \Vert \) and maximize the variance of our encoding. Given \( N \) data samples \( x_i \in \mathbb{R}^d \):
-\begin{enumerate}
-    \item Normalize to remove brightness variations: \( x'_i = \sfrac{x_i}{\Vert x_i\Vert} \)
-    \item Center data by subtracting mean: \( x''_i = x'_i - \mu, \quad \mu = \frac{1}{N}\sum_{i=1}^N x'_i  \)
-    \item Compute covariance matrix: \( \Sigma = \frac{1}{N-1}\cdot \sum (x''_i)\cdot (x''_i)^\top \)
-    \item Compute eigendecomp. of \( \Sigma \) by solving \( \Sigma e = \lambda e \) with e.g. SVG, i.e. \( \Sigma = U \Lambda U^\top \)
-    \item Define \( U_k \) as the first \( k \) eigenvectors of \( \Sigma = \left[u_{1}, \ldots, u_k\right] \), dirs with largest variance (= eigenvalues)
-    \item \( \text{PCA}(x_i) = U^\top_k (x_i' - \mu) = U^\top_k \cdot x''_i \)
-\end{enumerate}
-To decompress, use \( \text{PCA}^{-1}(y_i) = U_k\cdot y_i + \mu  \).
-\begin{itemize}
-    \item Face recognition, compare in projected space and find nearest neighbour
-    \item Face location, compute reconstruction error for every small patch, pick min
-    \item Data compression and visualization
-\end{itemize}
-Eigenfaces struggle with different lighting conditions. Fisherfaces perform better by trying to maximize between-class scatter and minimizing within-class scatter.
-
-\subsection{JPG}
-\begin{enumerate}
-    \item Conversion RGB \( \to \) YUV; only Y carries brightness info (luminance), UV contain color (chrominance)
-    \item Humans are more sensitive to brightness than color, so compress colors with chroma subsampling (e.g. only color of upper left pixel for \( 4\times 4\) grid).
-    \item Go over image with \( 8 \times 8 \) block for each YUV component and apply 2D DCT to it \( \rightarrow 64 \) vals, top left low.freq, bottom right high-freq.
-    \item Compress by integer division with weighting matrix \( \rightarrow \) compress low-right
-    \item Zig-zag run length encoding followed by Huffman
-\end{enumerate}
-High compression (10-100x) and 24 bit color depth is possible, but at the same time artifacts / wrong colors / Moiré. Also edges are softened because sharp edges require \( \infty \) freq.\\
-JPEG2000 achieves better results by using the Haar transform globally, not just \( 8 \times 8 \), on a successively downsampled image.
-
 \subsection{Optical Flow}
 \subsubsection{Applications} Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
 \textbf{Brightness Constancy}
