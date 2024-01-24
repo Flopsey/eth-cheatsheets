@@ -364,7 +364,7 @@ The Fourier transform makes use of the basis vectors
     }
 \end{center}
 \begin{center}
-    \includegraphics[width=\linewidth]{fourier-transforms.png}
+    \includegraphics[width=\linewidth]{fourier-transforms.jpeg}
 \end{center}
 
 \subsection{Warping, Optical Flow and Video Compression}
@@ -497,7 +497,7 @@ Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays 
 Basic concept of image reconstruction:
 \begin{figure}[H]
     \center
-    \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.png}
+    \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.jpeg}
 \end{figure}
 
 Continous case: The radon transform of a line is 
@@ -514,7 +514,7 @@ We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 \end{itemize}
 \textbf{Back projection} Given RT, find \( u(x,y) \). Example:
 \begin{figure}[h]
-    \includegraphics[width=\linewidth]{radon-back-projection.png}
+    \includegraphics[width=\linewidth]{radon-back-projection.jpeg}
 \end{figure}
 
 \subsubsection{Radon Transform Procedure} (do for many projection angles)
@@ -550,7 +550,7 @@ We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\linewidth]{ciergb.png}
+    \includegraphics[width=0.6\linewidth]{ciergb.jpeg}
 \end{figure}
 
 \subsubsection{Color Spaces}
@@ -612,7 +612,7 @@ If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 2 \\ 0 & -1 & 2 \\ 0 & 0 
 \subsubsection{Change of coord. system} Visually:
 
 \begin{tabular}{m{3cm}r}
-    \includegraphics[width=3cm]{coord-system-change.png}
+    \includegraphics[width=3cm]{coord-system-change.jpeg}
 &
 $
  p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \implies p' = TRp
@@ -657,7 +657,7 @@ Flux per solid angle per perpendicular area = effective intensity per unit area
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.4\linewidth]{lamberts-law.png}
+    \includegraphics[width=0.4\linewidth]{lamberts-law.jpeg}
 \end{figure}
 \subsubsection{Lighting} Modeling physical interactions between materials and light sources
 \subsubsection{Shading} Process of determining the color of a pixel
@@ -683,7 +683,7 @@ Problems with scan line interpolations are perspective distortion, orientation d
 
 \subsubsection{Phong shading} Barycentric interpolation of vertex normals, in object space
 \begin{figure}[H]
-    \includegraphics[width=\linewidth]{phong-shading.png}
+    \includegraphics[width=\linewidth]{phong-shading.jpeg}
 \end{figure}
 
 Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
@@ -694,7 +694,7 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\linewidth]{transparency.png}
+    \includegraphics[width=0.6\linewidth]{transparency.jpeg}
 \end{figure}
 
 \subsection{Geometry \& Textures}
@@ -753,7 +753,7 @@ It can be constructed visually with the deCasteljau algorithm.
 \subsubsection{Bresenham line} Always choose closest pixel at each intersection. 
 \begin{figure}[h]
     \center
-    \includegraphics[width=0.75\linewidth]{bresenham-line.png}
+    \includegraphics[width=0.75\linewidth]{bresenham-line.jpeg}
 \end{figure}
 
 After having computed the first \( d \) we can get the following \( d_\text{new} \) by adding \( a \) if we chose east (so \( d < 0 \)) or adding \( a + b \) if we chose north-east \( d > 0 \), which makes it very fast.
