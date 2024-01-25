@@ -485,54 +485,36 @@ After performing motion prediction, we encode the error between the actual frame
 Given a kernel with size \(F\), an image with size \(N\), padding \(P\) and a stride \(S\), the output dimensions of applying the filter to the image is \(\frac{N + 2P - F}{S} + 1\). For stride \(1\) and padding \(P = \frac{F - 1}{2}\), the input dimension is thus preserved.
 
 \subsection{Radon Transform}
-\section{Computer Graphics}
-\subsection{Graphics Pipeline}
-\subsection{Light and Colors}
-\subsection{Transformations}
-\subsection{Lighting and Shading}
-\subsection{Geometry and Textures}
-\subsection{Processing Conversion}
-\subsection{Scan Conversion}
-\subsection{Bézier Curves, B-Spline Curves and Tensor Product Surfaces (Rational Curves)}
-\subsection{Subdivision Surfaces}
-\subsection{Visibility and Shadows}
-\subsection{Ray Tracing}
-
-%%%%% ORIGINAL BELOW %%%%%
-
-\pagebreak
-\section{Computer Vision}
-\subsection{Radon Transform}
-Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays from all dirs through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
-
-Basic concept of image reconstruction:
+Given an object with unknown density \(f(x,y)\), find \(f\) by sending rays from all directions through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
 \begin{figure}[H]
     \center
     \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.jpeg}
 \end{figure}
-
-Continous case: The radon transform of a line is 
+Continuous case: The radon transform of a line is 
 \begin{align*}
     R(\rho , \theta) &= \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} \\&= \iint_{\mathbb{R}^2} u(x,y) \delta (p - x \cos (\theta) - y \sin (\theta) ) \mathop{dx} \mathop{dy}
 \end{align*}
 We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
-
+The radon transform has the following properties:
 \begin{itemize}
     \item Linear
-    \item Input shifted \( \implies \) RT shifted
-    \item Coordinate system rotated \( \implies \) RT rotated
-    \item RT of 2D convolution is a 1D conv. of RT'ed functions with respect to \( \rho \) (\( R(f*_\text{2D} g) = R(f) *_\text{1D} R(g) \), rhs. with fixed \( \theta  \))
+    \item Input shifted \(\implies\) Radon transform shifted
+    \item Coordinate system rotated \( \implies \) Radon transform rotated
+    \item Radon transform of 2D convolution is a 1D convolution of Radon transformed functions with respect to \(\rho\) (\(R(f *_\text{2D} g) = R(f) *_\text{1D} R(g) \), rhs. with fixed \(\theta\))
 \end{itemize}
-\textbf{Back projection} Given RT, find \( u(x,y) \). Example:
+
+\subsubsection{Back projection}
+Given Radon transform, find \(u(x,y)\). Example:
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{radon-back-projection.jpeg}
 \end{figure}
 
-\subsubsection{Radon Transform Procedure} (do for many projection angles)
+\subsubsection{Radon Transform Procedure}
+Is repeated for many projection angles:
 \begin{enumerate}
     \item Measure projection (attenuation) data
-    \item 1D Fourier Transform of projection data
-    \item 2D inverse FT and sum with previous image (backpropagate)
+    \item 1D Fourier transform of projection data
+    \item 2D inverse Fourier transform and sum with previous image (backpropagate)
 \end{enumerate}
 \begin{itemize}
     \bad requires many precise attenuation measurements
@@ -548,55 +530,65 @@ We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
     \item Viewing Transform -- from world to camera space, want z-axis = distance to object
     \item Primitive Processing -- output primitives from transformed vertices
     \item 3D Clipping -- remove unneeded primitives with view frustum, occlusion and back face culling
-    \item Projection to Screen Space
-    \item Scan Conversion -- discretize continous primities, interpolate attributes from vertices to pixel granularities (e.g. normals, UV)
+    \item Projection to screen space
+    \item Scan Conversion -- discretize continuous primitives, interpolate attributes from vertices to pixel granularities (e.g. normals, UV)
     \item Lighting, Shading, Texturing -- compute color based on lighting shading and texture map
-    \item Occlusion Handling -- handle occlusions, e.g. with z-Buffer
+    \item Occlusion Handling -- handle occlusions, e.g. with z-buffer
     \item Display result
 \end{enumerate}
 
 \subsubsection{Fragment} Generalization of a pixel that stores info such as depth or texture coords in addition to color
 
-\subsection{Light \& Colors}
-
+\subsection{Light and Colors}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\linewidth]{ciergb.jpeg}
 \end{figure}
 
-\subsubsection{Color Spaces}
-\subsubsection{CIE XYZ} Change of basis so that basis functions are non-negative
-\subsubsection{CIE xyY} \( x,y \) - chromaticity/color, \( Y \) brightness\\
-XYZ to xyY: \( x = \frac{X}{X+Y+Z}, y = \frac{Y}{X+Y+Z}, Y = Y \) \\
-xyY to XYZ: \( X = \frac{xY}{y}, Y = Y, Z = \frac{(1-x-y)Y}{y} \) 
-\subsubsection{RGB} Useful for monitors and displays
-\subsubsection{HSV} Hue, Saturation, Value. Dimensions correspond to natural notions of ``characteristics'' of color. Useful for color picking
-\subsubsection{YIQ} Y - luminance, I - in-phase (orange-blue), Q - quadrature (purple-green), based on psycho-physical properties of eye, good for skin colors, used for television
-\[
-    \left[\begin{smallmatrix} Y \\ I \\ Q \end{smallmatrix}\right] = \left[\begin{smallmatrix} 0.229 & 0.587 & 0.114 \\ 0.596 & -0.275 & -0.321 \\ 0.212 & -0.528 & 0.311 \end{smallmatrix}\right] \left[\begin{smallmatrix} R \\ G \\ B \end{smallmatrix}\right]
-\] 
-\subsubsection{CMY(K)} Subtractive color space, used for printing. To convert: \( [CMY] = [111] - [RGB]  \)
+\subsubsection{CIE XYZ}
+Change of basis so that basis functions are non-negative.
+
+\subsubsection{CIE xyY}
+\(x, y\) -- chromaticity, \(Y\) -- brightness
+\begin{subbox}{XYZ \(\to\) xyY}
+    \[x = \frac{X}{X + Y + Z}, \quad y = \frac{Y}{X + Y +Z}, \quad Y = Y\]
+\end{subbox}
+\begin{subbox}{xyY \(\to\) XYZ}
+    \[X = \frac{xY}{y}, \quad Y = Y, \quad Z = \frac{(1 - x - y)Y}{y}\]
+\end{subbox}
+
+\subsubsection{RGB}
+Useful for monitors and displays.
+
+\subsubsection{HSV}
+Hue, saturation, value. Dimensions correspond to natural notions of \say{characteristics} of color. Useful for color picking.
+
+\subsubsection{YIQ}
+Y -- luminance, I -- in-phase (orange-blue), Q -- quadrature (purple-green), based on psycho-physical properties of eye, good for skin colors, used for television.
+\[\left[\begin{smallmatrix} Y \\ I \\ Q \end{smallmatrix}\right] = \left[\begin{smallmatrix} \dots \end{smallmatrix}\right] \left[\begin{smallmatrix} R \\ G \\ B \end{smallmatrix}\right]\]
+
+\subsubsection{CMY(K)}
+Subtractive color space, used for printing. To convert:
+\[\left[\begin{smallmatrix} C \\ M \\ Y \end{smallmatrix}\right] = \left[\begin{smallmatrix} 1 \\ 1 \\ 1 \end{smallmatrix}\right] - \left[\begin{smallmatrix} R \\ G \\ B \end{smallmatrix}\right]\]
 \subsubsection{L*a*b / Luv} Perceptually correct distances, nonlinear warps of CIE chart such that MacAdams ellipses become approx. circular
 
 \subsubsection{White point calibration}
-\[
-    \left(\begin{smallmatrix} x \\ y \\ z \end{smallmatrix}\right) = \left[\begin{smallmatrix} x_R C_R & x_G C_G & x_B C_B \\ y_R C_R & y_G C_G & y_B C_B \\ (1-x_R-y_R)C_R & (1-x_G-y_G)C_G & (1-x_B-y_B)C_B \end{smallmatrix}\right] \left[\begin{smallmatrix}R\\G\\B\end{smallmatrix}\right]
-\] 
-Set \( (R,G,B) \) to \( (1,1,1) \). Map it to the given white point, e.g. \( (0.9505, 1, 1.0890) \), then find \( C_R, C_G, C_B \)
+\[\left(\begin{smallmatrix} x \\ y \\ z \end{smallmatrix}\right) = \left[\begin{smallmatrix} x_R C_R & x_G C_G & x_B C_B \\ y_R C_R & y_G C_G & y_B C_B \\ (1-x_R-y_R)C_R & (1-x_G-y_G)C_G & (1-x_B-y_B)C_B \end{smallmatrix}\right] \left[\begin{smallmatrix}R\\G\\B\end{smallmatrix}\right]\] 
+Set \((R, G, B) \) to \( (1,1,1) \). Map it to the given white point, e.g. \( (0.9505, 1, 1.0890) \), then find \( C_R, C_G, C_B \)
 
 \subsection{Transformations}
 \subsubsection{Homogeneous coordinates}
-Allow representing translation by matrix multiplication, done by projection onto hyperplane: \( p = \left[\begin{smallmatrix}x & y & z & w\end{smallmatrix}\right]^\top \to \left[\begin{smallmatrix}\frac{x}{w} & \frac{y}{w} & \frac{z}{w} & 1\end{smallmatrix}\right] \)
+Allow representing translation by matrix multiplication, done by projection onto hyperplane: \( p = \left[\begin{smallmatrix}x & y & z & w\end{smallmatrix}\right]^\mathrm{T} \to \left[\begin{smallmatrix}\frac{x}{w} & \frac{y}{w} & \frac{z}{w} & 1\end{smallmatrix}\right]^\mathrm{T} \)
 
-\subsubsection{3D Transformations} Examples: \\ 
+\subsubsection{3D Transformations} \hfill \break
 \bgroup
 \setlength{\tabcolsep}{0.2em}
 \begin{tabularx}{\linewidth}{lllX}
-    Trans. & \( \left[\begin{smallmatrix} 1 & 0 & 0 & t_x \\ 0 & 1 & 0 & t_y \\ 0 & 0 & 1 & t_z \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & 
+    Translation & \( \left[\begin{smallmatrix} 1 & 0 & 0 & t_x \\ 0 & 1 & 0 & t_y \\ 0 & 0 & 1 & t_z \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & 
     Scaling & \( \left[\begin{smallmatrix} s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
-    Rot. (x) & \( \left[\begin{smallmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos \theta & -\sin \theta & 0 \\ 0 & \sin \theta  & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
-    Rot. (y) & \( \left[\begin{smallmatrix} \cos \theta  & 0 & \sin \theta  & 0 \\ 0 & 1 & 0 & 0 \\ -\sin \theta & 0 & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
-    Rot. (z) & \( \left[\begin{smallmatrix} \cos \theta  & -\sin \theta & 0 & 0 \\ \sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
+    Rotation (x) & \( \left[\begin{smallmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos \theta & -\sin \theta & 0 \\ 0 & \sin \theta  & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
+    Rotation (y) & \( \left[\begin{smallmatrix} \cos \theta  & 0 & \sin \theta  & 0 \\ 0 & 1 & 0 & 0 \\ -\sin \theta & 0 & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
+    Rotation (z) & \( \left[\begin{smallmatrix} \cos \theta  & -\sin \theta & 0 & 0 \\ \sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
     Shear (2D) & \( \left[\begin{smallmatrix} 1 & a & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
     Shear (x) & \( \left[\begin{smallmatrix} 1 & 0 & \text{sh}_x & 0 \\ 0 & 1 & \text{sh}_y & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & \\
 \end{tabularx}
@@ -620,8 +612,7 @@ If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 2 \\ 0 & -1 & 2 \\ 0 & 0 
     }
 \end{center}
 
-\subsubsection{Change of coord. system} Visually:
-
+\subsubsection{Change of coordinate system} \hfill \break
 \begin{tabular}{m{3cm}r}
     \includegraphics[width=3cm]{coord-system-change.jpeg}
 &
@@ -633,13 +624,14 @@ $
 
 Transforming a normal \( n \): \( n' = (M^{-1})^\top n \)
 
-\subsubsection{Quaternions} Alternative approach for rotation. \\
+\subsubsection{Quaternions}
+Alternative approach for rotation. \\
 Properties:
-\begin{align*}
+\begin{gather*}
 	i^2=j^2=k^2 = -1, \quad ijk = -1, \quad ij=k, \quad ji=-k \\ \quad jk=i, \quad kj = -i, \quad ki = j, \quad ik = -j \\
-	\lVert q \rVert = \sqrt{a^2+b^2+c^2+d^2},\\ \text{where } q = a + \left[\begin{smallmatrix} b & c & d \end{smallmatrix}\right] \left[\begin{smallmatrix} i \\ j \\ k \end{smallmatrix}\right] = a + v \text{ ,v not vector!} \\
+	\lVert q \rVert = \sqrt{a^2+b^2+c^2+d^2},\\ \text{where } q = a + \left[\begin{smallmatrix} b & c & d \end{smallmatrix}\right] \left[\begin{smallmatrix} i \\ j \\ k \end{smallmatrix}\right] = a + v \text{, v not vector!} \\
 	\overline{z} = a - bi - cj - dk, \quad z^{-1} = \frac{\overline{z}}{\lVert z \rVert}
-\end{align*}
+\end{gather*}
 
 \subsubsection{Rotation with quaternions} Rotate \( p = \left[\begin{smallmatrix} x & y & z \end{smallmatrix}\right] \) around axis \( u = \left[\begin{smallmatrix} u_{1} & u_{2} & u_{3} \end{smallmatrix}\right] \) by angle \( \theta  \).
 \begin{enumerate}
@@ -650,10 +642,10 @@ Properties:
     \item Convert \( p' \) back to cartesian
 \end{enumerate}
 
-\subsubsection{Orientation of coord. system}
-Thumb: x-axis, index finger: y-axis, middle finger: z-axis. To get direction of cross product, use thumb \& index finger as multiplicands and middle finger is direction
+\subsubsection{Orientation of coordinate system}
+Thumb: x-axis, index finger: y-axis, middle finger: z-axis. To get direction of cross product, use thumb \& index finger as multiplicands and middle finger as direction.
 
-\subsection{Lighting}
+\subsection{Lighting and Shading}
 \subsubsection{Luminous Flux} \( \Phi(A) = \int P(\lambda)V(\lambda) \mathop{d\lambda} \) \\
 Perceived power of light, weighted with human sensitivity [lumen] 
 \subsubsection{Irradiance / Illumination} \( E(x) = \sfrac{d \Phi(A)}{dA(x)} \) \\
@@ -681,7 +673,6 @@ Material parameters: \( k_a, k_d, k_s, n \);
 light parameters: \( I_a, I_p \);
 geometry parameters: \( N, L, V, R \); attenuation due to spatial radiation: \( f_{att} \). Big \( n \) leads to small highlights in terms of surface area
 
-\subsection{Shading Models}
 \subsubsection{Flat shading} One color per primitive, in screen space
 \subsubsection{Gouraud shading} Linear interpolation of vertex intensities, in screen space
 \begin{enumerate}
@@ -708,23 +699,41 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
     \includegraphics[width=0.6\linewidth]{transparency.jpeg}
 \end{figure}
 
-\subsection{Geometry \& Textures}
-\subsubsection{Explicit representations} Point cloud, subdivision surface (define surface with primitives, use recursive algorithm for refining), polygon mesh. Can easily model complex shapes and sample points from it, but it can take lots of storage
-\subsubsection{Implicit representations} Signed distance function, algebraic surface \( (x(u,v), y(u,v), z(u,v)) \), level set. Can easily test inside/outside, compact storage but sampling all points is expensive, complex shapes hard to model
-\subsubsection{Texture Mappings} Goal: Map Texture \( (u,v) \)-coords. to geometry \( (x,y,z) \)-coords. Example of sphere mapping: \\\( (u,v) \to (\sin (u) \sin (v), \cos (v), \cos (u) \sin (v)) \). We want low distortion, a bijective mapping that is efficiently computable.
-\subsubsection{Light Maps} Save computation power by precomputing static lighting and applying it to texture (can be dynamically adapted)
-\subsubsection{Environment Maps} Mirror environment with imaginary sphere / cube for easier computation of reflective objects
-\subsubsection{Bump Maps} Perturb normals to fake fine detail, store normal displacement in grayscale value. A \textbf{Normal map} directly stores perturbed normals as \( (r,g,b) \) color where \( n' = (2r - 1, 2g - 1, 2b -1)^\top \). Limitations: No bumps on silhouette, no self-occlusions, no self-shadowing. In contrast, \textbf{displacement mapping} actually modifies geometry, but more complex \& expensive
+\subsection{Geometry and Textures}
+\subsubsection{Explicit representations} Point cloud, subdivision surface (define surface with primitives, use recursive algorithm for refining), polygon mesh. Can easily model complex shapes and sample points from it, but it can take lots of storage.
+\subsubsection{Implicit representations} Signed distance function, algebraic surface \( (x(u,v), y(u,v), z(u,v)) \), level set. Can easily test inside/outside, compact storage but sampling all points is expensive, complex shapes hard to model.
+\subsubsection{Texture Mappings} Goal: Map texture \( (u,v) \)-coordinates to geometry \( (x,y,z) \)-coordinates. Example of sphere mapping: \( (u,v) \to (\sin (u) \sin (v), \cos (v), \cos (u) \sin (v)) \). We want low distortion, a bijective mapping that is efficiently computable.
+\subsubsection{Light Maps} Save computation power by precomputing static lighting and applying it to texture (can be dynamically adapted).
+\subsubsection{Environment Maps} Mirror environment with imaginary sphere / cube for easier computation of reflective objects.
+\subsubsection{Bump Maps, Normal Maps, Displacement Map} \emph{Bump maps} perturb normals to fake fine detail, store normal displacement in grayscale value. A \emph{normal map} directly stores perturbed normals as \( (r,g,b) \) color where \( n' = (2r - 1, 2g - 1, 2b -1)^\top \). Limitations: No bumps on silhouette, no self-occlusions, no self-shadowing. In contrast, \emph{displacement mapping} actually modifies geometry, but more complex \& expensive
 \subsubsection{Procedural Textures} Generate textures from noise, e.g. Perlin or Gabor noise by creating a gaussian pyramid of noise and summing all layers in a weighted way
-\subsubsection{Mip-Mapping} Store down-sampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids asliasing and improves compute efficiency but incurs a storage overhead (\( \frac{1}{3} \) of the original texture storage)
+\subsubsection{Mip-Mapping} Store downsampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids aliasing and improves compute efficiency but incurs a storage overhead (\( \frac{1}{3} \) of the original texture storage)
 \subsubsection{Perspective Projection} Linear variations in world coordinates can yield non-linear variation in screen coords \( \to  \) optimal resampling filter is spatially variant
-\subsubsection{Geometry aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersampling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
+\subsubsection{Geometry Aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersampling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
 
-\subsubsection{Bidirectional Reflectance Distribution Function}
+\subsubsection{Bidirectional Reflectance Distribution Function (BRDF)}
 If \( x \) is position on surface, \( \vec{\omega}_i \) the direction of incoming light, \( \vec{\omega}_r \) the direction of outgoing light, then \( f_r(x, \vec{\omega}_i, \vec{\omega}_r) \) describes amount of outgoing light:
 \( = \frac{dL_r(x, \vec{\omega}_r)}{L_i(x, \vec{w}_i \cos \theta _i \mathop{d\vec{w}_i})} \)
 
-\subsection{Curves \& Splines}
+\subsection{Processing Signals}
+
+\subsection{Scan Conversion}
+\subsubsection{Bresenham line} Always choose closest pixel at each intersection. 
+\begin{figure}[h]
+    \center
+    \includegraphics[width=0.75\linewidth]{bresenham-line.jpeg}
+\end{figure}
+
+After having computed the first \( d \) we can get the following \( d_\text{new} \) by adding \( a \) if we chose east (so \( d < 0 \)) or adding \( a + b \) if we chose north-east \( d > 0 \), which makes it very fast.
+
+\subsubsection{Scan Conversion of Polygons} 
+\begin{enumerate}
+    \item Calculate all intersections on scan line
+    \item Sort intersection points by ascending x-coordinates
+    \item Fill all spans between consecutive intersections if parity is odd
+\end{enumerate}
+
+\subsection{Bézier Curves, B-Spline Curves and Tensor Product Surfaces (Rational Curves)}
 \subsubsection{Bézier curves}
 \( x(t) = b_0 B^n_0(t) + \ldots + b_n B^n_n (t) \) \\
 \( B^n_i(t) = \binom{n}{i} t^i (1-t)^{n-i}, \text{ if } i < 0 \lor i >0: B^n_i (t) = 0 \) \\
@@ -738,9 +747,10 @@ It can be constructed visually with the deCasteljau algorithm.
 \end{itemize}
 
 \subsubsection{B-splines}
-\( x(t) = \sum_{i=0}^k d_i N_i^n (t) \), basis function is recursively defined by convolution of box func.: 
-\( B^0(t) = 1 \text{ if } t \in [-1, 0] \implies B^1(t) = \int_\mathbb{R} B^0(s) B^0(t-s) \mathop{ds} \text{ und } B^n(t) = B^{n-1}(t) * B^0(t)\)
+\( x(t) = \sum_{i=0}^k d_i N_i^n (t) \), basis function is recursively defined by convolution of box function: 
+\( B^0(t) = 1 \text{ if } t \in [-1, 0] \implies B^1(t) = \int_\mathbb{R} B^0(s) B^0(t-s) \mathop{ds} \text{ und } B^n(t) = B^{n-1}(t) * B^0(t)\).
 
+\subsection{Subdivision Surfaces}
 \subsubsection{Subdivision Surfaces} Generalization of spline curves/ surfaces, converge to smooth limit surface, successive refinement.
 \textit{Primal}: Faces are split into sub-faces,
 \textit{Dual}: Vertices are split into multiple vertices
@@ -760,29 +770,15 @@ It can be constructed visually with the deCasteljau algorithm.
 \end{tabularx}
 \end{center}
 
-\subsection{Scan Conversion}
-\subsubsection{Bresenham line} Always choose closest pixel at each intersection. 
-\begin{figure}[h]
-    \center
-    \includegraphics[width=0.75\linewidth]{bresenham-line.jpeg}
-\end{figure}
+\subsection{Visibility and Shadows}
+\subsubsection{Painter's Algorithm} Solves visibility problem by rendering objects from furthest to nearest. Has issues with cyclic overlaps and intersections.
 
-After having computed the first \( d \) we can get the following \( d_\text{new} \) by adding \( a \) if we chose east (so \( d < 0 \)) or adding \( a + b \) if we chose north-east \( d > 0 \), which makes it very fast.
-
-\subsubsection{Scan Conversion of Polygons} 
-\begin{enumerate}
-    \item Calculate all intersections on scan line
-    \item Sort intersection points by ascending x-coordinates
-    \item Fill all spans between consecutive intersections if parity is odd
-\end{enumerate}
-
-\subsection{Visibility \& Shadows}
-\subsubsection{Painter's Algorithm} Solves visibility problem by rendering objects from furthest to nearest. Has issues with cyclic overlaps \& intersections
 \subsubsection{Z-buffering} Store depth of nearest object for each pixel. Initialize all values to \( \infty \), then iterate over polygons and update z-buffer.
-Limited resolution can cause flickering, so place near clipping plane far from camera
+Limited resolution can cause flickering, so place near clipping plane far from camera.
 
-\subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces
-\subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use img as proj. texture. Need to specify obstacles \& receivers, no self-shadows
+\subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces.
+
+\subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use image as proj. texture. Need to specify obstacles and receivers, no self-shadows
 \subsubsection{Shadow Maps} Compute depths from light source, compute depths from camera. For each pixel on camera plane, compute point in world coords., then project point onto light plane and compare \( a \) (distance from light to near point of object) and \( b \) (distance from light to far point of object), \( a + \text{bias} < b \implies \) in shadow. Bias needed to avoid self-shadowing, point can lie outside FoV of shadow map (\( \to \) use cubical shadow map) and aliasing due to undersampled shadow map (\( \to  \) filter result of depth test, not depths)
 
 \subsubsection{Shadow Volumnes} Explicitly represent shape of space in shadow as volume. Shoot ray from camera, incr./decr. each time a volume is entered/left \( \implies > 0 \implies \) in shadow. (Optimization: Use silhouette edges only.) Introduces lots of new geometry, expensive, objects must be watertight for silhouette optimization
