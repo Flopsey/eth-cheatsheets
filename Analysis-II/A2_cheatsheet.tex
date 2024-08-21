@@ -64,6 +64,13 @@
   colorlinks=true
 }
 
+% No newline after subsubsections
+\usepackage[compact]{titlesec}
+\titleformat{\subsubsection}[runin]{\bfseries}{}{0pt}{}[]
+
+% Nice quotes
+\usepackage{dirtytalk}
+
 % Metadata
 \title{Cheatsheet Analysis II}
 \author{Julian Steinmann}
@@ -81,11 +88,510 @@
 \def\Q{\mathbb{Q}}
 \def\N{\mathbb{N}}
 \def\X{\mathcal{X}}
-\def\dx{\text{ d}x}
+\def\dx{\; \mathrm{d}x}
+\def\smallCalO{\begin{smallmatrix}\!\mathcal{O}\!\end{smallmatrix}}  % Ugly, but Wikipedia does it too...
+\DeclareMathOperator{\gradient}{grad}
+\DeclareMathOperator{\divergence}{div}
+\DeclareMathOperator{\trace}{spur}
 \DeclareMathOperator{\curl}{curl}
 \DeclareMathOperator{\Hess}{Hess}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
 
 \begin{document}
+
+
+\section{Gewöhnliche Differentialgleichungen (ODEs)}
+
+\subsection{ODE}
+
+\begin{mainbox}{}
+    Eine Gleichung der Form \( G(y, y', \dots, y^{(k)}, x) = 0 \) heisst \emph{gewöhnliche Differentialgleichung \( k \)-ter Ordnung} (engl. ODE). Eine \emph{Lösung} ist eine \( k \)-mal differenzierbare Funktion \( f: \: I \to \R \) auf einem offenen Intervall \( I \subseteq \R \) mit
+    \[ G(f(x), f'(x), \dots, f^{(k)}(x), x) = 0 \quad \text{für alle \(x \in I\).} \]
+    Ist zusätzlich \( {y(x_0) = y_0}, \, {y'(x_0) = y_1}, \, \dots, \, {y^{(k - 1)}(x_0) = y_{k - 1}} \) mit \( x_0, y_0, y_1, \dots, y_{k - 1} \in \R \) vorgegeben, spricht man von einem \emph{Anfangswertproblem}.
+\end{mainbox}
+
+\( k \geq 1 \) heisst \emph{Ordnung} der ODE. Dabei gehen wir davon aus, dass \( k \) minimal ist, d.h. dass \( G \) tatsächlich von \( y^{(k)} \) abhängt. Eine Gleichung der Form \( G(y, x) = 0 \) ist keine ODE.
+
+
+\subsection{Separation der Variablen}
+
+\begin{align*}
+    &\text{ODE der Form } y' = \frac{1}{a(y)} b(x) \quad \text{für \(a, b\) stetig, \(a(y) \neq 0\)} \\
+    \iff & a(y) y' = b(x) \\
+    \iff & \int a(y) y'(x) \dx = \int b(x) \dx + c \\
+    \iff & A(y) = B(x) + c \quad \text{für Stammfunktionen \(A, B\) von \(a, b\).}
+\end{align*}
+
+Es folgt \( y = A^{-1}(B(x) + c) \), falls ein Inverses \( A^{-1} \) existiert.
+
+
+\subsection{Existenz- und Eindeutigkeitssatz}
+
+\begin{mainbox}{Existenz- und Eindeutigkeitssatz (Satz 2.1.6)}
+    Ein Anfangswertproblem erster Ordnung \( y' = F(y, x), \, y(x_0) = y_0 \) mit F stetig differenzierbar hat eine eindeutige \emph{maximale} Lösung.
+\end{mainbox}
+
+\underline{Genauer:} Ist \( F: \: \R^2 \to \R \) in einer Umgebung von \( (y_0, x_0) \) stetig, und stetig differenzierbar nach \( y \), dann gibt es eine Lösung \( f: \: I \to \R \) auf einem offenen Intervall \( I \subseteq \R \) mit \( x_0 \in I \), sodass für jede Lösung \( g: \: J \to \R \) gilt: \( J \subseteq I \) und \( f|_J = g \).
+
+Eine ODE von Ordnung \( k \geq 2 \) lässt sich als System von \( k \) ODEs von Ordnung \( 1 \) in \( k \) unbekannten Funktionen \( z_0, \dots, z_{k - 1} \) umschreiben, z. B.: Die Lösungen von \( \exp(y'' y' + \sin(y^{x + 1})) = 3 \) entsprechen denen von
+\[ \left| \begin{aligned}
+    \exp(z_1' z_1 + \sin(z_0^{x + 1})) &= 3 \\
+    z_0' &= z_1
+\end{aligned} \right| \]
+via \( z_0 = y, \, z_1 = y' \).
+
+Versionen des Existenz- und Eindeutigkeitssatzes gelten auch für Systeme von ODEs, und für ODEs von Ordnung \( \geq 2 \).
+
+
+\subsection{Lineare ODE}
+
+\begin{mainbox}{(Definition 2.2.1)}
+    Eine \emph{lineare ODE} von Ordnung \( k \geq 1 \) ist eine Gleichung
+    \begin{equation} \label{script_eq_2}
+        y^{(k)} + a_{k - 1} y^{(k - 1)} + \dots + a_0 y = b
+    \end{equation}
+    wobei die \emph{Koeffizienten} \( a_0, \dots, a_{k - 1} \) und die \emph{Inhomogenität} \( b \) Funktionen \( I \to \C \) sind für ein offenes Intervall \( I \subseteq \R\).
+    Eine \emph{Lösung} ist ein \( k \)-mal differenzierbares \( f: \: I \to \C \) mit
+    \[ f^{(k)}(x) + a_{k - 1}(x) y^{(k - 1)}(x) + \dots + a_0(x) y(x) = b(x) \]
+    für alle \( x \in I \). (Wobei \( f'(x) = (\Re(f(x)))' + i (\Im(f(x)))' \)).
+    Falls \( b = 0 \), nennen wir \eqref{script_eq_2} \emph{homogen}, sonst \emph{inhomogen}.
+    Die Gleichung
+    \begin{equation} \label{script_eq_3}
+        y^{(k)} + a_{k - 1} y^{(k - 1)} + \dots + a_0 y = 0
+    \end{equation}
+    heisst die \emph{zu \eqref{script_eq_2} gehörige homogene lineare ODE}.
+\end{mainbox}
+
+Falls \( a_i, b \) reellwertig, dann suchen wir meist reellwertige Lösungen.
+
+Sind \( f_1, f_2 \) Lösungen einer homogenen linearen ODE, dann ist es auch \( \lambda f_1 + f_2 \) für \( \lambda \in \C \).
+
+\begin{subbox}{(Satz 2.2.3)}
+    Annahme: \( a_0, \dots, a_{k - 1}, b \) stetig.
+    \begin{itemize}
+        \item Die Lösungen der \emph{homogenen} linearen ODE \eqref{script_eq_3} bilden einen \( \C \)-Vektorraum \( S \) mit \( \dim S = k \).
+        \item Die \emph{inhomogene} lineare ODE \eqref{script_eq_2} hat eine Lösung \( f_0 \). Die Menge aller Lösungen von \eqref{script_eq_2} ist genau der affine Raum \( f_0 + S \).
+        \item Für beliebige \( x_0 \in I, \quad y_0, \dots, y_{k - 1} \in \C \) hat das \emph{Anfangswertproblem} \eqref{script_eq_2} mit \( y(x_0) = y_0, \dots, y^{(k - 1)}(x_0) = y_{k - 1} \) genau eine Lösung.
+        \item \( a_0, \dots, a_{k - 1}, b \text{ \emph{reellwertig}}  \implies \dim_\R \{ \text{reellwertige } f \in S \} = k \), \eqref{script_eq_2} hat eine reellwertige Lösung \( f_0 \), und \( \{ \text{reellwertige Lösungen von \eqref{script_eq_2}} \} = f_0 + \{ \text{reellwertige } f \in S \} \). Für \( x_0 \in I, \, y_0, \dots, y_{k - 1} \in \R \) hat das entsprechende Anfangswertproblem genau eine Lösung.
+    \end{itemize}
+\end{subbox}
+
+\subsubsection{Lösungsstrategie für lineare ODE}
+\begin{enumerate}
+    \item Finde Basis \( f_1, \dots, f_k \) des Lösungsraums \( S \) der \emph{homogenen} ODE. (\( k = 1 \): Finde eine nicht-triviale Lösung \( f_1 \).)
+    \item Finde eine einzelne Lösung \( f_0 \) der \emph{inhomogenen} ODE (\say{Partikulärlösung}). Die allgemeine Lösung ist \( f_0 + \sum_{i = 1}^k \lambda_i f_i, \quad \lambda_i \in \R \text{ oder } \C \). (\( k = 1 \): \(f_0 + \lambda_1 f_1 \))
+    \item Einsetzen der Anfangswerte in die allgemeine Lösung \( \rightarrow \) lineares Gleichungssystem für \( \lambda_1, \dots, \lambda_k \) mit eindeutiger Lösung. (\( k = 1 \): Eine einzelne lineare Gleichung \( f_0(x_0) + \lambda_1 f_1(x_0) = b(x_0) \).
+\end{enumerate}
+
+
+\subsection{Lineare ODE erster Ordnung}
+
+\underline{Zu lösen:} \( y' + ay = b \) mit gegebenen stetigen \( a, b: \: I \to \C \).
+
+\begin{subbox}{(Proposition 2.3.1)}
+    Die Lösungen von \( y' + ay = 0 \) sind genau \( f(x) = z e^{-A(x)} \), für \( A \) eine Stammfunktion von \( a \) und \( z \in \C \).
+\end{subbox}
+
+\begin{proof}
+    Dass \( z e^{-A(x)} \) eine Lösung ist, lässt sich einfach nachrechnen. Dass alle Lösungen von dieser Form sind, folgt daraus, dass sie nach Satz 2.2.3 einen eindimensionalen Vektorraum bilden.
+    Ein alternativer Beweis dafür: sei \( f \) eine Lösung. Wähle \( x_0 \in I \) und setze \( z = f(x_0) e^{A(x_0)} \). Dann \( f(x_0) = z e^{-A(x_0)} \). Nun sind \( f \) und \( z e^{-A(x_0)} \) zwei maximale Lösungen des Anfangswertproblems \( y' + ay = 0, \quad y(x_0) = f(x_0) \). Nach dem Existenz- und Eindeutigkeitssatz folgt \( f(x) = z e^{-A(x)} \) für alle \( x \in I \).
+\end{proof}
+
+Herleiten lässt sich die Formel \( z e^{-A(x)} \) durch Separation der Variablen.
+
+\subsection{Lineare ODE mit konstanten Koeffizienten}
+
+\begin{equation} \label{script_eq_4}
+    y^{(k)} + a_{k - 1} y^{(k - 1)} + \dots + a_0 y = b, \quad a_0, \dots, a_{k - 1} \in C
+\end{equation}
+
+\subsubsection{Lösung der homogenen ODE}
+\underline{Ansatz:} \( f(x) = e^{\alpha x} \)? Einsetzen:
+\begin{align*}
+    & \alpha^k e^{\alpha x} + a_{k - 1} \alpha^{k - 1} e^{\alpha x} + \dots + a_0 e^{\alhpha x} = 0 \\
+    \iff & \alpha^k + a_{k - 1} \alpha^{k - 1} + \dots + a_0 = 0 \\
+    \iff & \alpha \text{ Nullstelle von \( P(t) \), wobei:}
+\end{align*}
+
+\begin{mainbox}{Charakteristisches Polynom}
+    \( P(t) = t^k + a_{k -1} t^{k - 1} + \dots + a_0 \) heisst \emph{charakteristisches Polynom} der ODE \eqref{script_eq_4}.
+\end{mainbox}
+
+\begin{subbox}{}
+    Ist \( \alpha \) eine Nullstelle von \( P \), so löst \( e^{\alpha x} \) die homogene ODE \eqref{script_eq_4}. Hat \( P \) keine mehrfachen Nullstellen, ist \( \{ e^{\alpha x} \; | \; \alpha \in \C, \, P(\alpha) = 0 \} \) eine Basis des Lösungsraums \( S \).
+\end{subbox}
+
+\begin{proof}
+    Fundamentalsatz der Algebra \( \implies \) Falls \( P \) keine mehrfachen Nullstellen hat, so hat \( P \) \( k \) viele Nullstellen \( \alpha_1, \dots, \alpha_k \). Dann sind \( e^{\alpha_1 x}, \dots, e^{\alpha_k x} \) linear unabhängige Funktionen \( \R \to \C \). Da \( \dim S = k \) nach Satz 2.2.3, ist \( e^{\alpha_1 x}, \dots, e^{\alpha_k x} \) eine Basis.
+\end{proof}
+
+\begin{subbox}{}
+    Hat \( P \) Nullstellen \( \alpha_1, \dots, \alpha_l \) mit Vielfachheiten \( v_1, \dots, v_l \), ist eine Basis des Lösungsraums \( \{ x^j e^{\alpha_i x} \; | \; i \in \{ 1, \dots, l \}, \, j \in \{0, \dots, v_i - 1 \} \} \).
+\end{subbox}
+
+Falls \( a_0, \dots, a_{k - 1} \in \R \), so ist \( \alpha = \beta + i \gamma \) Nullstelle von \( P \) genau dann wenn \( \bar{\alpha} = \beta - i \gamma \) Nullstelle ist. Nun findet man eine reellwertige Basis des Lösungsraums indem man \( e^{\alpha x}, e^{\bar{\alpha} x} \) durch \( e^{\beta x} \cos(\gamma x), \, e^{\beta x} \sin(\gamma x) \) ersetzt.
+
+\begin{subbox}{Superpositionsprinzip (2.2.5)}
+    Löst \( f_0 \) die ODE mit inhomogenem Term b und \( g_0 \) die ODE mit inhomogenem Term \( c \), so löst \( \lambda f_0 + \mu g_0 \) die ODE mit inhomogenem Term \( \lambda b + \mu c \).
+\end{subbox}
+
+\subsubsection{Methode der unbestimmten Koeffizienten}
+Ansatz: Eine Lösung suchen, die \say{ähnlich aussieht} wie \( b \). Tatsächlich gilt:
+
+\begin{itemize}
+    \item \( b(x) = x^d e^{\beta x} \) \( \implies \) \eqref{script_eq_4} hat Lösung der Form \( Q(x) e^{\beta x} \), für ein Polynom \( Q \) von Grad \( \leq d \) (falls \( P(\beta) \neq 0 \)), bzw. von Grad \( \leq d + j \) (falls \( \beta \) \( i \)-fache Nullstelle von P).
+    \item \( b(x) = x^d \cos(\beta x) \) oder \( x^d \sin(\beta x) \) \( \implies \) \eqref{script_eq_4} hat Lösung der Form \( Q_1(x) \cos(\beta x) + Q_2(x) \sin(\beta x) \), mit \( Q_1, Q_2 \) wie im ersten Punkt \( Q \)
+\end{itemize}
+
+Im 2. Fall \( b(x) = x^d \cos(\beta x) \) oder \( x^d \sin(\beta x) \) muss man prüfen, ob \( \beta_i \) (nicht \( \beta \) wie im 1. Fall) eine \( j \)-fache Nullstelle von \( P \) ist. Die Polynome \( Q_1, Q_2 \) haben dann Grad \( \leq d + j \).
+
+
+\subsection{Harmonischer Oszillator}
+
+\[ y(x) = \text{Auslenkung des Körpers zum Zeitpunkt \( x \)} \]
+Dann gilt die ODE
+\[ my'' = -by' - ky \]
+wobei \( m \) die Masse, \( b \geq 0 \) der Widerstand, \( k > 0 \) die Federkonstante. \\
+Falls \( b = 0 \), sind alle Lösungen periodisch. \\
+Falls \( b > 0 \), gilt für alle Lösungen \( \limxi y(x) = 0 \). \\
+Für \( b^2 - 4km > 0 \) findet man eine oszillierende Lösung. \\
+Für \( b^2 - 4km \leq 0 \) hingegen eine nicht oszillierende Lösung. \\
+
+
+\subsection{Variation der Konstanten}
+
+\underline{Zu lösen:} \( y' + ay = b \). Ansatz: \( f(x) = z(x) e^{-A(x)} \).
+In ODE einsetzen:
+\begin{align*}
+    & f'(x) + a(x) f(x) = b(x) \\
+    \iff & z'(x) e^{-A(x)} - z(x) a(x) e^{-A(x)} + a(x) z(x) e^{-A(x)} = b(x) \\
+    \iff & z'(x) e^{-A(x)} = b(x) \\
+    \iff &z'(x) = e^{A(x)} b(x)
+\end{align*}
+
+Wähle für \( z \) eine Stammfunktion von \( e^{A(x)} \) b(x).
+Dann ist \( f(x) = z(x) e^{-A(x)} \) eine Lösung.
+Falls \( y(x_0) = y_0 \) gegeben, wähle die Stammfunktion so, dass \( z(x_0) e^{-A(x_0)} = y_0 \).
+
+\subsubsection{Variation der Konstanten für Ordnung \( \geq 2 \)}
+Spezialfall ODE zweiter Ordnung
+\[ y'' + a_1 y' + a_0 y = b \]
+Erst Basis \( f_1, f_2 \) des Lösungsraumes der homogenen ODE finden. \\
+Ansatz:
+\[ \left| \begin{aligned}
+    z_1(x) f_1(x) + z_2(x) f_2(x) &= f_0(x) \\
+    z_1'(x) f_1(x) + z_2'(x) f_2(x) &= 0
+\end{aligned} \right| \]
+Berechne:
+\begin{align*}
+    f_0' &= z_1' f_1 + z_1 f_1' + z_2' f_2 + z_2 f_2' \\
+    &= z_1 f_1' + z_2 f_2'
+\end{align*}
+\[ f_0'' &= z_1' f_1' + z_1 f_1'' + z_2' f_2' + z_2 f_2'' \]
+In ODE einsetzen:
+\begin{align*}
+    b &= z_1(\underbrace{f_1'' + a_1 f_1' + a_0 f_0}_{= 0}) \\
+    &+ z_2(\underbrace{f_2'' + a_1 f_2' + a_0 f_2}_{= 0}) \\
+    &+ z_1' f_1' + z_2' f_2'
+\end{align*}
+Also:
+\begin{align*}
+    & f_0 \text{ Lösung} \\
+    \iff & \left| \begin{aligned}
+        z_1' f_1 + z_2' f_2 &= 0 \\
+        z_1' f_1' + z_2' f_2' &= b
+    \end{aligned} \right| \\
+    \iff & \underbrace{\begin{pmatrix*}
+        f_1 & f_2 \\
+        f_1' & f_2'
+    \end{pmatrix*}}_A \begin{pmatrix*}
+        z_1' \\ z_2'
+    \end{pmatrix*} = \begin{pmatrix*}
+        0 \\ b
+    \end{pmatrix*} \\
+    \implies & \begin{pmatrix*}
+        z_1' \\ z_2'
+    \end{pmatrix*} = A^{-1} \begin{pmatrix*}
+        0 \\ b
+    \end{pmatrix*}
+\end{align*}
+
+Dies sind explizite Formeln für \( z_1', z_2' \). Schliesslich nach Stammfunktion von \( z_1', z_2' \) finden.
+
+
+\section{Differentialrechnung in \(\R^n\)}
+
+\[ f: \: \R^n \to \R^m \]
+
+
+\subsection{Stetigkeit und Konvergenz im Mehrdimensionalen}
+
+Die \emph{Norm} von \( x \in \R^n \) ist \( \norm{x} = \sqrt{x_1^2 + \dots + x_n^2} \).
+
+\begin{mainbox}{Stetigkeit (Definition 3.2.3)}
+    \( U \subseteq \R^n \), \( f: \: x \to \R^m \) heisst \emph{stetig bei \( x_0 \in U \)} falls für alle \( \varepsilon > 0 \) existiert \( \delta > 0 \) sodass \( \norm{x - x_0} < \delta \implies \norm{f(x) - f(x_0)} < \varepsilon \). \( f \) heisst \emph{stetig} falls \( f \) bei allen \( x_0 \in U \) stetig ist.
+\end{mainbox}
+
+\begin{mainbox}{Konvergenz (Definition 3.2.1)}
+    Eine Folge \( x_1, x_2, \dots \in \R^n \) \emph{konvergiert gegen \( y \in \R^n \)} (geschrieben \( \limxi x_k = y \)) falls für  alle \( \varepsilon > 0 \) existiert \( N \) sodass für alle \( k \geq N \) gilt: \( \norm{x_k - y} < \varepsilon \).
+\end{mainbox}
+
+\begin{subbox}{(Lemma 3.2.2)}
+    \begin{align*}
+        & \underbrace{\lim_{k \to \infty}}_\text{Limes in \( \R^n \)} x_k = y \\
+        \iff & \underbrace{\lim_{k \to \infty}}_\text{Limes in \( \R \)} \norm{x_k - y} = 0 \\
+        \iff & \underbrace{\lim_{k \to \infty}}_\text{Limes in \( \R \)} x_{k, l} = y_l \quad \text{für alle \( l \in \{ 1, \dots, n \} \)}
+    \end{align*}
+\end{subbox}
+
+\begin{subbox}{(Satz 3.2.4)}
+    \( U \subseteq \R^n \), \( f: \: U \to \R^m \) ist stetig bei \( x_0 \in U \) \( \iff \) falls \( x_1, x_2, \dots \in U \) mit \( \lim_{k \to \infty} x_k = x_0 \), dann \( \lim_{k \to \infty} f(x_k) = f_(x_0) \).
+\end{subbox}
+
+\begin{subbox}{(Satz 3.2.9)}
+    \( f: \: \underbrace{U}_{\in \R^n} \to \underbrace{V}_{\in \R^m} \) und \( g: \: V \to \R^p \) stetig \( \implies \) \(g \circ f \) stetig.
+\end{subbox}
+
+\begin{proof}
+    Mit Satz 3.2.4. Falls \( x_1, x_2, \dots, \in U \) konvergiert, dann
+    \[ g(f(\lim_{k \to \infty} x_k)) = g(\lim_{k \to \infty} f(x_k)) = \lim_{k \to \infty} g(f(x_k)) \]
+    Die erste Gleichheit gilt weil \( f \) stetig ist, die zweite weil \( g \) stetig ist.
+\end{proof}
+
+\begin{subbox}{(Definition 3.2.5}
+    \( U \subseteq \R^n \), \(f: \: U \to \R^m \). Der \emph{Grenzwert von \( f \) bei \( x_0 \in U \)} ist gleich \( y \in \R^m \), geschrieben \( \lim_{x \to x_0, \, x \neq x_0} f(x) = y \), falls für alle \( \varepsilon > 0 \) ein \( \delta > 0 \) existiert, sodass \( x \in U \) mit \( \norm{x - x_0} < \delta \) und \( x \neq x_0 \) \( \implies \) \( \norm{f(x) - y} < \varepsilon \).
+\end{subbox}
+
+Der Wert \( f(x_0) \) hat keinen Einfluss auf \( \lim_{x \to x_0, \, x \neq x_0} f(x) \).
+
+\begin{subbox}{(Satz 3.2.7)}
+    \( \lim_{x \to x_0, \, x \neq x_0} f(x) = y \) \( \iff \) für jede Folge \( x_1, x_2, \dots \in U \) mit \( \lim_{k \to \infty} x_k = x_0 \) und \( x_k \neq x_0 \) gilt \( \lim_{k \to \infty} f(x_k) = y \).
+\end{subbox}
+
+\begin{mainbox}{(Definition 3.2.11)}
+    \( U \subseteq \R^n \) heisst:
+    \begin{itemize}
+        \item \emph{beschränkt} falls \( \{ \norm{x} \; | \; x \in U \} \) beschränkt
+        \item \emph{abgeschlossen} falls \( x_1, x_2, \dots \in U \), \( \lim_{k \to \infty} x_k = y \implies y \in U \)
+        \item \emph{offen} falls für alle \( x \in U \) existiert \( \delta > 0 \) sodass \[ \{ y \in R \; | \; \abs{x_i - y_i} < \delta \text{ für alle } i \} \subseteq U \]
+        \item \emph{kompakt} falls \( U \) abgeschlossen und beschränkt ist.
+    \end{itemize}
+\end{mainbox}
+
+\begin{subbox}{(Satz 3.3.2)}
+    \( U \subseteq \R^n \) offen \( \iff \) \(\R^n \setminus U \) abgeschlossen.
+\end{subbox}
+
+\begin{subbox}{(Satz 3.2.13)}
+    \( f: \: \R^n \to \R^m \) stetig. Dann:
+    \begin{enumerate}
+        \item \( V \subseteq \R^m \) abgeschlossen \( \implies \) \( f^{-1}(V) \subseteq \R^n \) abgeschlossen
+        \item \( V \subseteq \R^m \) offen \( \implies \) \( f^{-1}(V) \subseteq \R^n \) offen
+    \end{enumerate}
+    Hier ist \( f^{-1}(V) \) das \emph{Urbild von \( V \) bezüglich \( f \)}, d.h. \( f^{-1}(V) = \{ x \in \R^n \; | \; f(x) \in V \} \). Dies ist für alle \( f: \: \R^n \to \R^m \) definiert, auch solche \( f \), die keine Umkehrfunktion \( f^{-1} \) haben.
+\end{subbox}
+
+\begin{proof}
+    \begin{enumerate}
+        \item \( x_1, x_2, \dots \in f^{-1}(V) \) und \( \lim_{k \to \infty} x_k = y \) \( \implies \) \( f(y) \in V \implies y \in f^{-1}(V) \).
+        \item \( V \) offen \( \implies \) \( \R^m \setminus V \) abgeschlossen \( \implies \) \( \underbrace{f^{-1}(\R^m \setminus V)}_{\R^m \setminus f^{-1}(V)} \) abgeschlossen \( \implies \) \( f^{-1}(V) \) offen.
+    \end{enumerate}
+\end{proof}
+
+\begin{subbox}{(Satz 3.2.15)}
+    \( U \in \R^n \) nicht-leer und kompakt, \( f: \: U \to \R \) stetig \( \implies \) \( f \) ist beschränkt und nimmt ein Minimum und ein Maximum an, d.h. es gibt \( x_+, x_- \in U \) sodass \( f(x_+) = \sup_{x \in U} f(x), \, f(x_-) = \inf_{x \in U} f(x) \).
+\end{subbox}
+
+
+\subsection{Partielle Ableitungen}
+
+\begin{mainbox}{Partielle Ableitung (Definition 3.3.5)}
+    \( U \subseteq \R^m \) offen, \( f: \: U \to \R \). Die \emph{\( i \)-te partielle Ableitung von \( f \) bei \( x_0 \in U \)} ist \( \partial_{x_i} f \coloneqq g'(x_{0, i}) \in \R \), wobei \( g: \: \{ t \in \R \; | \; (x_{0, 1}, \dots, \underbrace{t}_\text{Index \( i \)}, \dots, x_{0, n}) \in U \} \to \R \), \( g(t) = f(x_{0, 1}, \dots, \underbrace{t}_\text{Index \( i \)}, \dots, x_{0, n}) \), falls \( g \) bei \( x_0 \) differenzierbar.
+\end{mainbox}
+
+Andere Schreibweisen:
+\[ \partial_{x_i} f = \partial_i f = \frac{\partial f}{\partial x_i} = f_{x_i} \]
+
+Falls \( \partial_{x_i} \) überall existiert, ist \( \partial_{x_i} f \) selbst wieder eine Funktion \( U \to \R^m \), genau wie \( f \). Also kann man höhere partielle Ableitung betrachten: \( \partial_{x_j} \partial_{x_i} f \). Andere Notationen:
+\[ \partial_{ji} f = \frac{\partial^2 f}{\partial x_j \, \partial x_i} = f_{x_j x_i} \]
+
+\begin{mainbox}{Jacobimatrix (Definition 3.3.9)}
+    \( U \subseteq \R^n \) offen, \( f: \: U \to \R^m, \ f = (f_1, \dots, f_m) \) mit \( f_i: \: U \to \R \).
+    Die \( m \! \times \! n \)-Matrix
+    \[ J_f(x) = \left( \partial_j f_i(x) \right)_\substack{1 \leq i \leq m \\ 1 \leq j \leq n} \]
+    heisst \emph{Jacobimatrix von \( f \) bei \( x \)}.
+\end{mainbox}
+
+\begin{mainbox}{Gradient, Divergenz (Definition 3.3.11)}
+    \( U \subseteq \R^m \) offen
+    
+    Der \emph{Gradient} von \( f: \: U \to \R \) bei \( x_0 \in U \) ist
+    \[ \gradient f(x_0) = \nabla f(x_0) = \begin{pmatrix*}
+        \partial_1 f(x_0) \\
+        \vdots \\
+        \partial_n f(x_0)
+    \end{pmatrix*} = J_f(x_0)^\mathrm{T} \]
+
+    Die \emph{Divergenz} von \(f: \: U \to \R^n \) bei \( x_0 \in U \) ist
+    \[ \divergence f(x_0) = \partial_1 f_1(x_0) + \dots + \partial_n f_n(x_0) = \trace J_f(x_0) \]
+\end{mainbox}
+
+
+\subsection{Differential}
+
+Für Funktionen \( f: \: \R \to \R \) bedeutet Differenzierbarkeit bei \( x_0 \), dass \( f \) in der Nähe von \( x_0 \) gut durch eine Gerade angenähert wird.
+
+Entsprechend definieren wir, dass \( f: \: \R^n \to \R^m \) bei \( x_0 \in \R^n \) differenzierbar ist, wenn \( f \) in der Nähe von \( x_0 \) gut durch eine affine Funktion (= Konstante + lineare Funktion) angenähert wird.
+
+\begin{mainbox}{Differenzierbarkeit, Differenzial (Definition 3.4.2)}
+    \( U \subseteq \R \) offen, \( f: \: U \to \R^m \), \( A \) eine lineare Abbildung \( \R^n \to \R^m \). \( f \) heisst \emph{differenzierbar bei \( x_0 \in U \) mit Differential \( A \)}, geschrieben \( \mathrm{d} f(x_0) = A \), falls
+    \[ \lim_{x \to x_0, \, x \neq x_0} \frac{f(x) - f(x_0) - A (x - x_0)}{\norm{x - x_0}} = 0 \]
+\end{mainbox}
+
+\( \mathrm{d} f(x_0) = A \) \( \iff \) \( f \) hat die \emph{Dreigliedentwicklung}
+\[ f(x) = f(x_0) + A(x - x_0) + \text{Fehler}(x - x_0) \]
+wobei \( \text{Fehler}(x - x_0) = \smallCalO (\norm{x - x_0}) \), d.h.
+\[ \lim_{x \to x_0, \, x \neq x_0} \frac{\text{Fehler}(x - x_0}{\norm{x - x_0}} = 0 \]
+
+Für \( f: \: \R \to \R \) ist \( \mathrm{d} f(x_0) \) die lineare Abbildung \( \R \to \R, \, x \mapsto f'(x_0) \cdot x \).
+
+\( f = (f_1, \dots, f_m \) differenzierbar \( \iff \) \( f_1, \dots, f_m \) differenzierbar
+
+\begin{subbox}{Stetige Differenzierbarkeit (Satz 3.4.7)}
+    \( U \subseteq \R^n \) offen, \(f: \: U \to \R^m \). Falls \( \partial_{xj} f_i \) für alle \( 1 \leq j \leq m, \, 1 \leq i \leq m \) existiert und stetig ist, dann ist \( f \) differenzierbar.
+    Wir nennen \( f \) dann \emph{stetig differenzierbar}.
+\end{subbox}
+
+\begin{subbox}{(Satz 3.4.4)}
+    \( U \subseteq \R^n \) offen, \( f: \: U \to \R^m \) differenzierbar. Dann
+    \begin{itemize}
+        \item \( f \) ist stetig.
+        \item \( \partial_{xj} f_i \) existiert für \( 1 \leq j \leq n, \, 1 \leq i \leq m \).
+        \item Die Matrix von \( \mathrm{d} f (x_0) \) bezüglich den Standardbasen von \( \R^n, \R^m \) ist gleich \( J_f(x_0) \).
+    \end{itemize}
+\end{subbox}
+
+\begin{subbox}{(Satz 3.4.6)}
+    \( U \subseteq \R^n \) offen, \(f, g: \: U \to \R^m \) differenzierbar. Dann:
+    \begin{itemize}
+        \item \( f + g \) ist differenzierbar und \( \mathrm{d} (f + g)(x_0) = \mathrm{d} f(x_0) + \mathrm{d} y(x_0) \).
+        \item \( m = 1 \) \( \implies \) \( fg \) ist differenzierbar.
+        \item \( m = 1, \, g \neq 0 \) \( \implies \) \( \frac{f}{g} \) ist differenzierbar.
+    \end{itemize}
+\end{subbox}
+
+\begin{subbox}{Kettenregel (Satz 3.4.9)}
+    \( U \subseteq \R^n \) offen, \( V \subseteq \R^m \) offen, \( f: \: U \to V, \, g: \: V \to \R^p \) differenzierbar. Dann ist \( g \circ f \) differenzierbar und
+    \[ \mathrm{d} (g \circ f)(x_0) = \mathrm{d} g(f_(x_0)) \circ \mathrm{d} f(x_0) \]
+    Insbesondere erfüllen die Jacobimatrizen
+    \[ J_{g \circ f}(x_0) = J_g(f(x_0)) J_f(x_0) \]
+\end{subbox}
+
+Falls \( p = 1 \), kann man die Kettenregel auch mit Gradienten schreiben:
+\[ \nabla_{g \circ f} = J_{g \circ f}^\mathrm{T}, \quad \nabla_g = \nabla_g^\mathrm{T} \]
+also
+\[ \underbrace{\nabla_{g \circ f}(x_0)}_{\in \R^n} = \underbrace{J_f(x_0)^\mathrm{T}}_{\in \R^{n \! \times \! m}} \cdot \underbrace{\nabla_g(f(x_0))}_{\in \R^m} \]
+
+
+\subsection{Tangentialraum und Richtungsableitungen}
+
+\begin{mainbox}{Tangentialraum (Definition 3.4.11)}
+    \( U \subseteq \R^n \) offen, \( f: \: U \to \R^m \) differenzierbar, \( x_0 \in U \), \( A = \mathrm{d} f(x_0) \). Der \emph{Tangentialraum bei \( x_0 \) des Graphen von \( f \)} ist der Graph von \( g(x) = f(x_0) + A(x - x_0) \), also \( \{ (x, g(x)) \; | \; x \in \R^n \} \subseteq \R^n \times \R^m \).
+\end{mainbox}
+
+\begin{subbox}{Richtungsableitung (Definition 3.4.13)}
+    \( U \subseteq \R^n \) offen, \(f: \: U \to \R^m \), \( v \in \R^n \setminus \{ 0 \} \), \(x_0 \in U \). Die \emph{Richtungsableitung von \( f \) in Richtung \( v \) bei \( x_0 \)} ist \( D_v f(x_0) \coloneqq \underbrace{J_g(0)}_{\left( \begin{smallmatrix}
+        \partial_x g_1(0) \\
+        \vdots \\
+        \partial_x g_m(0)
+    \end{smallmatrix} \right)} \in \R^m \), wobei \( g: \: \{ t \in \R \; | \; x_0 + tv \in U \} \to \R^m, \, g(t) = f(x_0 + tv) \).
+\end{subbox}
+
+Falls \( m = 1\), dann \( D_{e_i} f(x_0) = \partial_{x_i} f(x_0) \) für \( e_i \) den \( i \)-ten Standardbasisvektor.
+
+\begin{subbox}{(Satz 3.4.15)}
+    \( U \subseteq \R^n \) offen, \( f: \: U \to \R^m \) stetig differenzierbar \( \implies \) für alle \( x_0 \in U, \, v \in \R^n \setminus \{ 0 \} \) gilt \(D_v f(x_0) = \mathrm{d} f(x_0)(v) \). Insbesondere
+    \[ D_{\lambda_1 v_1 + \lambda_2 v_2} f(x_0) = \lambda_1 D_{v_1} f(x_0) + \lambda_2 D_{v_2} f(x_0) \]
+\end{subbox}
+
+
+\subsection{Höhere Ableitungen}
+
+\begin{mainbox}{(Definition 3.5.1)}
+    \begin{align*}
+        C^0(U, \R^m) &\coloneqq \{ \text{stetige Funktionen } f: \: U \to \R^m \} \\
+        \underbrace{C^k(U, \R^m)}_\text{für \( k \geq 1 \)} &\coloneqq \{ f \text{ diffbar und alle } \partial_{x_j} f \in C^{k - 1}(U, \R^m) \} \\
+        &= \{ f \text{ sodass alle } \partial_{x_{j_1}}, \dots, \partial_{x_{j_k}} f_i \text{ existieren \& stetig sind} \} \\
+        &= \text{\say{\( k \)-mal stetig differenzierbar}} \\
+        C^\infty(U, \R^m) &\coloneqq \bigcap_{k = 0}^\infty C^k(U, \R^m) \\
+        &= \text{\say{glatt}}
+    \end{align*}
+    Wir haben \( C^0 \supseteq C^1 \supseteq C^2 \supseteq \dots \supseteq C^\infty \)
+\end{mainbox}
+
+\begin{mainbox}{Hessische (Definition 3.5.9)}
+    \( U \subseteq \R^n \) offen, \( (f: \: U \to \R) \in C^2 \), \( x_0 \in U \). Die \emph{Hessische von \(f \) bei \( x_0 \)} ist die \( n \! \times \! n \)-Matrix
+    \[ H_f(x_0) = (\partial_{x_i} \partial_{x_j} f(x_0))_\substack{1 \leq i \leq n \\ 1 \leq j \leq n} \]
+\end{mainbox}
+
+\begin{subbox}{(Satz 3.5.4)}
+    \( U \subseteq \R^n \) offen, \( f \in C^2(U, \R^m) \). Dann gilt
+    \[ \partial_{x_j} \partial_{x_l} f = \partial_{x_l} \partial_{x_j} f \]
+\end{subbox}
+
+\begin{subbox}{}
+    Ist \( f \in C^k \), so lassen sich \( \partial_{x_{j_1}}, \dots, \partial_{x_{j_k}} \) beliebig vertauschen!
+\end{subbox}
+
+
+\subsection{Taylorpolynome}
+
+Dreigliedentwicklung von \( f \in C^1(U, \R) \) für \( U \subseteq \R \) offen
+\[ f(x) = \underbrace{f(x_0) + f'(x_0) \cdot y}_{T_1 f(x) \text{ (Polynom von Grad \( \leq 1 \))}} + \smallCalO(\abs{y}) \]
+wobei \( y = x - x_0 \).
+
+Annäherung durch Taylorpolynome für \( f \in C^k \):
+\[ f(x) = \underbrace{\sum_{j = 0}^k \frac{1}{j!} \cdot f^{(j)}(x_0) \cdot y^j}_{T_k f(x) \text{ Polynom von Grad \( \leq k \)}} + \smallCalO(\abs{y}^k) \]
+
+\( T_k f(x) \) ist das einzige Polynom \( P(x) \) von Grad \( \leq k \), sodass \( P(x_0) = f(x_0), \, P'(x_0) = f'(x_0), \, \dots, \, P^{(k)}(x_0) = f^{(k)}(x_0) \).
+
+Erinnerung: \( \deg x_1^{m_1} \cdot \dots \cdot x_n^{m_m} = m_1 + \dots + m_m \)
+
+
+\subsection{Exkurs zum Landau-Symbol \texorpdfstring{\( \smallCalO \)}{ℴ}}
+
+\begin{mainbox}{}
+    \( U \subseteq \R^n \), \( g: \: U \to \R \), \( x_0 \in U \). Dann ist \emph{\( \smallCalO(g) \)} die Menge der Funktionen \( f: \: U \to \R \) mit \( \lim_{x \to x_0, \, x \neq x_0} \abs{\frac{f(x)}{g(x)}} = 0 \) (die Betragsstriche können auch weggelassen werden, das wäre äquivalent).
+
+    Schreibweise: \( f = \smallCalO(g) \) anstatt \( f \in \smallCalO(g) \), \( \smallCalO(f) = \smallCalO(g) \) anstatt \( \smallCalO(f) \subseteq \smallCalO(g) \).
+
+    Für Funktionen \( \R \to \R \), \( x_0 = 0 \) gilt \( x^k = \smallCalO(x^l) \iff k > l \).
+\end{mainbox}
+
+\subsubsection{Rechenregeln}
+\begin{gather*}
+    \smallCalO(x^a) + \smallCalO(x^b) = \smallCalO(x^{\min(a, b)}) \\
+    \smallCalO(x^a) \cdot \smallCalO(x^b) = \smallCalO(x^{a + b}) \\
+    x^a \smallCalO(x^b) = \smallCalO(x^{a + b})
+\end{gather*}
+Diese Regeln gelten für \( x_0 = 0 \). Ansonsten muss man \( x \) durch \( y = x - x_0 \) ersetzen.
+
+
+\subsection{Kritische Punkte}
+\subsection{Lagrange-Multiplikatoren}
+\subsection{Satz der Umkehrabbildung}
+\section{Integration in \(\R^n\)}
+\subsection{Wegintegrale}
+\subsection{Rotation/Curl}
+\subsection{Riemann-Integral in \(\R^n\)}
+\subsection{Uneigentliche Integrale}
+\subsection{Transformationsformel}
+\subsection{Schwerpunktsberechnungen}
+
+\pagebreak
+%%% Original cheatsheet below %%%
 
 \maketitle
 
