@@ -7,8 +7,10 @@
 \usepackage{flowfram}
 \ffvadjustfalse
 \setlength{\columnsep}{1cm}
-\Ncolumn[<9]{3}
-\onecolumn[9]
+\Ncolumn[<10]{3}
+\onecolumn[10]
+
+\usepackage[dvipsnames]{xcolor}
 
 % define nice looking boxes
 \usepackage[many]{tcolorbox}
@@ -82,6 +84,8 @@
 
 
 \begin{document}
+
+\small
 
 \maketitle
 
@@ -520,44 +524,6 @@ Die Maximum-Likelihood-Methode ist ein Weg, um systematisch einen Schätzer zu b
 \end{enumerate}
 Unter dem gefundenen \(\theta\) ist die Likelihood-Funktion maximal.
 
-\section{Konfidenzintervalle}
-\begin{mainbox}{Definition Konfidenzintervall}
-	Sei \(\alpha \in [0,1]\). Ein Konfidenzintervall für \(\theta\) mit Niveau \(1 - \alpha\) ist ein Zufallsintervall \(I=[A,B]\), sodass gilt
-	\[\forall \theta \in \Theta \: \P_\theta[A\le \theta \le B] \ge 1- \alpha\]
-
-	wobei \(A\) und \(B\) Zufallsvariablen der Form \(A = a(X_1, \ldots, X_n), B = b(X_1, \ldots, X_n)\) mit \(a,b: \R^n \to \R\) sind.
-\end{mainbox}
-
-Wenn wir einen Schätzer \(T = T_{ML} \sim \mathcal{N}(m, \frac{1}{n})\) haben, suchen wir ein Konfidenzintervall der Form
-\[I = [T-c/\sqrt{n}, T+c/\sqrt{n}]\]
-Hierbei gilt:
-\begin{align*}
-	\P_\theta[T-c/\sqrt{n} \le m \le T+c/\sqrt{n}] \\
-	= \P_\theta[-c\le Z \le c]
-\end{align*}
-wobei \(Z = \sqrt{n}(T-m)\) ist.
-
-\subsection{Häufige Fälle}
-\subsubsection*{\texorpdfstring{Normalverteilt -- \(\mu\) unbekannt, \(\sigma^2\) bekannt (z-Test)}{Normalverteilt -- μ unbekannt, σ² bekannt (z-Test)}}
-Erwartungstreuer Schätzer: \(\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\)\\
-Verteilung unter \(\P_\theta: \frac{\overline{X}_n - \theta_0}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
-\begin{enumerate}
-	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_\theta\)
-	\item Hypothesen \(H_0 : \theta = \theta_0\), z.B. \(H_A : \theta \ne \theta_0\)
-	\item Test \(T = \frac{\overline{X}_n - \mu}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
-	\item Verwerfungsbereich \((-\infty, -c) \ \cup \ (c, \infty)\) für \(c\ge 0\)
-\end{enumerate}
-
-\subsubsection*{\texorpdfstring{Normalverteilt -- \(\mu\), \(\sigma^2\) unbekannt (t-Test)}{Normalverteilt --< μ, σ² unbekannt (t-Test)}}
-Wir definieren \(\vec{\theta} = (\mu, \sigma^2)\) und den Varianz-Schätzer \(S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X}_n)^2\).
-\begin{enumerate}
-	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_{\vec{\theta}}\)
-	\item Test \(T = \frac{\overline{X}_n - \mu_0}{\sqrt{S^2/n}} \sim t_{n-1}\)
-\end{enumerate}
-
-\subsection{Approximatives Konfidenzintervall}
-Wir können den zentralen Grenzwertsatz benutzen, um eine standardnormalverteilte ZV zu erhalten, und damit die Konfidenzintervalle zu bestimmen.
-
 \section{Tests}
 \begin{subbox}{Null- und Alternativhypothese}
 	Die Nullhypothese \(H_0\) und die Alternativhypothese \(H_A\) sind zwei Teilmengen \(\Theta_0 \subseteq \Theta, \Theta_A \subseteq \Theta\) wobei \(\Theta_0 \cap \Theta_A = \varnothing\). Eine Hypothese heisst \textit{einfach}, falls die Teilmenge aus einem einzelnen Wert besteht; sonst \textit{zusammengesetzt}.
@@ -703,6 +669,153 @@ Wir definieren \(\tau(x) = \phi(a +(b-a)U)\). Dann verwenden wir
 	            & = \int_{-\infty}^\infty \phi(y)\frac{1}{b-a} \mathbb{I}_{y\in[a,b]} \mathop{dy}
 \end{align*}
 Die Dichte von \(U'\) ist also \(\frac{1}{b-a} \mathbb{I}_{y\in[a,b]}\).
+
+\subsection{Serie 13}
+\paragraph{Q1.} Sei \( \Theta = [0, 1] \). Wir betrachten die Modellfamilie \( (\P_\theta)_{\theta \in \Theta} \), wobei \( X_1, \dots, X_n \) unter \( \P_\theta \) unabhängig, identisch verteilt sind mit \( X_1 \sim \mathrm{Geo}(\theta) \). Was ist die Likelihood-Funktion \( L(x_1, \dots, x_n; \theta) \) für \( x_1, \dots, x_n \in \{1, 2, \dots \} \)?
+\begin{enumerate}[label=(\alph*)]
+    \item \( (1 - \theta)^{x_1 + \dots + x_n} \)
+    \item \( \theta^n \cdot (1 - \theta)^{x_1 + \dots + x_n} \)
+    \item {\color{Green} \( \theta^n \cdot (1 - \theta)^{x_1 + \dots + x_n - n} \) }
+    \item \( (1 - \theta)^{x_1 + \dots + x_n - n} \)
+\end{enumerate}
+{\color{Green} Für eine \( \mathrm{Geo}(\theta) \)-verteilte Zufallsvariable \( X \) (unter \( \P_\theta \) gilt \( \P_\theta[X = x] = \theta \cdot (1 - \theta)^{x - 1} \) für alle \( x \in \{1, 2, \dots \} \). Da die Zufallsvariablen \( X_1, \dots, X_n \) unabhängig sind, erhält man die Likelihood-Funktion
+\begin{align*}
+    L(x_1, \dots, x_n; \theta) &=  \P_\theta[X_1 = x_1, \dots, X_n = x_n ] \\
+    &= \prod_{i = 1}^n \P_\theta[X_i = x_i] \\
+    &= \theta^n \cdot (1 - \theta)^{x_1 + \dots + x_n - n}
+\end{align*}}
+
+\paragraph{Q2.} Weiterhin sei \( \Theta = [0, 1] \) und \( X_1, \dots, X_n \) seien unter \( \P_\theta \) unabhängig, identisch verteilt mit \( X_1 \sim \mathrm{Geo}(\theta) \). Was ist der Maximum-Likelihood-Schätzer \( T_{ML} \) für \( \theta \)?
+\begin{enumerate}[label=(\alph*)]
+    \item \( \frac{X_1 + \dots + X_n}{n} \)
+    \item {\color{Green} \( \frac{n}{X_1 + \dots + X_n} \)}
+    \item \( \frac{X_1 + \dots + X_n + n}{n} \)
+    \item \( \frac{n}{X_1 + \dots + X_n + n} \)
+\end{enumerate}
+{\color{Green} In der vorherigen Frage haben wir gezeigt, dass die log-Likelihood-Funktion gegeben ist durch
+\[ n \cdot \log(\theta) + (x_1 + \dots + x_n - n) \cdot \log(1 - \theta) \]
+Wir setzen nun die Ableitung der log-Likelihood-Funktion nach \( \theta \) gleich \( 0 \) und erhalten
+\begin{align*}
+    & \frac{n}{\theta} - \frac{x_1 + \dots + x_n - n}{1 - \theta} = 0 \\
+    \iff & n - n \theta = (x_1 + \dots + x_n) \cdot \theta - n \theta \\
+    \iff & \theta = \frac{n}{x_1 + \dots + x_n }
+\end{align*}
+und somit
+\[ T_{ML} = \frac{n}{X_1 + \dots + X_n} \]
+}
+
+\paragraph{Q3.} Sei \( \Theta = (\theta, \infty) \). Wir betrachten die Modellfamilie \( (P_\theta)_{\theta \in \Theta} \), wobei \( X_1, \dots, X_n \) unter \( \P_\theta \) unabhängig, identisch verteilt sind mit \( X_1 \sim \mathrm{Exp}(\theta) \). Was ist die Likelihood-Funktion \( L(x_1, \dots, x_n; \theta)  \) für \( x_1, \dots, x_n \geq 0 \)?
+\begin{enumerate}[label=(\alph*)]
+    \item \( e^{-\theta(x_1 + \dots + x_n)} \)
+    \item \( \theta \cdot e^{-\theta(x_1 + \dots + x_n)} \)
+    \item {\color{Green} \( \theta^n \cdot e^{-\theta(x_1 + \dots + x_n)} \)}
+    \item \( n \theta^n \cdot e^{-\theta(x_1 + \dots + x_n)} \)
+\end{enumerate}
+{\color{Green} Eine \( \mathrm{Exp}(\theta) \)-verteilte Zufallsvariable \( X \) (unter \( \P_\theta \)) hat Dichte \( f_X(x) = \theta e^{-\theta x} 1_{x \geq 0} \). Da die Zufallsvariablen \( X_1, \dots, X_n \) unabhängig sind, haben die Zufallsvariablen \( X_1, \dots, X_n \) eine gemeinsame Dichte und wir erhalten die Likelihood-Funktion
+\begin{align*}
+    L(x_1, \dots, x_n; \theta) &= f_{X_1, \dots, X_n}(x_1, \dots, x_n; \theta) \\
+    &= \prod_{i = 1}^n \theta e^{-\theta x_i} 1_{x_i \geq 0} \\
+    &= \theta^n e^{-\theta(x_1 + \dots + x_n)} 1_{x_1, \dots, x_n \geq 0}
+\end{align*}}
+
+\paragraph{Q4.} Weiterhin sei \(\Theta = (\theta, \infty) \) und \( X_1, \dots , X_n \) seien unter \( \P_\theta \) unabhängig, identisch verteilt mit \( X_1 \sim \mathrm{Exp}(\theta) \). Was ist der Maximum-Likelihood-Schätzer \( T_{ML} \) für \( \theta \)?
+\begin{enumerate}[label=(\alph*)]
+    \item {\color{Green} \( \frac{n}{X_1 + \dots + X_n} \)}
+    \item \( X_1 + \dots + X_n \)
+    \item \( \frac{X_1 + \dots + X_n}{n} \)
+    \item \( \frac{1}{X_1 + \dots + X_n} \)
+\end{enumerate}
+{\color{Green} In der vorherigen Frage haben wir gezeigt, dass die log-Likelihood-Funktion gegeben ist durch
+\[ n \cdot \log(\theta) - \theta(x_1 + \dots + x_n) \]
+Wir setzen nun die Ableitung der log-Likelihood-Funktion nach \( \theta \) gleich \( 0 \) und erhalten
+\[ \frac{n}{\theta} - (x_1 + \dots + x_n) = 0 \iff \theta = \frac{n}{x_1 + \dots + x_n} \]
+und somit
+\[ T_{ML} = \frac{n}{X_1 + \dots + X_n} \]}
+
+\paragraph{Q5.} Sei \( X \sim \chi_n^2 \). Was ist der Erwartungswert \( \E[X] \)?
+\begin{enumerate}[label=(\alph*)]
+    \item \( 1 \)
+    \item \( 2 \)
+    \item \( \frac{n}{2} \)
+    \item {\color{Green} \( n \)}
+    \item \( n^2 \)
+\end{enumerate}
+{\color{Green} \( X \) hat die gleiche Verteilung wie \( Z_1^2 + \dots + Z_n^2 \), wobei \( Z_1, \dots, Z_n \) u.i.v. \(\sim \mathcal{N}(0,1) \) sind. Aus Linearität haben wir
+\[ \E[X] = \E[Z_1^2] + \dots + \E[Z_n^2] = n \E[Z_1^2] = n \]}
+
+\paragraph{Q6.} Sei \( X_1, \dots, X_n \) u.i.v. \( \sim \mathcal{N}(0, 1)\). \textit{(Mehrere richtige Antworten möglich.)}
+\begin{enumerate}[label=(\alph*)]
+    \item {\color{Green} \( X_1^2 + \dots + X_n^2 \sim \chi_n^2 \)}
+    \item \( (X_1 + \dots + X_n)^2 \sim \chi_n^2 \)
+    \item {\color{Green} \( \frac{1}{n} (X_1 + \dots + X_n)^2 \sim \chi_1^2 \)}
+    \item {\color{Green} \( X_1^2 + X_2^2 \sim \mathrm{Exp}(\frac{1}{2}) \)}
+\end{enumerate}
+
+\paragraph{F1. [MLE I: Stetige Verteilung]}
+Wir betrachten eine stetige Verteilung mit Dichte
+\[ f(x) = \begin{cases}
+    \frac{\theta}{x^{\theta + 1}} & x \geq 1 \\
+    0 & x < 1
+\end{cases} \]
+wobei \( \theta > 0 \) ein unbekannter Parameter ist. Wir wollen den Parameter \( \theta \) mit Hilfe eines Datensatzes schätzen.
+Sei \( X_1, \dots, X_n \) eine Stichprobe von unabhängigen Zufallsvariablen, welche alle die Dichte \( f \) besitzen. Bestimme die Likelihood- und log-Likelihood-Funktion.
+Bestimme den zugehörigen Maximum-Likelihood-Schätzer für \( \theta \). Schreibe zuerst die allgemeine Formel für \( n \) Beobachtungen hin und berechne dann den Schätzwert für die folgende konkrete Stichprobe:
+\begin{center}
+    \begin{tabular}{|ccccc|}
+        \hline
+        \( x_1 \) & \( x_2 \) & \( x_3 \) & \( x_4 \) & \( x_5 \)  \\
+        \hline
+        \( 12.0 \) & \( 4.0 \) & \( 6.9 \) & \( 27.9 \) & \( 15.4 \) \\
+        \hline
+    \end{tabular}
+\end{center}
+{\color{Green}
+\begin{enumerate}[label=(\alph*)]
+    \item \color{Green} Die Likelihood-Funktion ergibt sich aus dem Produkt der Dichten. Für \( x_1, \dots, x_n \geq 1 \) erhalten wir
+    \begin{align*}
+        L(x_1, \dots, x_n; \theta) &= \prod_{i = 1}^n f(x_i) \\
+        &= \prod_{i=1}^n \frac{\theta}{x_i^{\theta + 1}} \\
+        &= \theta^n \frac{1}{(\prod_{i = 1}^{n} x_i)^{\theta + 1}}
+    \end{align*}
+    Falls \( x_i < 1 \) für ein \( 1 \leq i \leq n \), ist die Likelihood-Funktion gleich \( 0 \), wir können uns also auf den Fall \( x1, \dots, x_n \geq 1 \) beschränken.
+    Die log-Likelihood-Funktion erhalten wir durch Logarithmieren obiger Formel als
+    \begin{align*}
+        l(x_1, \dots, x_n; \theta) &= \log L(x_1, \dots, x_n; \theta) \\
+        &= n \log \theta - (\theta + 1) \sum_{i = 1}^n \log x_i
+    \end{align*}
+    \item \color{Green} Ableiten und Nullsetzen der log-Likelihood-Funktion ergibt
+    \[ \frac{\partial}{\partial \theta} l(x_1, \dots, x_n; \theta) = \frac{n}{\theta} - \sum_{i = 1}{n} \log x_i = 0 \]
+    für \( \theta^* = \frac{n}{\sum_{i = 1}^n \log x_i} \). Für \( \theta < \theta^* \) ist die Ableitung strikt positiv, für \( \theta > \theta^* \) strikt negativ, es handelt sich also um das Maximum. Also ist der Maximum-Likelihood-Schätzer
+    \[ T_{ML} = \frac{n}{\sum_{i = 1}^{n} \log X_i} = \frac{1}{\frac{1}{n} \sum_{i = 1}^{n} \log X_i} \]
+    Der realisierte Schätzwert für die gegebenen Daten ist dann
+    \[ t_{ML} = \frac{5}{\sum_{i = 1}^5 \log x_i} = 0.4214 \]
+\end{enumerate}
+}
+
+\paragraph{F3. [Beispiel 8.14]}
+Die Australier Mr. Smith und Dr. Thurston streiten sich über das Durchschnittsgewicht von Straußeneiern. Beide sind damit einverstanden, das Gewicht approximativ als normalverteilt aufzufassen. Mr. Smith behauptet, das mittlere Gewicht sei 1100g, während Dr. Thurston darauf besteht, es liege im Schnitt bei 1200g.
+Sie reisen also nach Afrika und suchen Straußeneier. Da diese aber gut versteckt sind, finden sie nur \( n = 8 \) Eier, deren Gewichte (in g) 1090, 1150, 1170, 1080, 1210, 1230, 1180, 1140 betragen.
+\begin{enumerate}[label=(\alph*)]
+    \item Dr. Thurston schlägt vor, Mr. Smiths Behauptung als Hypothese \( \mu = \mu_0 = 1100 \) gegen seine Alternative \( \mu > 1100 \) auf dem 5\%-Niveau zu testen.
+    \item Mr. Smith schlägt vor, Dr. Thurstons Behauptung als Hypothese \( \mu = \mu_1 = 1200 \) gegen seine Alternative \( \mu < 1200 \) auf dem 5\%-Niveau zu testen.
+\end{enumerate}
+Die Varianz \( \sigma^2 \) ist beiden bekannt und beträge (in g) \( \sigma = 55 \).
+{\color{Green}
+\begin{enumerate}[label=(\alph*)]
+    \item Der Mittelwert der 8 Eier ist:
+    \[ \bar{x_n} = \frac{1}{n} \sum_{k = 1}^n x_k = \frac{1}{8} \sum_{k = 1}^8 x_k = 1156.25 \]
+    Der kritische Wert für einseitigen Test auf dem 5\%-Niveau ist \( z_{0.95} = 1.645 \). Der Teststatistik ist:
+    \[ T_{Th} = \frac{\bar{x_n} - \mu_0}{\frac{\sigma}{\sqrt{n}}} = \frac{1156.25 - 1100}{\frac{55}{\sqrt{8}}} = 2.89 \]
+    Da \( T_{Th} > z_{0.95} \), wird die Nullhypothese \( \mu = 1100 \) auf dem 5\%-Niveau verworfen.
+    \item Der Mittelwert der 8 Eier bleibt:
+    \[ \bar{x_n} = \frac{1}{n} \sum_{k = 1}^n x_k = \frac{1}{8} \sum_{k = 1}^8 x_k = 1156.25 \]
+    Der kritische Wert für einseitigen Test auf dem 5\%-Niveau ist \( z_{0.05} = -1.645 \). Der Teststatistik ist:
+    \[ T_{Sm} = \frac{\bar{x_n} - \mu_1}{\frac{\sigma}{\sqrt{n}}} = \frac{1156.25 - 1200}{\frac{55}{\sqrt{8}}} = -2.25 \]
+    Da \( T_{Sm} < z_{0.05} \), wird die Nullhypothese \( \mu = 1200 \) auf dem 5\%-Niveau verworfen.
+\end{enumerate}
+Dieses Beispiel illustriert sehr schön die Bedeutung der Wahl von Hypothese und Alternative und auch ihre asymmetrische Behandlung. Mit dem ersten Test würde man Dr. Thurston Recht geben, mit dem zweiten hingegen Mr. Smith. Und das passiert trotz völlig identischen Daten!
+}
+
 
 \section{Quellen}
 Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}{Cheatsheet von Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind grösstenteils vom offiziellen Vorlesungsskript (V. Tassion) übernommen.
