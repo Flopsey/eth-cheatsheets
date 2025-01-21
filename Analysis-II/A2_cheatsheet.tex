@@ -115,7 +115,13 @@
     \[
         \left\{ \begin{array}{l}
              F(x, y(x), y'(x), y''(x), \dots, y^{(n)}(x)) = 0 \\
-             y(x_0) = y_0, \, y'(x_0) = y_1, \, y''(x_0) = y_2, \, \dots, \,, y^{(n - 1)}(x_0) = y_{n - 1}
+             \left\{ \begin{aligned}
+                y(x_0) &= y_0, \\
+                y'(x_0) &= y_1, \\
+                y''(x_0) &= y_2, \\
+                &\vdots \\
+                y^{(n - 1)}(x_0) &= y_{n - 1}
+            \end{aligned} \right.
         \end{array} \right.
     \]
 \end{mainbox}
@@ -176,7 +182,7 @@ Betrachtet man nun nur die unterschiedlichen vorkommenden Nullstellen, so gehör
 \end{subbox}
 
 \subsection{Fundamentalsystem}
-Hat das charakteristische Polynom die Nullstellen \( \lambda_1, \, \dots, \, \lambda_k \) mit Vielfachheiten \( m_1, \dots, \, m_k \), so besitzt die Differentialgleichung die linear unabhängigen Lösungen \begin{gather*}
+Hat das charakteristische Polynom die Nullstellen \( \lambda_1,\allowbreak \, \dots,\allowbreak \, \lambda_k \) mit Vielfachheiten \( m_1,\allowbreak \dots,\allowbreak \, m_k \), so besitzt die Differentialgleichung die linear unabhängigen Lösungen \begin{gather*}
     e^{\lambda_1 x}, \, x \cdot e^{\lambda_1 x}, \, \dots, \, x^{m_1 - 1} \cdot e^{\lambda_1 x} \text{,} \\
     e^{\lambda_2 x}, \, x \cdot e^{\lambda_2 x}, \, \dots, \, x^{m_2 - 1} \cdot e^{\lambda_2 x} \text{,} \\
     \vdots \\
@@ -191,10 +197,14 @@ Diese Lösungen bilden ein \emph{Fundamentalsystem} der Differentialgleichung. \
 \paragraph{Beispiel} mit \( y(x) = A \cdot e^{(a + bi)x} + B \cdot e^{(a - bi)x} \)
 \begin{align*}
     y(x) &= A \cdot e^{ax + ibx} + B \cdot e^{ax - ibx} \\
-    &= A \cdot e^{ax} \cdot (\cos(bx) + i \sin(bx))) + B \cdot e^{ax} \cdot (\cos(bx) - i \sin(bx)) \\
+    &= \begin{aligned}
+        &A \cdot e^{ax} \cdot (\cos(bx) + i \sin(bx)) \\
+        &+ B \cdot e^{ax} \cdot (\cos(bx) - i \sin(bx))
+    \end{aligned} \\
     &= (A + B) \cdot e^{ax} \cdot \cos(bx) + (A - B)i \cdot e^{ax} \cdot \sin(bx) \\
     &= A^* \cdot e^{ax} \cos(bx) + B^* \cdot e^{ax} \cdot \sin(bx)
 \end{align*}
+
 
 \subsection{Variation der Konstanten}
 \begin{itemize}
@@ -217,11 +227,33 @@ Es ist wichtig, dass \( y_p(x) \) \emph{eine Funktion derselben Form} wie \( b(x
     \begin{tabular}{|c|c|}
     \hline
     \textbf{Inhomogener Term $b(x)$} & \textbf{Ansatz für $y_p(x)$} \\ \hline
-    $\sum_{i=0}^m b_ix^i$ & $\sum_{i=0}^m A_i x^i$ \\ 
-    $e^{\alpha x} \sum_{i=0}^m b_i x^i$ & $e^{\alpha x} \sum_{i=0}^m A_i x^i$ \\ 
-    $\sin(\omega x) \sum_{i=0}^m b_i x^i + \cos(\omega x) \sum_{i=0}^m c_i x^i$ & $\sin(\omega x) \sum_{i=0}^m A_i x^i + \cos(\omega x) \sum_{i=0}^m B_i x^i$ \\ 
-    $\sinh(\omega x) \sum_{i=0}^m b_i x^i + \cosh(\omega x) \sum_{i=0}^m c_i x^i$ & $\sinh(\omega x) \sum_{i=0}^m A_i x^i + \cosh(\omega x) \sum_{i=0}^m B_i x^i$ \\ 
-    $e^{\alpha x} \sin(\omega x) \sum_{i=0}^m b_i x^i + e^{\alpha x} \cos(\omega x) \sum_{i=0}^m c_i x^i$ & $e^{\alpha x} \sin(\omega x) \sum_{i=0}^m A_i x^i + e^{\alpha x} \cos(\omega x) \sum_{i=0}^m B_i x^i$ \\ \hline
+    $\sum_{i=0}^m b_ix^i$ & $\sum_{i=0}^m A_i x^i$ \\
+    \hline
+    $e^{\alpha x} \sum_{i=0}^m b_i x^i$ & $e^{\alpha x} \sum_{i=0}^m A_i x^i$ \\
+    \hline
+    $\begin{aligned}
+        &\sin(\omega x) \sum_{i=0}^m b_i x^i \\
+        &+ \cos(\omega x) \sum_{i=0}^m c_i x^i
+    \end{aligned}$ & $\begin{aligned}
+        &\sin(\omega x) \sum_{i=0}^m A_i x^i \\
+        &+ \cos(\omega x) \sum_{i=0}^m B_i x^i
+    \end{aligned}$ \\
+    \hline
+    $\begin{aligned}
+        &\sinh(\omega x) \sum_{i=0}^m b_i x^i \\
+        &+ \cosh(\omega x) \sum_{i=0}^m c_i x^i
+    \end{aligned}$ & $\begin{aligned}
+        &\sinh(\omega x) \sum_{i=0}^m A_i x^i \\
+        &+ \cosh(\omega x) \sum_{i=0}^m B_i x^i
+    \end{aligned}$ \\
+    \hline
+    $\begin{aligned}
+        &e^{\alpha x} \sin(\omega x) \sum_{i=0}^m b_i x^i \\
+        &+ e^{\alpha x} \cos(\omega x) \sum_{i=0}^m c_i x^i
+    \end{aligned}$ & $\begin{aligned}
+        &e^{\alpha x} \sin(\omega x) \sum_{i=0}^m A_i x^i \\
+        &+ e^{\alpha x} \cos(\omega x) \sum_{i=0}^m B_i x^i
+    \end{aligned}$ \\ \hline
     \end{tabular}
 \end{table}
 Wenn es vorkommt, dass \emph{ein Teil der für \( y_p(x) \) zu wählenden Funktion bereits in der Lösung des homogenen Problems vorhanden ist}, wird der Ansatz zusätzlich \emph{mit \( x \) multipliziert}.
@@ -313,9 +345,10 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
 
 \subsection{Partielle Differenzierbarkeit}
 \begin{mainbox}{}
-    Eine Funktion \( f: \: \Omega \subseteq \R^n \to \R \) heisst an der Stelle \( a \in \Omega \) nach der Variablen \( x_i \) partiell differenzierbar, falls \[
-        \frac{\partial f}{\partial x_i} a = \lim_{h \to 0} \frac{f(a_1, \dots, a_i + h, \dots, a_n) - f(a_1, \dots, a_i, \dots, a_n)}{h}
-    \] existiert. \( \frac{\partial f}{\partial x_i} a \) heisst partielle Ableitung von \( f \) nach \( x_i \).
+    Eine Funktion \( f: \: \Omega \subseteq \R^n \to \R \) heisst an der Stelle \( a \in \Omega \) nach der Variablen \( x_i \) partiell differenzierbar, falls \begin{multline*}
+        \frac{\partial f}{\partial x_i} a = \\
+        \lim_{h \to 0} \frac{f(a_1, \dots, a_i + h, \dots, a_n) - f(a_1, \dots, a_i, \dots, a_n)}{h}
+    \end{multline*} existiert. \( \frac{\partial f}{\partial x_i} a \) heisst partielle Ableitung von \( f \) nach \( x_i \).
 \end{mainbox}
 \begin{subbox}{}
     Partielle Differenzierbarkeit ist nicht stark genug, um die Stetigkeit zu implizieren (wie im eindimensionalen Fall).
@@ -356,9 +389,10 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
 \paragraph{Anwendungsbeispiele}
 \begin{itemize}
     \item Taylor-Entwicklung
-    \[
-        T(x;a) = f(a) + (x - a)^\T \nabla f(a) + \frac{1}{2} (x - a)^\T \Hess_f(a)(x - a)
-    \]
+    \begin{multline*}
+        T(x;a) =\\
+        f(a) + (x - a)^\T \nabla f(a) + \frac{1}{2} (x - a)^\T \Hess_f(a)(x - a)
+    \end{multline*}
     \item Bestimmung der Art kritischer Punkte
     \begin{itemize}
         \item Ist die Matrix an einer Stelle \emph{positiv definit} \( \implies \) lokales Minimum
@@ -447,9 +481,10 @@ Erinnerung:
 Was bedeutet gut approximieren?
 Es existiert die Dreigliedentwicklung \[
     f(x) = f(x_0) + f'(x_0)(x - x_0) + R(x, x_0)
-\] und \[
-    \lim_{x \to x_0} \frac{\| f(x) - f(x_0) - f'(x_0)(x - x_0) \|}{\| x - x_0 \|} = \lim_{x \to x_0} \frac{\| R(x, x_0) \|}{\| x - x_0 \|} = 0
-\]
+\] und \begin{multline*}
+    \lim_{x \to x_0} \frac{\| f(x) - f(x_0) - f'(x_0)(x - x_0) \|}{\| x - x_0 \|} = \\
+    \lim_{x \to x_0} \frac{\| R(x, x_0) \|}{\| x - x_0 \|} = 0
+\end{multline*}
 Das heisst \( R(x, x_0) \) geht schneller gegen \( 0 \) als \( \| x - x_0 \| \).
 
 \begin{mainbox}{}
@@ -520,51 +555,32 @@ Für das Differential gilt \[
 
 \subsection{Taylorpolynome}
 Durch das Ausmultiplizieren der Matrizen erhalten wir:
-% {\small
-% \begin{multline*}
-%     T_3 f(x, y) = \\
-%     f(x_0, y_0)
-%     + \frac{\partial f}{\partial x} (x_0, y_0)(x - x_0)
-%     + \frac{\partial f}{\partial y} (x_0, y_0)(y - y_0) \\
-%     + \frac{1}{2} \bigg[
-%         \frac{\partial^2 f}{\partial x^2} (x_0, y_0)(x - x_0)^2
-%         + 2 \frac{\partial^2 f}{\partial x \partial y} (x_0, y_0)(x - x_0)(y - y_0) \\
-%         + \frac{\partial^2 f}{\partial y^2} (x_0, y_0)(y - y_0)^2
-%     \bigg] \\
-%     + \frac{1}{6} \bigg[
-%         \frac{\partial^3 f}{\partial x^3} (x_0, y_0)(x - x_0)^3
-%         + 3 \frac{\partial^3 f}{\partial x^2 \partial y} (x_0, y_0)(x - x_0)^2(y - y_0) \\
-%         + 3 \frac{\partial^3 f}{\partial x \partial y^2} (x_0, y_0)(x - x_0)(y - y_0)^2
-%         + \frac{\partial^3 f}{\partial y^3} (x_0, y_0)(y - y_0)^3
-%     \bigg]
-% \end{multline*}
-% }
 \begin{multline*}
     T_3 f(x, y) = \\
-    \left. \begin{split}
-        \left. \begin{split}
-            \left. \begin{split}
+    \left. \begin{aligned}
+        \left. \begin{aligned}
+            \left. \begin{aligned}
                 \left.
                     f(x_0, y_0)
                 \quad \right\} \ T_0 \\
-                + \left[ \begin{split}
+                + \left[ \begin{aligned}
                     &\frac{\partial f}{\partial x} (x_0, y_0)(x - x_0) \\
                     + &\frac{\partial f}{\partial y} (x_0, y_0)(y - y_0)
-                \end{split} \right]
-            \end{split} \quad \right\} \ T_1 \\
-            + \frac{1}{2} \left[ \begin{split}
+                \end{aligned} \right]
+            \end{aligned} \quad \right\} \ T_1 \\
+            + \frac{1}{2} \left[ \begin{aligned}
                 &\frac{\partial^2 f}{\partial x^2} (x_0, y_0)(x - x_0)^2 \\
                 + &2 \frac{\partial^2 f}{\partial x \partial y} (x_0, y_0)(x - x_0)(y - y_0) \\
                 + &\frac{\partial^2 f}{\partial y^2} (x_0, y_0)(y - y_0)^2 \\
-            \end{split} \right]
-        \end{split} \quad \right\} \ T_2 \\
-        + \frac{1}{6} \left[ \begin{split}
+            \end{aligned} \right]
+        \end{aligned} \quad \right\} \ T_2 \\
+        + \frac{1}{6} \left[ \begin{aligned}
             &\frac{\partial^3 f}{\partial x^3} (x_0, y_0)(x - x_0)^3 \\
             + &3 \frac{\partial^3 f}{\partial x^2 \partial y} (x_0, y_0)(x - x_0)^2(y - y_0) \\
             + &3 \frac{\partial^3 f}{\partial x \partial y^2} (x_0, y_0)(x - x_0)(y - y_0)^2 \\
             + &\frac{\partial^3 f}{\partial y^3} (x_0, y_0)(y - y_0)^3
-        \end{split} \right]
-    \end{split} \quad \right\} \ T_3
+        \end{aligned} \right]
+    \end{aligned} \quad \right\} \ T_3
 \end{multline*}
 
 \begin{mainbox}{}
@@ -575,9 +591,10 @@ Durch das Ausmultiplizieren der Matrizen erhalten wir:
 \end{mainbox}
 \begin{subbox}{}
     Das Taylorpolynom 2. Ordnung von \( f \) bei \( y \) ist:
-    \[
-        T_2 f(x) = f(y) + \langle \nabla f(y), x - y \rangle + \frac{1}{2} (x - y)^\mathsf{T} \cdot H_f(y) \cdot (x - y)
-    \]
+    \begin{multline*}
+        T_2 f(x) = \\
+        f(y) + \langle \nabla f(y), x - y \rangle + \frac{1}{2} (x - y)^\mathsf{T} \cdot H_f(y) \cdot (x - y)
+    \end{multline*}
 \end{subbox}
 
 \subsection{Tangentialraum}
@@ -597,9 +614,10 @@ Durch das Ausmultiplizieren der Matrizen erhalten wir:
     \]
 \end{mainbox}
 Daraus folgt:
-\[
-    T_k f(g(x)) = \text{\( p(q(x)) \) nach Entfernen von Monomen von Grad \( > k \)}
-\]
+\begin{multline*}
+    T_k f(g(x)) = \\
+    \text{\( p(q(x)) \) nach Entfernen von Monomen von Grad \( > k \)}
+\end{multline*}
 \begin{subbox}{}
     Die Bedingung \( g(0) = 0 \) ist nötig, weil das Taylorpolynom von \( f \) nur Auskunft über \( f \) nahe bei \( 0 \) (oder allgemeiner dem Entwicklungspunkt) gibt.
 \end{subbox}
@@ -617,12 +635,14 @@ Problem: \( g(0, 0) = 1 \neq 0 \implies \) Satz lässt sich nicht direkt anwende
 Egal, wie hoch man den Grad des Taylorpolynoms von \( f \) wählt: durch Einsetzen von \( g \) erhält man immer weitere konstante Terme.
 
 \paragraph{Trick:}
-\begin{align*}
-    f(g(x_1, x_2)) &= e^{\cos(x_1) \cos(x_2)} = e \cdot e^{\cos(x_1) \cos(x_2) - 1} \text{,} \\
-    \tilde{g}(x_1, x_2) &= \cos(x_1) \cos(x_2) - 1 \quad \text{(neues \( \tilde{g} \) mit \( \tilde{g}(0, 0) = 0 \))} \\
-    &= e \cdot \left( 1 + \left(-\frac{x_1^2}{2} - \frac{x_2^2}{2} \right) \right) + o(\| x \|^3) \\
-    &= e - e \frac{x_1^2}{2} - e \frac{x_2^2}{2} + o(\| x \|^3).
-\end{align*}
+\begin{gather*}
+    f(g(x_1, x_2)) = e^{\cos(x_1) \cos(x_2)} = e \cdot e^{\cos(x_1) \cos(x_2) - 1} \text{,} \\
+    \begin{aligned}
+        \tilde{g}(x_1, x_2) &= \cos(x_1) \cos(x_2) - 1 \quad \text{(neues \( \tilde{g} \) mit \( \tilde{g}(0, 0) = 0 \))} \\
+        &= e \cdot \left( 1 + \left(-\frac{x_1^2}{2} - \frac{x_2^2}{2} \right) \right) + o(\| x \|^3) \\
+        &= e - e \frac{x_1^2}{2} - e \frac{x_2^2}{2} + o(\| x \|^3).
+    \end{aligned}
+\end{gather*}
 
 \subsection{Landau-Notation}
 \begin{mainbox}{}
@@ -636,7 +656,7 @@ Egal, wie hoch man den Grad des Taylorpolynoms von \( f \) wählt: durch Einsetz
     \item Zum Beispiel bedeutet \( f(x) = o(x - y) \), dass \( f(x) \) schneller gegen \( 0 \) geht als \( (x - y) \).
 \end{itemize}
 
-\subsection{Rechenregeln für \( o(h) \)}
+\subsection{Rechenregeln für \texorpdfstring{\( o(h) \)}{o(h)}}
 \begin{itemize}
     \item \( \lambda \cdot o(h) + \mu \cdot o(h) \subseteq o(h) \quad \text{für \( \lambda, \mu \in \R \)} \)
     \item \( g \cdot o(h) \subseteq o(g) \cdot o(h) \subseteq o(g \cdot h) \)
@@ -706,8 +726,8 @@ Es seien \( A_1, \dots, A_n \) die Hauptminoren der reellen, symmetrischen \( n 
 Die Lösungen sind die Kandidaten für Extremalstellen von \( f \).
 \paragraph{Schritt 2:} Um zu entscheiden, ob ein kritischer Punkt \( x_0 \) von \( f \) ein Maximum oder ien Minimum ist, muss man die Hesse-Matrix von \( f \) untersuchen:
 \begin{align*}
-    \Hess(f)(x_0) \text{ positiv definit } &\implies x_0 \text{ lokales Minimum von } f \\
-    \Hess(f)(x_0) \text{ negativ definit } &\implies x_0 \text{ lokales Maximum von } f \\
+    \Hess(f)(x_0) \text{ pos. definit } &\implies x_0 \text{ lokales Min. von } f \\
+    \Hess(f)(x_0) \text{ neg. definit } &\implies x_0 \text{ lokales Max. von } f \\
     \Hess(f)(x_0) \text{ indefinit } &\implies x_0 \text{ Sattelpunkt von } f
 \end{align*}
 
@@ -829,7 +849,7 @@ Diese Integrale kommen oft in Rechnungen vor
     \end{tabular}
 \end{table}
 
-\subsubsection{\( f(x) \)}
+\subsubsection{\texorpdfstring{\( f(x) \)}{f(x)}}
 Eine beliebige stückweise stetige Funktion \( f: \: [a, b] \to \R \)
 \begin{table}[h]
     \centering
@@ -894,16 +914,17 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \]
 \end{mainbox}
 \begin{mainbox}{}
-    Es seien der Quader \( Q = [a_1, b_1] \times [a_2, b_2] \times \dots \times [a_n, b_n] \) und \( f: \: Q \to \R \) mit \( f \in C^0(Q) \) gegeben. Dann gilt \[
-        \int_Q f(x) \, \mathrm{d}\mu(x_1, \dots, x_n) = \int_{a_1}^{b1} \int_{a_2}^{b_2} \dots \int_{a_n}^{b_n} f(x_1, x_2, \dots, x_n) \, \mathrm{d}x_n \, \dots \, \mathrm{d}x_2 \, \mathrm{d}x_1 \text{.}
-    \]
+    Es seien der Quader \( Q = [a_1, b_1] \times [a_2, b_2] \times \dots \times [a_n, b_n] \) und \( f: \: Q \to \R \) mit \( f \in C^0(Q) \) gegeben. Dann gilt \begin{multline*}
+        \int_Q f(x) \, \mathrm{d}\mu(x_1, \dots, x_n) = \\
+        \int_{a_1}^{b1} \int_{a_2}^{b_2} \dots \int_{a_n}^{b_n} f(x_1, x_2, \dots, x_n) \, \mathrm{d}x_n \, \dots \, \mathrm{d}x_2 \, \mathrm{d}x_1 \text{.}
+    \end{multline*}
 \end{mainbox}
 
 \subsection{Normalbereiche}
 \begin{itemize}
-    \item In der Praxis sind die meisten Bereiche, auf denen man integrieren will, komplizierter als Quader
-    \item Das Problem liegt nicht in der Berechnung der Integrale, sondern in der Parametrisierung von Gebieten in \( \R^n \)
-    \item Das Kochrezept für Normalbereiche erlaubt uns, komplizierte Integrationsgebiete in Betracht zu ziehen
+    \item In der Praxis sind die meisten Bereiche, auf denen man integrieren will, komplizierter als Quader.
+    \item Das Problem liegt nicht in der Berechnung der Integrale, sondern in der Parametrisierung von Gebieten in \( \R^n \).
+    \item Das Kochrezept für Normalbereiche erlaubt uns, komplizierte Integrationsgebiete in Betracht zu ziehen.
 \end{itemize}
 
 \begin{mainbox}{}
@@ -938,7 +959,9 @@ Für \[
 \begin{mainbox}{}
     \( \Omega \subset \R^n \) heisst Normalbereich, falls sich \( \Omega \) folgendermassen darstellen lässt:
     \begin{multline*}
-        \Omega = \{ (x_1, x_2, \dots, x_n) \in \R^n \; | \; a \leq x_1 \leq b, \\ \, f_1(x_1) \leq x_2 \leq g_1(x_1), \dots, \\ f_{n - 1}(x_1, x_2, \dots, x_{n - 1}) \leq x_n \leq g_{n - 1}(x_1, x_2, \dots, x_{n - 1}) \}
+        \Omega = \{ (x_1, x_2, \dots, x_n) \in \R^n \; | \; a \leq x_1 \leq b, \\
+        \, f_1(x_1) \leq x_2 \leq g_1(x_1), \dots, \\
+        f_{n - 1}(x_1, x_2, \dots, x_{n - 1}) \leq x_n \leq g_{n - 1}(x_1, x_2, \dots, x_{n - 1}) \}
     \end{multline*} mit stetigen Funktionen \( f_i, g_i \).
 \end{mainbox}
 Für solche Bereiche gilt die Formel \begin{multline*}
@@ -1012,9 +1035,10 @@ Des Weiteren folgt aus dem Satz von Fubini
 \subsubsection{Transformationsformel}
 \begin{mainbox}{}
     Es gilt
-    \[
-        \int_\Omega f(\mathbf{x}) \, \mathrm{d}\mu(\Omega) = \int_{\Phi^{-1}(\Omega)} f(\Phi(\mathbf{x})) \cdot \left| \det(J_\Omega) \right| \, \mathrm{d}\mu(\Phi^{-1}(\Omega))
-    \]
+    \begin{multline*}
+        \int_\Omega f(\mathbf{x}) \, \mathrm{d}\mu(\Omega) = \\
+        \int_{\Phi^{-1}(\Omega)} f(\Phi(\mathbf{x})) \cdot \left| \det(J_\Omega) \right| \, \mathrm{d}\mu(\Phi^{-1}(\Omega))
+    \end{multline*}
     oder anders ausgedrückt
     \[
         \int_{\Phi(\hat{\Omega})} f(\mathbf{x}) \, \mathrm{d}\mu(\Phi(\hat{\Omega})) = \int_{\hat{\Omega}} f(\Phi(\mathbf{x})) \cdot \left| \det(J_\Omega) \right| \, \mathrm{d}\mu(\hat{\Omega})
@@ -1032,14 +1056,14 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
     \end{pmatrix} \right| \, \mathrm{d }u \, \mathrm{d}v
 \] ersetzt.
 
-\subsubsection{Koordinatentransformationen in \( \R^2 \)}
+\subsubsection{Koordinatentransformationen in \texorpdfstring{\( \R^2 \)}{2 dimensions}}
 \begin{table}[h]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
         \multicolumn{3}{|c|}{\textbf{Polarkoordinaten}} \\
         \hline
-        Definition & Maximaler Definitionsbereich & Volumenelement \\
+        Definition & Max. Def'bereich & Volumenelement \\
         \hline
         \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{2}{*}{\centering \( \mathrm{d}x \, \mathrm{d}y = r \, \mathrm{d}r \, \mathrm{d}\varphi \)} \\
         \( y = r \sin \varphi \) & \( 0 \leq \varphi < 2 \pi \) & \\
@@ -1052,7 +1076,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
         \hline
         \multicolumn{3}{|c|}{\textbf{Elliptlische Koordinaten}} \\
         \hline
-        Definition & Maximaler Definitionsbereich & Volumenelement \\
+        Definition & Max. Def'bereich & Volumenelement \\
         \hline
         \( x = ra \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{2}{*}{\centering \( \mathrm{d}x \, \mathrm{d}y = abr \, \mathrm{d}r \, \mathrm{d}\varphi \)} \\
         \( y = rb \sin \varphi \) & \( 0 \leq \varphi < 2 \pi \) & \\
@@ -1060,16 +1084,16 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
     \end{tabular}
 \end{table}
 
-\subsubsection{Koordinatentransformationen in \( \R^3 \)}
+\subsubsection{Koordinatentransformationen in \texorpdfstring{\( \R^3 \)}{3 dimensions}}
 \begin{table}[h]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
         \multicolumn{3}{|c|}{\textbf{Zylinderkoordinaten}} \\
         \hline
-        Definition & Maximaler Definitionsbereich & Volumenelement \\
+        Definition & Max. Def'bereich & Volumenelement \\
         \hline
-        \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \mathrm{d}x \, \mathrm{d}y \, \mathrm{d}z = r \, \mathrm{d}r \, \mathrm{d}\varphi \, \mathrm{d}z \)} \\
+        \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \begin{array}{l} \mathrm{d}x \, \mathrm{d}y \, \mathrm{d}z = \\ r \, \mathrm{d}r \, \mathrm{d}\varphi \, \mathrm{d}z \end{array} \)} \\
         \( y = r \sin \varphi \) & \( 0 \leq \varphi < 2 \pi \) & \\
         \( z = z \) & \( -\infty < z < \infty \) & \\
         \hline
@@ -1081,9 +1105,9 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
         \hline
         \multicolumn{3}{|c|}{\textbf{Kugelkoordinaten}} \\
         \hline
-        Definition & Maximaler Definitionsbereich & Volumenelement \\
+        Definition & Max. Def'bereich & Volumenelement \\
         \hline
-        \( x = r \sin \theta \, \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \mathrm{d}x \, \mathrm{d}y \, \mathrm{d}z = r^2 \, \mathrm{d}r \, \sin \theta \, \mathrm{d}\theta \, \mathrm{d}\varphi \)} \\
+        \( x = r \sin \theta \, \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \begin{array}{l} \mathrm{d}x \, \mathrm{d}y \, \mathrm{d}z = \\ r^2 \, \mathrm{d}r \, \sin \theta \, \mathrm{d}\theta \, \mathrm{d}\varphi \end{array} \)} \\
         \( y = r \sin \theta \, \sin \varphi \) & \( 0 \leq \theta \leq \pi \) & \\
         \( z = r \cos \theta \) & \( 0 \leq \varphi < 2 \pi \) & \\
         \hline
