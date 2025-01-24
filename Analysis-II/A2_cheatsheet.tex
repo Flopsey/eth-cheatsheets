@@ -49,6 +49,7 @@
 % Tables
 \usepackage{tabularx, multirow}
 \usepackage{booktabs}
+\usepackage{float}
 
 % Make enumerations more compact
 \usepackage{enumitem}
@@ -91,9 +92,9 @@
 
 \begin{document}
 
-\maketitle
+% \maketitle
 
-\input{../license.tex}
+% \input{../license.tex}
 
 \section{Gewöhnliche Differentialgleichungen}
 \begin{mainbox}{}
@@ -222,7 +223,7 @@ Es ist wichtig, dass \( y_p(x) \) \emph{eine Funktion derselben Form} wie \( b(x
     y_p(x) = \underbrace{Ax + B}_\text{1. Teil} + \underbrace{(C \sin x + D \cos x) e^{3x}}_\text{2. Teil}
 \]
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
     \hline
@@ -447,7 +448,7 @@ Wir betrachten alle möglichen Richtungen mit dem Richtungsvektor \( v \in \R^n 
 \begin{mainbox}{}
     Die Richtungsableitung von \( f \) in Richtung \( v = (a, b) \) mit \( \| v \|_2 = 1 \) in \( \R^2 \)
     \[
-        \partial_v f(a) = \lim_{h \to 0} \frac{f(\mathbf{x} + h \cdot \mathbf{v}) - f(\mathbf{x})}{h}
+        \partial_v f(\mathbf{x}) = \lim_{h \to 0} \frac{f(\mathbf{x} + h \cdot \mathbf{v}) - f(\mathbf{x})}{h}
     \]
 \end{mainbox}
 \begin{subbox}{}
@@ -799,7 +800,7 @@ Diese Integrale kommen oft in Rechnungen vor
 \[
     x^2 + y^2 = r^2
 \]
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -810,7 +811,7 @@ Diese Integrale kommen oft in Rechnungen vor
         \hline
     \end{tabular}
 \end{table}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -826,7 +827,7 @@ Diese Integrale kommen oft in Rechnungen vor
 \[
     \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
 \]
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -837,7 +838,7 @@ Diese Integrale kommen oft in Rechnungen vor
         \hline
     \end{tabular}
 \end{table}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -851,7 +852,7 @@ Diese Integrale kommen oft in Rechnungen vor
 
 \subsubsection{\texorpdfstring{\( f(x) \)}{f(x)}}
 Eine beliebige stückweise stetige Funktion \( f: \: [a, b] \to \R \)
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -1057,7 +1058,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
 \] ersetzt.
 
 \subsubsection{Koordinatentransformationen in \texorpdfstring{\( \R^2 \)}{2 dimensions}}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
@@ -1070,7 +1071,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
         \hline
     \end{tabular}
 \end{table}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
@@ -1085,7 +1086,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
 \end{table}
 
 \subsubsection{Koordinatentransformationen in \texorpdfstring{\( \R^3 \)}{3 dimensions}}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
@@ -1099,7 +1100,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
         \hline
     \end{tabular}
 \end{table}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
@@ -1164,6 +1165,7 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
     \item Dazu verwenden wir das Prinzip von Cavalieri und den Satz von Fubini oder die Parametrisierung als Normalbereich (falls es Hyperparameter gibt), um die Grenzen der Integrale zu bestimmen.
 \end{enumerate}
 
-\section{Quellen}
-Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
+% \section{Quellen}
+% Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
+
 \end{document}
