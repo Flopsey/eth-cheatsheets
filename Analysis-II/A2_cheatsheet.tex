@@ -92,9 +92,9 @@
 
 \begin{document}
 
-% \maketitle
+\maketitle
 
-% \input{../license.tex}
+\input{../license.tex}
 
 \section{Gewöhnliche Differentialgleichungen}
 \begin{mainbox}{}
@@ -528,8 +528,8 @@ Wie sieht die Matrix \( A \) aus?
 
 \subsection{Die Kettenregel}
 Wir betrachten die Zusammensetzung \[
-    g \circ f: \: \Omega \subseteq \R^n \to \R', \, x \mapsto f(x) \mapsto g(f(x))
-\] der differenzierbaren Funktionen \( f: \: \Omega \subseteq \R^n \to \R^m \) und \( g: \: U \subseteq \R^m \to \R' \) mit \( U \subseteq f(\Omega) \).
+    g \circ f: \: \Omega \subseteq \R^n \to \R^l, \, x \mapsto f(x) \mapsto g(f(x))
+\] der differenzierbaren Funktionen \( f: \: \Omega \subseteq \R^n \to \R^m \) und \( g: \: U \subseteq \R^m \to \R^l \) mit \( U \subseteq f(\Omega) \).
 Für das Differential gilt \[
     \mathrm{d} (g \circ f)(x) = \mathrm{d} g(f(x)) \cdot \mathrm{d} f (x)
 \] wobei \( \cdot \) die Matrix-Multiplikation bezeichnet.
