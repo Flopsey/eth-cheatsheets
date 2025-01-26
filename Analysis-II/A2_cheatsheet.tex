@@ -96,23 +96,24 @@
 
 \input{../license.tex}
 
+\small
+
 \section{Gewöhnliche Differentialgleichungen}
-\begin{mainbox}{}
+\begin{mainbox}{Ordnung}
     Die \emph{Ordnung} einer Differentialgleichung ist die Ordnung der höchsten Ableitung, die in der Differentialgleichung vorkommt.
 \end{mainbox}
-\begin{mainbox}{}
+\begin{mainbox}{Linearität}
     Eine Differenzialgleichung heisst \emph{linear}, falls für je zwei Lösungen \( y_1(x) \) und \( y_2(x) \) der Differentialgleichung auch jede Linearkombination \( ay_1(x) + by_2(x) \) eine Lösung derselben Gleichung ist. Dies ist genau dann der Fall, wenn \( y \) und all Ableitungen \( y' \), \( y'' \), etc. linear vorkommen, d.h. in Ausdrücken der Form \[
         a(x)y(x) + b(x) \text{, } c(x)y'(x) + d(x) \text{, etc.}
     \]
     Es dürfen also keine nicht linearen Terme wie \( y^2 \), \( (y'')^3 \), \( \sin(y) \), \( e^{y'} \), etc. vorkommen.
 \end{mainbox}
-\begin{mainbox}{}
+\begin{mainbox}{Homogenität}
     Eine Differenzialgleichung heisst \emph{homogen}, falls keine Terme vorkommen, die rein von der Funktionsvariablen \( x \) abhängen. Sonst nennt man die Gleichung \emph{inhomogen}.
 \end{mainbox}
 
-\subsection{Anfangswertprobleme}
-\begin{mainbox}{}
-    Ein \(Anfangswertproblem\) \( n \)-ter Ordnung ist eine gewöhnliche Differentialgleichung \( n \)-ter Ordnung zusammen mit \( n \) Anfangsbedingungen
+\begin{mainbox}{Anfangswertproblem}
+    Ein \emph{Anfangswertproblem} \( n \)-ter Ordnung ist eine gewöhnliche Differentialgleichung \( n \)-ter Ordnung zusammen mit \( n \) Anfangsbedingungen
     \[
         \left\{ \begin{array}{l}
              F(x, y(x), y'(x), y''(x), \dots, y^{(n)}(x)) = 0 \\
@@ -152,8 +153,7 @@ Eine partikuläre Lösung des Problems
     \item Ansatz (educated guess)
 \end{itemize}
 
-\subsection{Grundprinzip für lineare, inhomogene Differetialgleichungen}
-\begin{mainbox}{}
+\begin{mainbox}{Grundprinzip für lineare, inhomogene Differetialgleichungen}
     Eine der wichtigsten Eigenschaften linearer, inhomogener Differentialgleichungen besteht darin, dass die allgemeine Lösung folgende Form hat
     \[
         y(x) = y_h(x) + y_p(x)
@@ -169,7 +169,7 @@ Da \( e^{\lambda x} \neq 0 \), darf man den Term \( e^{\lambda x} \) einfach weg
     a_n \lambda^n + a_{n - 1} \lambda^{n - 1} + \dots + a_0 = 0 \text{,}
 \] die sogenannte \emph{charakteristische Gleichung}.
 
-\subsection{Mehrfache Nullstellen}
+\subsubsection{Mehrfache Nullstellen}
 \begin{mainbox}{}
     Falls eine Nullstelle \( \lambda \) mehrmals vorkommt, sagen wir \( m \) mal, so sagt man, dass \emph{\( \lambda \) Vielfachheit \( m \)} hat (man sagt auch, dass \( \lambda \) eine \( m \)-fache Nullstelle ist).
 \end{mainbox}
@@ -182,7 +182,7 @@ Betrachtet man nun nur die unterschiedlichen vorkommenden Nullstellen, so gehör
     \]
 \end{subbox}
 
-\subsection{Fundamentalsystem}
+\subsubsection{Fundamentalsystem}
 Hat das charakteristische Polynom die Nullstellen \( \lambda_1,\allowbreak \, \dots,\allowbreak \, \lambda_k \) mit Vielfachheiten \( m_1,\allowbreak \dots,\allowbreak \, m_k \), so besitzt die Differentialgleichung die linear unabhängigen Lösungen \begin{gather*}
     e^{\lambda_1 x}, \, x \cdot e^{\lambda_1 x}, \, \dots, \, x^{m_1 - 1} \cdot e^{\lambda_1 x} \text{,} \\
     e^{\lambda_2 x}, \, x \cdot e^{\lambda_2 x}, \, \dots, \, x^{m_2 - 1} \cdot e^{\lambda_2 x} \text{,} \\
@@ -191,7 +191,7 @@ Hat das charakteristische Polynom die Nullstellen \( \lambda_1,\allowbreak \, \d
 \end{gather*}
 Diese Lösungen bilden ein \emph{Fundamentalsystem} der Differentialgleichung. \emph{Die allgemeine Lösung ist eine Linearkombination aller Lösungen im Fundamentalsystem.} Die Koeffizienten der Linearkombination werden dann aus den Anfangsbedingungen bestimmt.
 
-\subsection{Basiswechsel}
+\subsubsection{Basiswechsel}
 \begin{mainbox}{}
     Nach Euler gilt \( e^{ix} = \cos x + i \sin x \), daher kann man die Basis einfach umformen.
 \end{mainbox}
@@ -228,26 +228,26 @@ Es ist wichtig, dass \( y_p(x) \) \emph{eine Funktion derselben Form} wie \( b(x
     \begin{tabular}{|c|c|}
     \hline
     \textbf{Inhomogener Term $b(x)$} & \textbf{Ansatz für $y_p(x)$} \\ \hline
-    $\sum_{i=0}^m b_ix^i$ & $\sum_{i=0}^m A_i x^i$ \\
-    \hline
+    % $\sum_{i=0}^m b_ix^i$ & $\sum_{i=0}^m A_i x^i$ \\
+    % \hline
     $e^{\alpha x} \sum_{i=0}^m b_i x^i$ & $e^{\alpha x} \sum_{i=0}^m A_i x^i$ \\
     \hline
-    $\begin{aligned}
-        &\sin(\omega x) \sum_{i=0}^m b_i x^i \\
-        &+ \cos(\omega x) \sum_{i=0}^m c_i x^i
-    \end{aligned}$ & $\begin{aligned}
-        &\sin(\omega x) \sum_{i=0}^m A_i x^i \\
-        &+ \cos(\omega x) \sum_{i=0}^m B_i x^i
-    \end{aligned}$ \\
-    \hline
-    $\begin{aligned}
-        &\sinh(\omega x) \sum_{i=0}^m b_i x^i \\
-        &+ \cosh(\omega x) \sum_{i=0}^m c_i x^i
-    \end{aligned}$ & $\begin{aligned}
-        &\sinh(\omega x) \sum_{i=0}^m A_i x^i \\
-        &+ \cosh(\omega x) \sum_{i=0}^m B_i x^i
-    \end{aligned}$ \\
-    \hline
+    % $\begin{aligned}
+    %     &\sin(\omega x) \sum_{i=0}^m b_i x^i \\
+    %     &+ \cos(\omega x) \sum_{i=0}^m c_i x^i
+    % \end{aligned}$ & $\begin{aligned}
+    %     &\sin(\omega x) \sum_{i=0}^m A_i x^i \\
+    %     &+ \cos(\omega x) \sum_{i=0}^m B_i x^i
+    % \end{aligned}$ \\
+    % \hline
+    % $\begin{aligned}
+    %     &\sinh(\omega x) \sum_{i=0}^m b_i x^i \\
+    %     &+ \cosh(\omega x) \sum_{i=0}^m c_i x^i
+    % \end{aligned}$ & $\begin{aligned}
+    %     &\sinh(\omega x) \sum_{i=0}^m A_i x^i \\
+    %     &+ \cosh(\omega x) \sum_{i=0}^m B_i x^i
+    % \end{aligned}$ \\
+    % \hline
     $\begin{aligned}
         &e^{\alpha x} \sin(\omega x) \sum_{i=0}^m b_i x^i \\
         &+ e^{\alpha x} \cos(\omega x) \sum_{i=0}^m c_i x^i
@@ -279,7 +279,7 @@ Zuerst betrachten wir Stetigkeit und partielle Differenzierbarkeit skalarwertige
     \end{pmatrix} \mapsto f(x_1, \dots, x_n)
 \]
 
-\subsection{Bestimmung der Stetigkeit}
+\subsubsection{Bestimmung der Stetigkeit}
 Funktionen, die immer stetig sind:
 \begin{itemize}
     \item Polynome
@@ -295,7 +295,7 @@ Funktionen, die immer stetig sind:
     Differenzierbarkeit \( \implies \) Stetigkeit \( \implies \) Integrierbarkeit
 \end{subbox}
 
-\subsection{Polarkoordinaten-Trick}
+\subsubsection{Polarkoordinaten-Trick}
 Der Polarkoordinaten-Trick ist für uns das wichtigste Werkzeug, um die Stetigkeit zu überprüfen.
 Sei \( f(x, y) \) eine Funktion. Setze \begin{align*}
     x &= r \cdot \cos \varphi \\
@@ -303,8 +303,8 @@ Sei \( f(x, y) \) eine Funktion. Setze \begin{align*}
 \end{align*}
 Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus welcher Richtung wir uns \( (x_0, y_0) \) nähern, ist \( f(x, y) \) stetig.
 
-\subsection{Norm}
-\begin{mainbox}{}
+\subsubsection{Norm}
+\begin{mainbox}{\( p \)-Norm}
     Die \( p \)-Norm eines reellen oder komplexen Vektors \( x = \begin{pmatrix}
         x_1 & \cdots & x_n
     \end{pmatrix} \in \K^n \) ist für reelles \( 1 \leq p < \infty \) definiert durch \( \| x \|_p = (\sum_{i=1}^n |x_i|^p)^\frac{1}{p} \).
@@ -314,11 +314,11 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
     \item \( \| t \cdot x \| = |t| \cdot \| x \| \quad t \in \R \) (absolute Homogenität)
     \item \( \| x + y \| \leq \| x \| + \| y \| \) (Subadditivität oder Dreiecksungleichung)
 \end{enumerate}
-\begin{subbox}{}
+\begin{subbox}{Euklidische Norm (\( 2 \)-Norm)}
     \( \| x \|_2 \) wird als \emph{Euklidische Norm (Distanz)} bezeichnet.
 \end{subbox}
 
-\subsection{Stetigkeit}
+\subsubsection{Stetigkeit}
 \begin{mainbox}{}
     Sei \( f: \: \Omega \subseteq \R^n \to \R^m, \, x_0 \in \Omega, \, y \in \R^m \). Die Funktion \( f \) hat Limes mit dem Wert \( y \) für \( x \to x_0 \), falls \( \forall \varepsilon > 0, \exists \delta > 0 \), sodass \( \forall x \in \Omega, \, x \neq x_0, \, \| x - x_0 \| < \delta \) gilt \( \| f(x) - y \| < \varepsilon \).
 \end{mainbox}
@@ -339,12 +339,12 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
     \end{enumerate}
 \end{subbox}
 
-\subsection{Partielle Ableitungen}
+\subsubsection{Partielle Ableitungen}
 \begin{mainbox}{}
     Eine partielle Ableitung ist die Ableitung einer Funktion mit mehreren Variablen nach einer dieser Variablen (in Richtung dieser Koordinatenachse). Die Werte der übrigen Argumente werden konstant gehalten.
 \end{mainbox}
 
-\subsection{Partielle Differenzierbarkeit}
+\subsubsection{Partielle Differenzierbarkeit}
 \begin{mainbox}{}
     Eine Funktion \( f: \: \Omega \subseteq \R^n \to \R \) heisst an der Stelle \( a \in \Omega \) nach der Variablen \( x_i \) partiell differenzierbar, falls \begin{multline*}
         \frac{\partial f}{\partial x_i} a = \\
@@ -355,7 +355,7 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
     Partielle Differenzierbarkeit ist nicht stark genug, um die Stetigkeit zu implizieren (wie im eindimensionalen Fall).
 \end{subbox}
 
-\subsection{Gradient}
+\subsubsection{Gradient}
 \begin{mainbox}{}
     Die \( n \) partiellen Ableitungen von \( f: \: \Omega \subseteq \R^n \to \R \) lassen sich in einem Vektor anordnen:
     \[
@@ -371,7 +371,7 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
     Die Regeln für die Bildung von partiellen Ableitungen sind dieselben wie für die Ableitungen von Funktionen von einer Variablen.
 \end{subbox}
 
-\subsection{Hesse-Matrix}
+\subsubsection{Hesse-Matrix}
 \begin{mainbox}{}
     Zweifache partielle Ableitungen von \( f: \: \Omega \subseteq \R^n \to \R \) kann man in einer \( n \times n \) Matrix anordnen:
     \[
@@ -390,16 +390,7 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
 \paragraph{Anwendungsbeispiele}
 \begin{itemize}
     \item Taylor-Entwicklung
-    \begin{multline*}
-        T(x;a) =\\
-        f(a) + (x - a)^\T \nabla f(a) + \frac{1}{2} (x - a)^\T \Hess_f(a)(x - a)
-    \end{multline*}
     \item Bestimmung der Art kritischer Punkte
-    \begin{itemize}
-        \item Ist die Matrix an einer Stelle \emph{positiv definit} \( \implies \) lokales Minimum
-        \item Ist die Matrix an einer Stelle \emph{negativ definit} \( \implies \) lokales Maximum
-        \item Ist die Matrix an einer Stelle \emph{indefinit} \( \implies \) Sattelpunkt
-    \end{itemize}
     \item Bestimmung der Konvexität
     \begin{itemize}
         \item Es gilt: Eine Funktion ist genau dann konvex, wenn ihre Hesse-Matrix überall in \( D \) positiv semidefinit ist. Ist die Hesse-Matrix sogar positiv definit in \( D \), dann ist die Funktion auf \( D \) strikt konvex.
@@ -417,11 +408,11 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
         f_m(x_1, \dots, x_n)
     \end{pmatrix}
 \]
-\begin{mainbox}{}
+\begin{mainbox}{Partielle Differenzierbarkeit}
     \( f \) heisst an der Stelle \( a \in \Omega \) partiell differenzierbar, falls jede der Komponenten \( f_i \) von \( f \) in \( a \) partiell differenzierbar ist.
 \end{mainbox}
 
-\subsection{Jacobi-Matrix}
+\subsubsection{Jacobi-Matrix}
 \begin{mainbox}{}
     Die partiellen Ableitungen von \( f: \: \Omega \subseteq \R^n \to \R^m \) kann man in einer \( m \times n \) Matrix anordnen:
     \[
@@ -437,12 +428,12 @@ Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus wel
     Für \( f: \: \R^n \to \R \) gilt: \( \nabla f(x_0) = (J_f(x_0))^\T \)
 \end{subbox}
 
-\subsection{Der Satz von Schwarz}
+\subsubsection{Der Satz von Schwarz}
 \begin{mainbox}{}
     Ist \( f: \: \Omega \subseteq \R^n \to \R \) \( m \)-mal partiell differenzierbar auf \( \Omega \) und sind alle partiellen Ableitungen bis zur \( m \)-ten Ordnung stetig, so spielt die Reihenfolge der Ableitungen der Ordnung \( \leq m \) keine Rolle.
 \end{mainbox}
 
-\subsection{Richtungsableitungen}
+\subsubsection{Richtungsableitungen}
 Wir können Ableitungen in alle Richtungen betrachten, nicht nur entlang der Achsen.
 Wir betrachten alle möglichen Richtungen mit dem Richtungsvektor \( v \in \R^n \) und nicht nur \( e_i, \, 1 \leq i \leq n \).
 \begin{mainbox}{}
@@ -458,7 +449,7 @@ Wir betrachten alle möglichen Richtungen mit dem Richtungsvektor \( v \in \R^n 
     \]
 \end{subbox}
 
-\subsection{Divergenz}
+\subsubsection{Divergenz}
 \begin{mainbox}{}
     Gegeben sei ein Vektorfeld \( f: \Omega \subseteq \R^n \to \R^n \) von der Klasse \( C^1 \) mit Komponenten \( f_1, f_2, f_n \). Die Divergenz ist definiert als \[
         \divergenz(f) = \frac{\partial f_1}{\partial x_1} + \frac{\partial f_2}{\partial x_2} + \dots + \frac{\partial f_n}{\partial x_n}
@@ -474,7 +465,7 @@ Wir betrachten alle möglichen Richtungen mit dem Richtungsvektor \( v \in \R^n 
     \]
 \end{subbox}
 
-\subsection{Das Differential}
+\subsubsection{Das Differential}
 Erinnerung:
 \begin{mainbox}{}
     \( f: \R \to \R \) ist in \( x_0 \) differenzierbar, falls man \( f \) durch die affine lineare Abbildung \( A(x) = f(x_0) + f'(x)(x - x_0) \) in der Nähe von \( x_0\) \emph{gut approximieren} kann.
@@ -511,9 +502,8 @@ Wie sieht die Matrix \( A \) aus?
     \end{enumerate}
 \end{mainbox}
 
-% TODO: Diagramm einfügen
 
-\subsection{Bestimmung der Differenzierbarkeit}
+\subsubsection{Bestimmung der Differenzierbarkeit}
 \begin{subbox}{}
     Summe, Differenz, Produkt, Quotient (falls der Nenner \( \neq 0 \) und die Zusammensetzung differenzierbarer Funktionen sind differenzierbar.
 \end{subbox}
@@ -526,7 +516,9 @@ Wie sieht die Matrix \( A \) aus?
     \end{itemize}
 \end{enumerate}
 
-\subsection{Die Kettenregel}
+% TODO: Diagramm einfügen
+
+\subsubsection{Die Kettenregel}
 Wir betrachten die Zusammensetzung \[
     g \circ f: \: \Omega \subseteq \R^n \to \R^l, \, x \mapsto f(x) \mapsto g(f(x))
 \] der differenzierbaren Funktionen \( f: \: \Omega \subseteq \R^n \to \R^m \) und \( g: \: U \subseteq \R^m \to \R^l \) mit \( U \subseteq f(\Omega) \).
@@ -539,8 +531,8 @@ Für das Differential gilt \[
 
 \section{Differentialrechnung}
 
-\subsection{Definition des Taylorpolynoms}
-\begin{mainbox}{}
+\subsection{Taylorpolynom}
+\begin{mainbox}{Definition}
     Sei \( U \subseteq \R^m \) offen, \( f \in C^k(U, \R) \), und sei \( y \in U\).
     Das \( k \)-te Taylorpolynom von \( f \) bei \( y \) ist definiert als:
     \[
@@ -554,8 +546,20 @@ Für das Differential gilt \[
     \end{itemize}
 \end{mainbox}
 
-\subsection{Taylorpolynome}
-Durch das Ausmultiplizieren der Matrizen erhalten wir:
+\begin{mainbox}{}
+    Sei \( f \in C^k(U, \R), \, y \in U \). Dann gilt:
+    \[
+        f(x) = T_k f(x) + o(\| x - y \|^k)
+    \]
+\end{mainbox}
+
+Das Taylorpolynom 2. Ordnung von \( f \) bei \( \mathbf{y} \) ist:
+\begin{multline*}
+    T_2 f(\mathbf{x}) = \\
+    \underbrace{f(\mathbf{y})}_{T_0} + \underbrace{\langle \nabla f(\mathbf{y}), \mathbf{x} - \mathbf{y} \rangle}_{T_1} + \underbrace{\frac{1}{2} (\mathbf{x} - \mathbf{y})^\mathsf{T} \cdot H_f(\mathbf{y}) \cdot (\mathbf{x} - \mathbf{y})}_{T_2}
+\end{multline*}
+
+Das Taylorpolynom 3. Ordnung von \( f \) bei \( (x_0, y_0) \) ist:
 \begin{multline*}
     T_3 f(x, y) = \\
     \left. \begin{aligned}
@@ -584,26 +588,12 @@ Durch das Ausmultiplizieren der Matrizen erhalten wir:
     \end{aligned} \quad \right\} \ T_3
 \end{multline*}
 
-\begin{mainbox}{}
-    Sei \( f \in C^k(U, \R), \, y \in U \). Dann gilt:
-    \[
-        f(x) = T_k f(x) + o(\| x - y \|^k)
-    \]
-\end{mainbox}
-\begin{subbox}{}
-    Das Taylorpolynom 2. Ordnung von \( f \) bei \( y \) ist:
-    \begin{multline*}
-        T_2 f(x) = \\
-        f(y) + \langle \nabla f(y), x - y \rangle + \frac{1}{2} (x - y)^\mathsf{T} \cdot H_f(y) \cdot (x - y)
-    \end{multline*}
-\end{subbox}
-
-\subsection{Tangentialraum}
+\subsubsection{Tangentialraum}
 \begin{mainbox}{}
     \( U \subset \R^n \) offen, \( f: \: U \to \R^m \) differenzierbar, \( x_0 \in U, \, A = \mathrm{df}(x_0) \). Der Tangentialraum bei \( x_0 \) des Graphen von \( f \) ist der Graph von \( g(x) = f(x_0) + A(x - x_0) \).
 \end{mainbox}
 
-\subsection{Verknüpfung von Taylorpolynomen}
+\subsubsection{Verknüpfung von Taylorpolynomen}
 \begin{mainbox}{}
     Sei \( f: \: \R \to \R \) und \( g: \: \R^n \to \R \) in \( C^k, \, k \geq 1 \), und \( g(0) = 0 \). Sei \begin{align*}
         p &= T_k f(y), \quad \text{sodass } f(y) = p(y) + o(y^k) \text{, \quad und} \\
@@ -645,7 +635,7 @@ Egal, wie hoch man den Grad des Taylorpolynoms von \( f \) wählt: durch Einsetz
     \end{aligned}
 \end{gather*}
 
-\subsection{Landau-Notation}
+\subsubsection{Landau-Notation}
 \begin{mainbox}{}
     Sei \( U \subseteq \R^m, \, h: \: U \to \R, \, y \in U \). Dann:
     \[
@@ -657,7 +647,7 @@ Egal, wie hoch man den Grad des Taylorpolynoms von \( f \) wählt: durch Einsetz
     \item Zum Beispiel bedeutet \( f(x) = o(x - y) \), dass \( f(x) \) schneller gegen \( 0 \) geht als \( (x - y) \).
 \end{itemize}
 
-\subsection{Rechenregeln für \texorpdfstring{\( o(h) \)}{o(h)}}
+\paragraph{Rechenregeln für \texorpdfstring{\( o(h) \)}{o(h)}}
 \begin{itemize}
     \item \( \lambda \cdot o(h) + \mu \cdot o(h) \subseteq o(h) \quad \text{für \( \lambda, \mu \in \R \)} \)
     \item \( g \cdot o(h) \subseteq o(g) \cdot o(h) \subseteq o(g \cdot h) \)
@@ -689,15 +679,13 @@ wobei \( y = f(x) \).
 
 Eine Abbildung \( f: \: \Omega \to f(\Omega) \) heisst \emph{Diffeomorphismus}, falls \( f \) invertierbar ist und \( f, f^{-1} \) von der Klasse \( C^1 \) sind. \textbf{Anders gesagt:} Ein Diffeomorphismus liegt vor, falls \( f \) umkehrbar ist und sowohl \( f \) als auch \( f^{-1} \) stetig differenzierbar sind.
 
-\subsection{Kritische Punkte}
-\begin{mainbox}{}
+\subsection{Kritische Punkte und Extremwerte}
+\begin{mainbox}{Kritischer Punkt}
     Ein Punkt \( x_0 \in \R^n \) ist ein kritischer Punkt einer Funktion \( f: \R^n \to \R \), wenn \( \nabla f(x_0) = 0 \).
     Kritische Punkte können Maxima, Minima, oder Sattelpunkte einer Funktion sein.
 \end{mainbox}
-\paragraph{Beispiel:}
-Betrachten wir die Funktion \( f(x) = x^2 \). Der kritische Punkt ist \( x= 0 \), da \( f'(x) = 0\).
 
-\subsection{Analyse von kritischen Punkten}
+\subsubsection{Analyse von kritischen Punkten}
 Der Typ eines kritischen Punktes kann durch das Verhalten der zweiten Ableitung bzw. der Hesse-Matrix \( H_f(x) \) bestimmt werden.
 \paragraph{Hesse-Matrix:}
 \begin{itemize}
@@ -710,29 +698,30 @@ Der Typ eines kritischen Punktes kann durch das Verhalten der zweiten Ableitung 
     \end{itemize}
 \end{itemize}
 
-\subsection{Hurwitz-Krieterium (Sylvester-Kriterium)}
-Es seien \( A_1, \dots, A_n \) die Hauptminoren der reellen, symmetrischen \( n \times n \)-Matrix.
-\begin{itemize}
-    \item \( \det A_1 > 0, \, \det A_2 > 0, \, \det A_3 > 0, \, \dots \) \( \iff \) pos. definit
-    \item \( \det A_1 < 0, \, \det A_2 < 0, \, \det A_3 < 0, \, \dots \) \( \iff \) neg. definit
-    \item Gilt weder \( A_1 \geq 0, \, A_2 \geq 0, \, A_3 \geq 0, \, \dots \) noch \( A_1 \leq 0, \, A_2 \leq 0, \, A_3 \leq 0, \, \dots \), so ist A indefinit.
-\end{itemize}
+\begin{subbox}{Hurwitz-Krieterium (Sylvester-Kriterium)}
+    Es seien \( A_1, \dots, A_n \) die Hauptminoren der reellen, symmetrischen \( n \times n \)-Matrix.
+    \begin{itemize}
+        \item \( \det A_1 > 0, \, \det A_2 > 0, \, \det A_3 > 0, \, \dots \) \( \iff \) pos. definit
+        \item \( \det A_1 < 0, \, \det A_2 < 0, \, \det A_3 < 0, \, \dots \) \( \iff \) neg. definit
+        \item Gilt weder \( A_1 \geq 0, \, A_2 \geq 0, \, A_3 \geq 0, \, \dots \) noch \( A_1 \leq 0, \, A_2 \leq 0, \, A_3 \leq 0, \, \dots \), so ist A indefinit.
+    \end{itemize}
+\end{subbox}
 
-\subsection{Kochrezept für Extremwertaufgaben ohne Nebenbedingungen}
-\paragraph{Gegeben:} \( f: \: \Omega \subset \R^n \to \R \) mit \( \Omega \) offen (ohne Rand) und \( f \) von der Klasse \( C^2 \).
-\paragraph{Gesucht:} ein Extremum der Funktion \( f \) in \( \Omega \).
-\paragraph{Schritt 1:} Finde kritische Punkte von \( f \), d.h. löse \[
+\subsubsection{Kochrezept für Extremwertaufgaben ohne Nebenbedingungen}
+\subparagraph{Gegeben:} \( f: \: \Omega \subset \R^n \to \R \) mit \( \Omega \) offen (ohne Rand) und \( f \) von der Klasse \( C^2 \).
+\subparagraph{Gesucht:} ein Extremum der Funktion \( f \) in \( \Omega \).
+\subparagraph{Schritt 1:} Finde kritische Punkte von \( f \), d.h. löse \[
     \mathrm{d}f = 0
 \]
 Die Lösungen sind die Kandidaten für Extremalstellen von \( f \).
-\paragraph{Schritt 2:} Um zu entscheiden, ob ein kritischer Punkt \( x_0 \) von \( f \) ein Maximum oder ien Minimum ist, muss man die Hesse-Matrix von \( f \) untersuchen:
+\subparagraph{Schritt 2:} Um zu entscheiden, ob ein kritischer Punkt \( x_0 \) von \( f \) ein Maximum oder ien Minimum ist, muss man die Hesse-Matrix von \( f \) untersuchen:
 \begin{align*}
     \Hess(f)(x_0) \text{ pos. definit } &\implies x_0 \text{ lokales Min. von } f \\
     \Hess(f)(x_0) \text{ neg. definit } &\implies x_0 \text{ lokales Max. von } f \\
     \Hess(f)(x_0) \text{ indefinit } &\implies x_0 \text{ Sattelpunkt von } f
 \end{align*}
 
-\subsection{Min-Max-Theorem}
+\subsubsection{Min-Max-Theorem}
 \begin{mainbox}{}
     Sei \( \bar{X} \subseteq \R^n \) eine kompakte Menge, \( f: \: \bar{X} \to \R \) stetig, dann ist \( f \) beschränkt und hat sein Maximum und Minimum in \( \bar{X} \).
     D.h. \( \exists x^+ \in \bar{X} \) und \( \exists x^- \in \bar{X} \) so dass \[
@@ -743,6 +732,8 @@ Wenn wir Extrema auf einer kompakten Menge suchen, müssen wir auch den Rand auf
 
 \section{Integralrechnung}
 
+\subsection{Wegintegral}
+
 \begin{mainbox}{}
     Es seien \( \vec{v}: \: \Omega \subset \R^n \to \R^n \) ein stetig differenzierbares Vektorfeld und \( \vec{\gamma}: \: [a, b] \to \R^n \) eine differenzierbare Kurve. Der Ausdruck \[
         \int_\gamma \vec{v} \, \mathrm{d}\vec{s} := \int_a^b \vec{v}(\vec{\gamma}(t)) \cdot \vec{y'}(t) \, \mathrm{d}t
@@ -751,22 +742,22 @@ Wenn wir Extrema auf einer kompakten Menge suchen, müssen wir auch den Rand auf
 \end{mainbox}
 Vektorfelder werden häufig in der Physik verwendet, um z.B. elektrische, magnetische oder Gravitationsfelder zu beschreiben. Das Wegintegral besitzt folgende physikalische Bedeutung: \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \) ist die Arbeit, welche längs \( \gamma \) unter der Wirkung von \( \vec{v} \) geleistet wird.
 
-\subsection{Eigenschaften}
-\subsubsection{Additivität}
+\subsubsection{Eigenschaften}
+\paragraph{Additivität}
 \begin{mainbox}{}
     Für \( \gamma = \gamma_1 + \gamma_2 \) gilt \[
         \int_{\gamma_1} f(\vec{s}) \, \mathrm{d}\vec{s} + \int_{\gamma_2} f(\vec{s}) \, \mathrm{d}\vec{s} \text{.}
     \]
 \end{mainbox}
 Wichtig ist, dass die Kurve \( \vec{\gamma} \) nicht von der Klasse \( C^1 \) sein muss, sondern es genügt, dass \( \vec{\gamma} \) stückweise der Klasse \( C^1 \) angehört. Notiert wird: \( \vec{\gamma} \in C^1_{pw} \).
-\begin{mainbox}{}
+\begin{mainbox}{Stückweise stetige Differenzierbarkeit}
     Eine Kurve \( \vec{\gamma}: \: [a, b] \to \R^n \) heisst \emph{stückweise stetig differenzierbar}, falls \( \vec{\gamma} \) bis auf endlich viele Stellen \( t_0 < t_1 < \dots < t_n \) stetig differenzierbar ist.
 \end{mainbox}
 In diesem Fall gilt einfach \[
     \int_\gamma \vec{v} \, \mathrm{d}s = \sum_{i = 1}^n \int_{\gamma_i} \vec{v} \, \mathrm{d}s \text{.}
 \]
 
-\subsubsection{Orientierung}
+\paragraph{Orientierung}
 \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \) ist von der gewählten orientierungserhaltenden Parametrisierung unabhängig. Bei einem orientierungsumkehrenden Parameterwechsel wird die neue Kurve in der umgekehrten Richtung zur ursprünglichen Kurve durchlaufen, sodass das Wegintegral \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \) sein Vorzeichen wechselt.
 \begin{mainbox}{}
     \[
@@ -774,14 +765,14 @@ In diesem Fall gilt einfach \[
     \]
 \end{mainbox}
 
-\subsection{Kochrezept für Wegintegrale}
-\paragraph{Gegeben:} Vektorfeld \( \vec{v} \in C^1 \), Kurve \( \gamma \in C^1_{pw} \).
-\paragraph{Gesucht:} Wegintegral \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \).
-\paragraph{Schritt 1:} Parametrisiere \( \gamma \), d.h. finde \[
+\subsubsection{Kochrezept für Wegintegrale}
+\subparagraph{Gegeben:} Vektorfeld \( \vec{v} \in C^1 \), Kurve \( \gamma \in C^1_{pw} \).
+\subparagraph{Gesucht:} Wegintegral \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \).
+\subparagraph{Schritt 1:} Parametrisiere \( \gamma \), d.h. finde \[
     \vec{\gamma}: \: [a, b] \to \R^n, \, t \mapsto \vec{\gamma}(t) \text{.}
 \]
-\paragraph{Schritt 2:} Berechne \( \vec{\gamma}'(t) = \frac{\mathrm{d}}{\mathrm{d}t} \, \vec{\gamma}(t)\) (jede Komponente nach dem Parameter \( t \) ableiten).
-\paragraph{Schritt 3:} Benutze die Formel
+\subparagraph{Schritt 2:} Berechne \( \vec{\gamma}'(t) = \frac{\mathrm{d}}{\mathrm{d}t} \, \vec{\gamma}(t)\) (jede Komponente nach dem Parameter \( t \) ableiten).
+\subparagraph{Schritt 3:} Benutze die Formel
 \[
     \int_\gamma \vec{v} \, \mathrm{d}\vec{s} = \int_a^b \vec{v}(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, \mathrm{d}t \text{.}
 \]
@@ -795,8 +786,8 @@ Diese Integrale kommen oft in Rechnungen vor
     \int_0^{2\pi} \sin t \, \cos t \, \mathrm{d}t = \int_0^{2\pi} \sin t \, \mathrm{d}t = \int_0^{2\pi} \cos t \, \mathrm{d}t = 0
 \end{gather*}
 
-\subsection{Wichtige Parametrisierungen}
-\subsubsection{Kreis}
+\subsubsection{Wichtige Parametrisierungen}
+\paragraph{Kreis}
 \[
     x^2 + y^2 = r^2
 \]
@@ -823,7 +814,7 @@ Diese Integrale kommen oft in Rechnungen vor
     \end{tabular}
 \end{table}
 
-\subsubsection{Ellipse}
+\paragraph{Ellipse}
 \[
     \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
 \]
@@ -850,7 +841,7 @@ Diese Integrale kommen oft in Rechnungen vor
     \end{tabular}
 \end{table}
 
-\subsubsection{\texorpdfstring{\( f(x) \)}{f(x)}}
+\paragraph{Beliebige stückweise stetige Funktion \texorpdfstring{\( f(x) \)}{f(x)}}
 Eine beliebige stückweise stetige Funktion \( f: \: [a, b] \to \R \)
 \begin{table}[H]
     \centering
@@ -862,7 +853,7 @@ Eine beliebige stückweise stetige Funktion \( f: \: [a, b] \to \R \)
     \end{tabular}
 \end{table}
 
-\subsubsection{Liniensegment}
+\paragraph{Liniensegment}
 Ein Liniensegment in \( \R^3 \) von \( (x_0, y_0, z_0) \) nach \( (x_1, y_1, z_1) \)
 \begin{align*}
     x &= (1 - t) \cdot x_0 + t \cdot x_1 \\
@@ -896,7 +887,7 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \]
 \end{enumerate}
 
-\subsection{Rotation}
+\subsubsection{Rotation}
 \begin{mainbox}{}
     Rotation (curl) im kartesischen Koordinatensystem is definiert als \[
         \rot \vec{F}(x, y, z) = \nabla \times \vec{F} \text{.}
@@ -908,7 +899,9 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \]
 \end{subbox}
 
-\subsection{Der Satz von Fubini}
+\subsection{Riemannintegral \texorpdfstring{in \( \R^n \)}{im mehrdimensionalen Raum}}
+
+\subsubsection{Der Satz von Fubini}
 \begin{mainbox}{}
     Es seien der Quader \( Q = [a_1, b_1] \times [a_2, b_2] \) und \( f: \: Q \to \R \) mit \( f \in C^0(Q) \) gegeben. Dann gilt \[
         \int_Q f(x, y) \, \mathrm{d}\mu(x, y) = \int_{a_1}^{b_1} \int_{a_2}^{b_2} f(x, y) \, \mathrm{d}x \, \mathrm{d}y \text{.}
@@ -921,7 +914,7 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \end{multline*}
 \end{mainbox}
 
-\subsection{Normalbereiche}
+\subsubsection{Normalbereiche}
 \begin{itemize}
     \item In der Praxis sind die meisten Bereiche, auf denen man integrieren will, komplizierter als Quader.
     \item Das Problem liegt nicht in der Berechnung der Integrale, sondern in der Parametrisierung von Gebieten in \( \R^n \).
@@ -1033,7 +1026,7 @@ Des Weiteren folgt aus dem Satz von Fubini
     \]
 \end{subbox}
 
-\subsubsection{Transformationsformel}
+\subsection{Transformationsformel}
 \begin{mainbox}{}
     Es gilt
     \begin{multline*}
@@ -1057,7 +1050,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
     \end{pmatrix} \right| \, \mathrm{d }u \, \mathrm{d}v
 \] ersetzt.
 
-\subsubsection{Koordinatentransformationen in \texorpdfstring{\( \R^2 \)}{2 dimensions}}
+\paragraph{Koordinatentransformationen in \texorpdfstring{\( \R^2 \)}{2 Dimensionen}} \
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
@@ -1085,7 +1078,7 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
     \end{tabular}
 \end{table}
 
-\subsubsection{Koordinatentransformationen in \texorpdfstring{\( \R^3 \)}{3 dimensions}}
+\paragraph{Koordinatentransformationen in \texorpdfstring{\( \R^3 \)}{3 Dimensionen}} \
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
@@ -1144,19 +1137,19 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
     \]
 \end{subbox}
 
-\subsection{Kochrezept für Flächeninhalte mit dem Satz von Green}
-\paragraph{Gegeben:} \( C \subset \R^2 \) beschränkt mit \( C^1_{pw} \)-Rand \( \partial C \).
-\paragraph{Gesucht:} \( \mu(C) \).
-\paragraph{Schritt 1:} Parametrisiere den Rand von \( C \) mit der Kurve \[
+\subsubsection{Kochrezept für Flächeninhalte mit dem Satz von Green}
+\subparagraph{Gegeben:} \( C \subset \R^2 \) beschränkt mit \( C^1_{pw} \)-Rand \( \partial C \).
+\subparagraph{Gesucht:} \( \mu(C) \).
+\subparagraph{Schritt 1:} Parametrisiere den Rand von \( C \) mit der Kurve \[
     \gamma: \: [a, b] \to \R^2 \text{.}
 \]
-\paragraph{Schritt 2:} Berechne \( \gamma' \) (jede Komponente nach dem Parameter \( t \) ableiten).
-\paragraph{Schritt 3:} Wende den Satz von Green an:
+\subparagraph{Schritt 2:} Berechne \( \gamma' \) (jede Komponente nach dem Parameter \( t \) ableiten).
+\subparagraph{Schritt 3:} Wende den Satz von Green an:
 \[
     \int_C 1 \, \mathrm{d}\mu(x, y) = \int_C \vec{v} \, \mathrm{d}x \, \mathrm{d}y = \int_{\gamma = \partial C} \vec{v} \, \mathrm{d}\vec{s} = \mu(C) \text{,}
 \] mit \( \vec{v} = (0, x) \).
 
-\subsection{Volumen ohne den Satz von Gauss}
+\subsubsection{Volumen ohne den Satz von Gauss}
 \begin{mainbox}{}
     Sei \( U \subset \R^n \). Das Volumen von \( U \) ist definiert als \( \mathrm{vol}(U) = \int_U 1 \, \mathrm{d}x_1 \, \dots \, \mathrm{d}x_n \).
 \end{mainbox}
@@ -1165,7 +1158,198 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
     \item Dazu verwenden wir das Prinzip von Cavalieri und den Satz von Fubini oder die Parametrisierung als Normalbereich (falls es Hyperparameter gibt), um die Grenzen der Integrale zu bestimmen.
 \end{enumerate}
 
-% \section{Quellen}
-% Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
+\section{Appendix}
+\footnotesize
+
+\subsection{Mitternachtsformel}
+\[
+    x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
+
+\subsection{Determinante}
+\begin{itemize}
+    \item Besteht eine Zeile/Spalte aus Nullen, ist die Determinante \( 0 \).
+    \item Sind zwei Zeilen/Spalten gleich, ist die Determinante \( 0 \).
+    \item \( \det \begin{pmatrix}
+        a_{11} & a_{12} \\
+        a_{21} & a_{22}
+    \end{pmatrix} = ad - bc \)
+    \item \( \det \begin{pmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23} \\
+        a_{31} & a_{32} & a_{33}
+    \end{pmatrix} = a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32} - a_{31}a_{22}a_{13} - a_{32}a_{23}a_{11} - a_{33}a_{21}a_{12} \)
+    \item Entwicklung nach i-ter Zeile bzw j-ter Spalte: 
+\end{itemize}
+
+\subsection{Inverse}
+\begin{itemize}
+    \item Für \(2 \times 2 \)-Matrize \( A := \begin{pmatrix}
+        a & c \\
+        b & d
+    \end{pmatrix} \) ist \( \ A^{-1} = \frac{1}{\det A} \begin{pmatrix}
+        d & -c \\
+        -b & a
+    \end{pmatrix} \)
+    \item Für höherdimensionale Matrizen: Gauss-Algorithmus
+\end{itemize}
+
+\subsection{Kreuzprodukt}
+\[
+    \begin{pmatrix}
+        a_1 \\ a_2 \\ a_3
+    \end{pmatrix} \times \begin{pmatrix}
+        b_1 \\ b_2 \\ b_3
+    \end{pmatrix} = \begin{pmatrix}
+        a_2b_3 - a_3b_2 \\
+        a_3b_1 - a_1b_3 \\
+        a_1b_2 - a_2b_1
+    \end{pmatrix}
+\]
+
+\subsection{Einheitskreis}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Analysis-II/Unit_circle_angles_color.svg.png}
+\end{figure}
+
+\subsection{Ableitungs- und Stammfunktionen}
+
+\paragraph{Potenz- und Wurzelfunktionen} \
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+         \( f(x) \) & \( F(x) \) \\
+         \hline \hline
+         \( k \quad (k \in \R) \) & kx \\
+         \hline
+         \( x^n \) & \( \begin{cases}
+             \frac{1}{n + 1} x^{n + 1} & n \neq -1 \\
+             \ln \lvert x \rvert & n = -1
+         \end{cases} \) \\
+         \hline
+         \( nx^{n - 1} \) & \( x^n \) \\
+         \hline
+         \( x \) & \( \frac{1}{2} x^2 \) \\
+         \hline
+         \( 2x \) & \( x^2 \) \\
+         \hline
+         \( x^2 \) & \( \frac{1}{3} x^3 \) \\
+         \hline
+         \( 3x^2 \) & \( x^3 \) \\
+         \hline
+         \( \sqrt{x} \) & \( \frac{2}{3} x^\frac{3}{2} \) \\
+         \hline
+         \( \sqrt[n]{x} \) & \( \frac{n}{n + 1} (\sqrt[n]{x})^{n + 1} \quad (n \neq 1) \) \\
+         \hline
+         \( \frac{1}{\sqrt{x}} \) & \( 2 \sqrt{x} \) \\
+         \hline
+         \( \frac{1}{n(\sqrt[n]{x^{n - 1}})} \) & \( \sqrt[n]{x} \) \\
+         \hline
+         \( -\frac{2}{x^3} \) & \( \frac{1}{x^2} \) \\
+         \hline
+         \( -\frac{1}{x^2} \) & \( \frac{1}{x} \)
+    \end{tabular}
+\end{table}
+
+\paragraph{Exponential- und Logarithmusfunktionen} \
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+         \( f(x) \) & \( F(x) \) \\
+         \hline \hline
+         \( e^x \) & \( e^x \) \\
+         \hline
+         \( e^{kx} \) & \( \frac{1}{k} e^{kx} \) \\
+         \hline
+         \( a^x \ln a \quad (a > 0) \) & \( a^x \) \\
+         \hline
+         \( a^x \) & \( \frac{a^x}{\ln a} \) \\
+         \hline
+         \( x^x(1 + \ln x) \) & \( x^x \quad (x \neq 0) \) \\
+         \hline
+         \( e^{x \ln \lvert x \rvert}(\ln \lvert x \rvert + 1) \) & \( \lvert x \rvert^x = e^{x \ln \lvert x \rvert} \quad (x \neq 0) \) \\
+         \hline
+         \( \frac{1}{x} \) & \( \ln \lvert x \rvert \) \\
+         \hline
+         \( \ln x \) & \( x \ln(x) - x \) \\
+         \hline
+         \( x^n \ln x \) & \( \frac{x^{n + 1}}{n + 1} \left( \ln x - \frac{1}{n + 1} \right) \quad (n \geq 0) \) \\
+         \hline
+         \( u'(x) \ln u(x) \) & \( u(x) \ln u(x) - u(x) \) \\
+         \hline
+         \( \frac{1}{x} \ln^n x \quad (n \neq -1) \) & \( \frac{1}{n + 1} \ln^{n + 1} x \) \\
+         \hline
+         \( \frac{1}{x} \ln x^n \quad (n \neq 0) \) & \( \frac{1}{2n} \ln^2 x^n = \frac{n}{2} \ln^2 x \) \\
+         \hline
+         \( \frac{1}{x} \frac{1}{\ln a} \) & \( \log_a x \) \\
+         \hline
+         \( \frac{1}{x \ln x} \) & \( \ln \lvert \ln x \rvert \quad (x > 0, \, x \neq 1) \) \\
+         \hline
+         \( \log_a x \) & \( \frac{1}{\ln a} (x \ln x - x) \) \\
+         \hline
+         \(  \) & \(  \) \\
+    \end{tabular}
+\end{table}
+
+\paragraph{Trigonometrische Funktionen} \
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+          \( f(x)\) & \( F(x)\) \\
+          \hline \hline
+          \(\tan(x) = \frac{\sin(x)}{\cos(x)}\) & \(\ln(\sec(x))\)    \\     
+          \hline
+         \( \cot(x)=\frac{\cos(x)}{\sin(x)} \) & \( -\ln(\sec(x)) \) \\
+                  \hline
+         \( \sin^2(x) \) & \(\frac{1}{2}(x-\sin(x)\cos(x)) = \frac{1}{2}x - \frac{1}{4}\sin(2x))  \) \\
+                  \hline
+         \( \cos^2(x) \) & \( \frac{1}{2}(x+\sin(x)\cos(x)) = \frac{1}{2}x + \frac{1}{4}\sin(2x)) \) \\
+         \hline
+         \( \sin(kx)\cos(kx) \) & \( -\frac{1}{4k}\cos(2kx)=\frac{1}{2k}\sin^2(kx) \) \\
+         \hline
+         \( \frac{\sin(ax)}{\exp(bx)}\) & \( \frac{a\exp(bx)-a\cos(ax)-b\sin(ax)}{(a^2+b^2)\exp(bx)} \) \\
+         \hline
+         \( \frac{\cos(ax)}{\exp(bx)} \) & \( \frac{a\sin(ax)-b\cos(ax)+b\exp(bx)}{a^2+b^2()\exp(bx)} \) \\
+         \hline
+         \( \arcsin(x)\) & \( x\arcsin(x)+\sqrt{1-x^2}\) \\
+         \hline
+         \( \arccos(x) \) & \( x\arccos(x)-\sqrt{1-x^2} \) \\
+         \hline
+         \( \arctan(x) \) & \( x\arctan(x)-\frac{1}{2}\ln(1+x^2) \) \\
+         \hline
+         \( \frac{1}{\sqrt{1-x^2}} \) & \( \arcsin(x) \) \\
+         \hline
+         \( \frac{-1}{\sqrt{1-x^2}} \) & \( \arccos(x \) \\
+         \hline
+         \( \frac{1}{1+x^2} \) & \( \arctan(x) \) \\
+         \hline
+         \( \frac{x^2}{x^2+1} \) & \( x-arctan(x) \) \\
+         \hline
+         \( \frac{1}{(x^2+1)^2} \) & \( \frac{1}{2}(\frac{x}{x^2+1}+\arctan(x)) \) \\
+         \hline
+         \( \sqrt{a^2-x^2} \) & \( \frac{a^2}{2}\arcsin\left(\frac{x}{a}\right)+\frac{x}{2}\sqrt{a^2-x^2}\) \\
+         \hline
+         \( \frac{1}{ax^2+bx+c} \) & \( \frac{2}{\sqrt{4ac-b^2}}\arctan\left(\frac{2ax+b}{\sqrt{4ac-b^2}}\right) \) \\        
+          
+    \end{tabular}
+\end{table}
+
+\paragraph{Verallgemeinerte Integrationsregeln} \
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+        \( f(x)\) & \( F(x)\) \\
+        \hline \hline
+        \( \frac{u'(x)}{u(x)} \) & \( \ln \lvert u(x) \rvert \) \\
+        \hline
+        \( u'(x) \cdot u(x) \) & \( \frac{1}{2} (u(x))^2 \) \\
+        \hline
+        \( u'(x) \cdot (u(x))^n \) & \( \frac{1}{n + 1} (u(x))^{n + 1} \) \\
+    \end{tabular}
+\end{table}
+
+\section{Quellen}
+Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
 
 \end{document}
