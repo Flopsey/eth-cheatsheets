@@ -46,6 +46,9 @@
 \usepackage{derivative}
 \allowdisplaybreaks
 
+%Algorithms
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 % Tables
 \usepackage{tabularx, multirow}
 \usepackage{booktabs}
@@ -516,7 +519,19 @@ Wie sieht die Matrix \( A \) aus?
     \end{itemize}
 \end{enumerate}
 
-% TODO: Diagramm einfügen
+\begin{subbox}{}
+    \begin{itemize}
+        \item Total differenzierbare Funktionen sind stetig
+        \item Total differenzierbare Funktionen sind partiell differenzierbar
+        \item Partiell differenzierbare Funktionen sind nicht notwendigerweise stetig und damit auch nicht notwendigerweise total differenzierbar.
+        \item Stetig partiell differenzierbare Funktionen, also Funktionen, deren partielle Ableitungen stetig sind, sind dagegen stetig total differenzierbar.
+    \end{itemize}
+\end{subbox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Analysis-II/HEIF-Image.png}
+\end{figure}
 
 \subsubsection{Die Kettenregel}
 Wir betrachten die Zusammensetzung \[
@@ -528,8 +543,6 @@ Für das Differential gilt \[
 \begin{subbox}{}
     Das Differential (im Allgemeinen) ist keine Zahl, sondern eine lineare Abbildung gegeben durch eine Matrix \( A = J_f \).
 \end{subbox}
-
-\section{Differentialrechnung}
 
 \subsection{Taylorpolynom}
 \begin{mainbox}{Definition}
@@ -730,13 +743,19 @@ Die Lösungen sind die Kandidaten für Extremalstellen von \( f \).
 \end{mainbox}
 Wenn wir Extrema auf einer kompakten Menge suchen, müssen wir auch den Rand auf kritische Punkte untersuchen.
 
+\begin{mainbox}{Kompakte Menge}
+    \[
+        \text{kompakt} = \text{abgeschlossen und beschränkt}
+    \]
+\end{mainbox}
+
 \section{Integralrechnung}
 
 \subsection{Wegintegral}
 
 \begin{mainbox}{}
     Es seien \( \vec{v}: \: \Omega \subset \R^n \to \R^n \) ein stetig differenzierbares Vektorfeld und \( \vec{\gamma}: \: [a, b] \to \R^n \) eine differenzierbare Kurve. Der Ausdruck \[
-        \int_\gamma \vec{v} \, \mathrm{d}\vec{s} := \int_a^b \vec{v}(\vec{\gamma}(t)) \cdot \vec{y'}(t) \, \mathrm{d}t
+        \int_\gamma \vec{v} \, \mathrm{d}\vec{s} := \int_a^b \vec{v}(\vec{\gamma}(t)) \cdot \vec{\gamma'}(t) \, \mathrm{d}t
     \]
     wird \emph{Wegintegral} (oder Kurvenintegral) von \( \vec{v} \) längs \( \gamma \) genannt.
 \end{mainbox}
@@ -887,6 +906,16 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \]
 \end{enumerate}
 
+\paragraph{Potential finden:}
+\begin{enumerate}
+    \item Prüfen ob \( \vec{v} \) konservativ ist.
+    \item Es gilt \( \nabla \Phi = \vec{v} \iff \frac{\partial \Phi}{\partial x_1} = v_1, \, \dots, \, \frac{\partial \Phi}{\partial x_n} = v_n \)
+    \item Integriere \( v_1 \) nach \( x_1 \), z.B. \( \Phi(x, y, z) = \int v_1 \mathrm{d}x + g(y, z) \), wobei \( g \) von \( x \) unabhängig ist.
+    \item Bestimme \( g(y, z) \) indem \( v_2 \) nach \( x_2 \) integriert wird
+    \item etc.
+    \item Allenfalls Integrationskonstante anpassen, wenn Anfangswerte gegeben sind.
+\end{enumerate}
+
 \subsubsection{Rotation}
 \begin{mainbox}{}
     Rotation (curl) im kartesischen Koordinatensystem is definiert als \[
@@ -934,7 +963,10 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \] wobei \( h, k \) zwei stetige Funktionen der Variablen \( y \) sind.
 \end{mainbox}
 
-% TODO: Illustration Normalbereiche einfügen
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Analysis-II/HEIF-Image 2.png}
+\end{figure}
 
 Folgendes kann man als Verallgemeinerung des Satzes von Fubini sehen
 \begin{mainbox}{}
@@ -1179,7 +1211,20 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
         a_{21} & a_{22} & a_{23} \\
         a_{31} & a_{32} & a_{33}
     \end{pmatrix} = a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32} - a_{31}a_{22}a_{13} - a_{32}a_{23}a_{11} - a_{33}a_{21}a_{12} \)
-    \item Entwicklung nach i-ter Zeile bzw j-ter Spalte: 
+    % \item
+    %     \begin{algorithm}
+    %     Entwicklung nach i-ter Zeile bzw Spalte:
+    %         \begin{algorithmic}
+    %         \Require $A=(a_{ij}) i,j \in \{1,\dots,n\} \text{quadratische Matrix}$
+    %         \Procedure{Determinante}{$A$}
+    %         \State $i \gets \text{Spalte (oder Zeile) mit möglichst vielen Nullen}$
+    %         \For{j=1,\dots,n}
+    %         \State $A_{i,j} \gets \text{Streiche Spalte }i\text{ und Zeile } j$
+    %         \State $t = (-1)^{i+j}(a_{ij})\textbf{Determinante}(A_{i,j})$
+    %         \State $\det{A} = \det{A}+t$
+    %         \EndFor
+    %         \end{algorithmic}
+    %     \end{algorithm}    
 \end{itemize}
 
 \subsection{Inverse}
@@ -1210,10 +1255,18 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
 \subsection{Einheitskreis}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{Analysis-II/Unit_circle_angles_color.svg.png}
+    \includegraphics[width=0.75\linewidth]{Analysis-II/Unit_circle_angles_color.svg.png}
 \end{figure}
 
 \subsection{Ableitungs- und Stammfunktionen}
+
+\paragraph{Basics}
+\begin{align*}
+    u(x) + v(x) &= u' + v' \\
+    u(x) \cdot v(x) &= u'v + v'u \\
+    \frac{u(x)}{v(x)} &= \frac{u'v - v'u}{v^2} \\
+    u(v(x)) &= u'(v(x)) \cdot v'(x) \\
+\end{align*}
 
 \paragraph{Potenz- und Wurzelfunktionen} \
 \begin{table}[H]
@@ -1234,10 +1287,10 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
          \hline
          \( 2x \) & \( x^2 \) \\
          \hline
-         \( x^2 \) & \( \frac{1}{3} x^3 \) \\
-         \hline
-         \( 3x^2 \) & \( x^3 \) \\
-         \hline
+         %\( x^2 \) & \( \frac{1}{3} x^3 \) \\
+         %\hline
+         %\( 3x^2 \) & \( x^3 \) \\
+         %\hline
          \( \sqrt{x} \) & \( \frac{2}{3} x^\frac{3}{2} \) \\
          \hline
          \( \sqrt[n]{x} \) & \( \frac{n}{n + 1} (\sqrt[n]{x})^{n + 1} \quad (n \neq 1) \) \\
@@ -1346,10 +1399,40 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
         \( u'(x) \cdot u(x) \) & \( \frac{1}{2} (u(x))^2 \) \\
         \hline
         \( u'(x) \cdot (u(x))^n \) & \( \frac{1}{n + 1} (u(x))^{n + 1} \) \\
+        \hline
+        \((ax+b)^n\) & \(\frac{(ax+b)^{n+1}}{a(n+1)}+C ,(n\neq1)\)\\
+        \hline
+        \(x(ax+b)^n\) & \(\frac{ax(n+1)-b}{a^2(n+1)(n+2)}(ax+b)^{n+}+C\)\\
+        %\hline
+        %\(\frac{x}{ax+b}\) & \(\frac{x}{a}-\frac{b}{a^2}\ln{\lvert ax+b \rvert} +C\)\\
+        \hline
+        \(\frac{x}{(ax+b)^n}\)&\(\frac{1}{a^2}\left[\frac{1}{(2-n)(ax+b)^{n-2}}-b\frac{1}{(1-n)(ax+b)^{n-1}}\right]+C\)\\
+        \hline
+        \(\frac{x^2}{(ax+b)^n}\)&\(\)\\
+        \hline
+        \(\)&\(\)\\
     \end{tabular}
 \end{table}
 
-\section{Quellen}
-Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
+% \paragraph{Grenzwerte, Reihen, Folgen} \
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{cc}
+%         \(f(x)\) & \(Wert\)\\
+%         \hline \hline
+%         \(\lim_{\lvert\xi\rvert\to\inf} (1+\frac{z}{\xi})^{\xi}\) & \(e^z\)\\
+%         \hline
+%         \(-\sum_{k=1}^{\inf} \frac{z^k}{k}\) & \(\ln(1-z)\)\\
+%         \hline
+%         \(\sum_{k=0}^{\inf} \frac{z^k}{k!}\)&\(\exp(x)\)\\
+%         \hline
+%         \(\sum_{k=0}^{\inf}(-1^k)\frac{z^{2k+1}}{(2k+1)!}\)&\(\sin(x)\)\\
+%         \hline
+%         \(\sum_{k=0}^{\inf}(-1)^k\frac{z^{2k}}{(2k)!}\)&\(\cos(x)\)\\
+%     \end{tabular}
+% \end{table}
+
+% \section{Quellen}
+% Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
 
 \end{document}
