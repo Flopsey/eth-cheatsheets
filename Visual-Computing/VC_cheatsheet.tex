@@ -367,7 +367,7 @@ The Fourier transform makes use of the basis vectors
     }
 \end{center}
 \begin{center}
-    \includegraphics[width=\linewidth]{fourier-transforms.jpeg}
+    \includegraphics[width=\linewidth]{./Figures/fourier-transforms.jpeg}
 \end{center}
 
 \subsubsection{Restoration / Deconvolution}
@@ -491,7 +491,7 @@ Given a kernel with size \(F\), an image with size \(N\), padding \(P\) and a st
 Given an object with unknown density \(f(x,y)\), find \(f\) by sending rays from all directions through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
 \begin{figure}[H]
     \center
-    \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.jpeg}
+    \includegraphics[width=0.75\linewidth]{./Figures/radon-image-reconstruction.jpeg}
 \end{figure}
 Continuous case: The radon transform of a line is 
 \begin{align*}
@@ -509,7 +509,7 @@ The radon transform has the following properties:
 \subsubsection{Back projection}
 Given Radon transform, find \(u(x,y)\). Example:
 \begin{figure}[h]
-    \includegraphics[width=\linewidth]{radon-back-projection.jpeg}
+    \includegraphics[width=\linewidth]{./Figures/radon-back-projection.jpeg}
 \end{figure}
 
 \subsubsection{Radon Transform Procedure}
@@ -545,7 +545,7 @@ Is repeated for many projection angles:
 \subsection{Light and Colors}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\linewidth]{ciergb.jpeg}
+    \includegraphics[width=0.6\linewidth]{./Figures/ciergb.jpeg}
 \end{figure}
 
 \subsubsection{CIE XYZ}
@@ -617,7 +617,7 @@ If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 2 \\ 0 & -1 & 2 \\ 0 & 0 
 
 \subsubsection{Change of coordinate system} \hfill \break
 \begin{tabular}{m{3cm}r}
-    \includegraphics[width=3cm]{coord-system-change.jpeg}
+    \includegraphics[width=3cm]{./Figures/coord-system-change.jpeg}
 &
 $
  p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \implies p' = TRp
@@ -663,7 +663,7 @@ Flux per solid angle per perpendicular area = effective intensity per unit area
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.4\linewidth]{lamberts-law.jpeg}
+    \includegraphics[width=0.4\linewidth]{./Figures/lamberts-law.jpeg}
 \end{figure}
 \subsubsection{Lighting} Modeling physical interactions between materials and light sources
 \subsubsection{Shading} Process of determining the color of a pixel
@@ -688,7 +688,7 @@ Problems with scan line interpolations are perspective distortion, orientation d
 
 \subsubsection{Phong shading} Barycentric interpolation of vertex normals, in object space
 \begin{figure}[H]
-    \includegraphics[width=\linewidth]{phong-shading.jpeg}
+    \includegraphics[width=\linewidth]{./Figures/phong-shading.jpeg}
 \end{figure}
 
 Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
@@ -699,7 +699,7 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\linewidth]{transparency.jpeg}
+    \includegraphics[width=0.6\linewidth]{./Figures/transparency.jpeg}
 \end{figure}
 
 \subsection{Geometry and Textures}
@@ -724,7 +724,7 @@ If \( x \) is position on surface, \( \vec{\omega}_i \) the direction of incomin
 \subsubsection{Bresenham line} Always choose closest pixel at each intersection. 
 \begin{figure}[h]
     \center
-    \includegraphics[width=0.75\linewidth]{bresenham-line.jpeg}
+    \includegraphics[width=0.75\linewidth]{./Figures/bresenham-line.jpeg}
 \end{figure}
 
 After having computed the first \( d \) we can get the following \( d_\text{new} \) by adding \( a \) if we chose east (so \( d < 0 \)) or adding \( a + b \) if we chose north-east \( d > 0 \), which makes it very fast.
