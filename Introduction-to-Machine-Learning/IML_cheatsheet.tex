@@ -1,0 +1,382 @@
+% Basic stuff
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+
+% 3 column landscape layout with fewer margins
+\usepackage[landscape, left=0.75cm, top=1cm, right=0.75cm, bottom=1.5cm, footskip=15pt]{geometry}
+\usepackage{flowfram}
+\ffvadjustfalse
+\setlength{\columnsep}{1cm}
+\Ncolumn{3}
+
+% Reduce vertical spacing
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1ex plus .5ex minus .2ex}{0.5ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{0.75ex plus .5ex minus .2ex}{0.25ex plus .2ex}
+
+\makeatletter
+\g@addto@macro\normalsize{%
+  \setlength\abovedisplayskip{3pt}%
+  \setlength\belowdisplayskip{3pt}%
+  \setlength\abovedisplayshortskip{2pt}%
+  \setlength\belowdisplayshortskip{2pt}%
+}
+\makeatother
+
+% Make enumerations more compact and adjust indentation
+\usepackage{enumitem}
+\setlist[itemize,1]{itemsep=1pt, topsep=2pt, left=0pt}
+\setlist[itemize,2]{itemsep=1pt, topsep=1pt, left=10pt}
+\setlist[enumerate,1]{itemsep=1pt, topsep=2pt, left=0pt}
+\setlist[enumerate,2]{itemsep=1pt, topsep=1pt, left=10pt}
+
+% define nice looking boxes
+\usepackage[many]{tcolorbox}
+
+% a base set, that is then customised
+\tcbset {
+  base/.style={
+    boxrule=0mm,
+    leftrule=1mm,
+    left=1.75mm,
+    arc=0mm, 
+    fonttitle=\bfseries, 
+    colbacktitle=black!10!white, 
+    coltitle=black, 
+    toptitle=0.75mm, 
+    bottomtitle=0.25mm,
+    title={#1},
+    breakable,
+    top=1pt,
+    bottom=1pt
+  }
+}
+
+\definecolor{iml}{rgb}{0.19, 0.62, 0.75}
+\newtcolorbox{mainbox}[1]{
+  colframe=iml, 
+  base={#1}
+}
+
+\newtcolorbox{subbox}[1]{
+  colframe=black!20!white,
+  base={#1}
+}
+
+% Mathematical typesetting & symbols
+\usepackage{amsthm, mathtools, amssymb} 
+\usepackage{marvosym, wasysym}
+\usepackage{derivative}
+\allowdisplaybreaks
+
+%Algorithms
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+% Tables
+\usepackage{tabularx, multirow}
+\usepackage{booktabs}
+\usepackage{float}
+
+% Make enumerations more compact
+\usepackage{enumitem}
+\setitemize{itemsep=0.5pt}
+\setenumerate{itemsep=0.75pt}
+
+% To include sketches & PDFs
+\usepackage{graphicx}
+
+% For hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true
+}
+
+% Metadata
+\title{Cheatsheet Introduction to Machine Learning}
+\author{Florian Affolter}
+\date{Sommersession 2025}
+
+% Math helper stuff
+\def\R{\mathbb{R}}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+\def\T{\mathsf{T}}
+
+\renewcommand\thesection{\Roman{section}}
+\usepackage{remreset}
+\makeatletter
+\@removefromreset{subsection}{section}
+\renewcommand\thesubsection{\arabic{subsection}}
+\makeatother
+
+\begin{document}
+
+% \maketitle
+
+\section*{Preliminaries}
+\subsection*{Linear Algebra}
+
+A symmetric matrix with real entries is \emph{positive (semi-)definite} iff all its eigenvalues are positive (nonnegative).
+
+\( A A^\T \) and \( A^\T A \) are symmetric and positive semi-definite. If \( m \leq n \) and \( \operatorname{rank}(A) = m \), then \( A A^\T \) is also positive definite.
+
+
+\subsection*{Analysis}
+
+\[
+        D f(\mathbf{x_0}) = J_f(\mathbf{x_0}) \\= \begin{bsmallmatrix}
+        \frac{\partial f_1}{\partial x_1}(\mathbf{x_0}) & \cdots & \frac{\partial f_1}{\partial x_n}(\mathbf{x_0}) \\
+        \vdots & \ddots & \vdots \\
+        \frac{\partial f_m}{\partial x_1}(\mathbf{x_0}) & \cdots & \frac{\partial f_m}{\partial x_n}(\mathbf{x_0})
+    \end{bsmallmatrix}
+\]
+
+\[
+    D f(\mathbf{x_0})[\mathbf{h}] = \langle \nabla f(\mathbf{x_0}), \mathbf{h} \rangle
+\]
+
+\[
+    D (f \circ g)(\mathbf{x_0}) = (D f)(g(\mathbf{x_0})) D g(\mathbf{x_0})
+\]
+
+\[
+    D^2 f(\mathbf{x_0}) = H_f(\mathbf{x_0}) \\= \begin{bsmallmatrix}
+        \frac{\partial^2 f}{\partial x_1^2}(\mathbf{x_0}) & \cdots & \frac{\partial^2 f}{\partial x_n \partial x_1}(\mathbf{x_0}) \\
+        \vdots & \ddots & \vdots \\
+        \frac{\partial^2 f}{\partial x_1 \partial x_n}(\mathbf{x_0}) & \cdots & \frac{\partial^2 f}{\partial x_n^2}(\mathbf{x_0})
+    \end{bsmallmatrix}
+\]
+
+
+\subsection*{Probability Theory}
+
+\begin{mainbox}{CDF}
+    \[
+        F_X(x) = \P_X((-\infty, x]) = \P(X \leq x)
+    \]
+\end{mainbox}
+Properties: \( \lim_{x \to \infty} F_X(x) = 1 \) and \( \lim_{x \to -\infty} F_X(x) = 0 \). It is monotonically increasing. It is right-continuous. \( \P(a < X \leq b) = F_X(b) - F_X(a) \).
+
+\begin{mainbox}{PMF}
+    \[
+        p_X(x) = \P(X = x) = \P_X(\{ x \})
+    \]
+\end{mainbox}
+
+\begin{mainbox}{PDF}
+    If \( \exists \; p_X: \: \R \to [0, \infty) \), such that \[
+        \P_X(I) = \P(X \in I) = \int_I p_X(x) \, \mathrm{d}x
+    \] for all intervals \( I \) in \( \R \), we call it \emph{PDF} of \( X \).
+\end{mainbox}
+\[
+    F_X(x) = \P(X \leq x) = \int_{-\infty}^x p_X(t) \mathrm{d}t
+\]
+
+
+\section*{Supervised Learning}
+
+\subsection*{Linear Regression}
+
+\begin{subbox}{Normal Equation}
+    \[
+        X^\T X \hat{w} = X^\T y
+    \]
+\end{subbox}
+
+Unique solution for the normal equation (given that \( d \leq n \) and \( X \) is full-rank):
+\[
+    \hat{\omega} = \left( X^\T X \right)^{-1} X^\T y
+\]
+
+When over-parametrized, use pseudo-inverse:
+\[
+    \hat{w} = \left( X^\T X \right)^\dagger X^\T y
+\]
+
+If \( X \) is full-rank and \( n < d \), then \( y = Xw \) has infinitely many solutions. The minimum-norm solution is:
+\[
+    \hat{w} = X^\T \left( X X^\T \right)^{-1} y = \left( X^\T X \right)^\dagger X^\T y
+\]
+
+
+\subsection*{Optimization}
+
+\begin{mainbox}{Convexity}
+    A set \( \mathcal{W} \subseteq \R^d \) is convex if it contains the line segment between any two of its points
+\end{mainbox}
+\begin{enumerate}
+    \item \( \alpha f + \beta g \) is convex if \( f, \, g \) are convex and \( \alpha, \, \beta \geq 0 \).
+    \item \( f \circ g \) is convex if \( f \) is convex and \( g \) is affine, or if \( f \) is convex and non-decreasing and \( g \) is convex.
+    \item The point-wise maximum of two convex functions is convex.
+\end{enumerate}
+
+If \( f \) is \emph{strongly convex}, at every point there is always a quadratic function that fits between \( f \) and the tangent of \( f \).
+The notion of strong convexity excludes functions with linear parts.
+
+\begin{subbox}{}
+    Suppose \( f \) is differentiable and strongly convex. Then there exists unique minimizer \( \mathbf{w^*} \) of \( f \) and gradient desent with sufficiently small step size and arbitrary initialization \( \mathbf{w^0} \) satisfies \[
+        \lim_{t \to \infty} \mathbf{w^t} = \mathbf{w^*} \text{.}
+    \]
+\end{subbox}
+
+
+\subsection*{Model evaluation and selection}
+
+\begin{subbox}{Error metrics}
+    \begin{itemize}
+        \item Model training
+        \begin{itemize}
+            \item \textbf{Training error (empirical risk):} \[
+                \frac{1}{\lvert \mathcal{D} \rvert} \sum_{(x, y) \in \mathcal{D}} \ell(f(x), y)
+            \] Used to train a model \( \hat{f}_\mathcal{D} \).
+        \end{itemize}
+    \end{itemize}
+    \begin{itemize}
+        \item Model evaluation
+        \begin{itemize}
+            \item \textbf{Expected estimation error:} \[
+                \E_X \ell \left( \hat{f}_\mathcal{D}(X), f^*(X) \right)
+            \] Tells us how good \( \hat{f}_D \) is. No access to \( f^* \)!
+            \item \textbf{Generalization error (population risk):} \[
+                \E_{X, Y} \ell \left( \hat{f}_\mathcal{D}(X), Y \right)
+            \] Proxy for estimation error. No access to \( \P_{X, Y} \)!
+            \item \textbf{Test error:} \[
+                \frac{1}{\lvert \mathcal{D}_{\text{test}} \rvert} \sum_{(x, y) \in \mathcal{D}_\text{test}} \ell(f(x), y)
+            \] Estimator of generalization error. Can be computed!
+        \end{itemize}
+    \end{itemize}
+\end{subbox}
+
+Even ground-truth function has strictly positive generalization error due to noise.
+
+Under model \( y = f^*(x) + \epsilon \), and under square loss:
+\[
+    L \left( \hat{f}; \P_{X, Y} \right) = \E_X \left( \hat{f}(X) - f^*(X) \right)^2 + \sigma^2
+\]
+
+
+\subsection*{Bias-Variance Tradeoff and Regularization}
+
+\begin{subbox}{Model Bias}
+    \[
+        \text{Bias}_\mathcal{D}^2 \left( \hat{f}_\mathcal{D}, \mathbf{x} \right) := \left( \E_\mathcal{D} \left[ \hat{f}_\mathcal{D}(\mathbf{x)} \right] - f^*(\mathbf{x)} \right)^2
+    \]
+    \[
+        \text{Bias}_\mathcal{D}^2 \left( \hat{f}_\mathcal{D} \right) := \E_X \left[ \text{Bias}_\mathcal{D}^2 \left( \hat{f}_\mathcal{D}, X \right) \right]
+    \]
+\end{subbox}
+
+\begin{subbox}{Model Variance}
+    \begin{multline*}
+        \text{Var}_\mathcal{D} \left( \hat{f}_\mathcal{D}(\mathbf{x}) \right) :=\\ \E_\mathcal{D} \left[ \left( \hat{f}_\mathcal{D}(\mathbf{x}) - \E_\mathcal{D} \left[ \hat{f}_\mathcal{D}(\mathbf{x}) \right] \right)^2 \right]
+    \end{multline*}
+    \[
+        \text{Var}_\mathcal{D} \left( \hat{f}_\mathcal{D} \right) := \E_X \left[ \text{Var}_\mathcal{D} \left( \hat{f}_\mathcal{D}(X) \right) \right]
+    \]
+\end{subbox}
+
+\begin{multline*}
+    \E_\mathcal{D} \left[ L \left( \hat{f}_\mathcal{D}; \P_{X, Y} \right) \right] =\\ \text{Var}_\mathcal{D} \left( \hat{f}_\mathcal{D} \right) + \text{Bias}_\mathcal{D}^2 \left( \hat{f}_\mathcal{D} \right) + \sigma^2
+\end{multline*}
+
+As \( \lambda \) increases, the bias also increases, whereas the variance drops. The noise term stays constant.
+
+
+\subsection*{Classification}
+
+\begin{mainbox}{Support Vector Machine}
+    \textbf{Hard-margin SVM:} \[
+        \min_{w \in \R^d} \lVert \mathbf{w} \rVert_2
+    \] such that \[
+        y_i \langle \mathbf{w}, \mathbf{x_i} \rangle \geq 1, \; \forall i = 1, \dots, n
+    \]
+
+    \textbf{Soft-margin SVM:} \[
+        \min_{w \in \R^d, \, \zeta \in \R^n} \left( \lVert \mathbf{w} \rVert_2^2 + \lambda \sum_{i = 1}^n \zeta_i \right)
+    \] such that \[
+        y_i \langle \mathbf{w}, \mathbf{x_i} \rangle \geq 1 - \zeta_i, \; \zeta_i \geq 0, \; \forall i = 1, \dots, n
+    \]
+\end{mainbox}
+
+\[
+    \text{FNR} := \frac{\text{\#FN}}{\text{\#}\{y = +1\}}, \ \text{FPR} := \frac{\text{\#FP}}{\text{\#}\{y = -1\}}
+\]
+\[
+    \text{TPR}  := \frac{\text{\#TP}}{\text{\#}\{y = +1\}}, \ \text{TNR} := \frac{\text{\#TN}}{\text{\#}\{y = -1\}}
+\]
+TPR = \emph{power} = \emph{recall}.
+
+
+\subsection*{Kernels}
+
+\begin{mainbox}{Kernel}
+    \( k: \: \R^d \times \R^d \to \R^d \) if it is symmetric and positive semi-definite.
+\end{mainbox}
+Feature maps can be \emph{composed}. Kernels can be \emph{added} in two ways: \[ k((\mathbf{x}, \mathbf{y}), (\mathbf{x'}, \mathbf{y'})) = k_1(\mathbf{x}, \mathbf{x'}) + k_2(\mathbf{y}, \mathbf{y'}) \text{,} \] \[ k(\mathbf{x}, \mathbf{x'}) = k_1(\mathbf{x}, \mathbf{x'}) + k_2(\mathbf{x}, \mathbf{x'}) \text{.} \] Kernels can be \emph{multiplied} in two ways: \[ k((\mathbf{x}, \mathbf{y}), (\mathbf{x'}, \mathbf{y'})) = k_1(\mathbf{x}, \mathbf{x'}) k_2(\mathbf{y}, \mathbf{y'}) \text{,} \] \[ k(\mathbf{x}, \mathbf{x'}) = k_1(\mathbf{x}, \mathbf{x'}) k_2(\mathbf{x}, \mathbf{x'}) \text{.} \]
+
+
+\subsection*{Neural Networks}
+
+\begin{mainbox}{Gradient}
+    \[
+        \nabla_\mathbf{x} f = \frac{\partial f}{\partial \mathbf{x}} = \begin{bsmallmatrix}
+            \frac{\partial f}{\partial x_1}, & \dots, & \frac{\partial f}{\partial x_n}
+        \end{bsmallmatrix}^\T
+    \]
+    \[
+        \nabla_{\mathbf{W^{(l)}}} f = \frac{\partial f}{\partial \mathbf{W^{(l)}}} = \begin{bsmallmatrix}
+            \frac{\partial f}{\partial w_{1, 1}^{(l)}} & \cdots & \frac{\partial f}{\partial w_{1, n}^{(l)}} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial f}{\partial w_{m, 1}^{(l)}} & \cdots & \frac{\partial f}{\partial w_{m, n}^{(l)}}
+        \end{bsmallmatrix}
+    \]
+\end{mainbox}
+
+
+% \section{Unsupervised Learning}
+
+% \subsection{Clustering}
+
+% \subsection{Principal Component Analysis}
+
+
+\section*{Probabilistic Methods}
+
+\subsection*{Probabilistic Modeling \& Inference}
+
+\begin{mainbox}{Bayes' Rule}
+    \[
+        \underbrace{p(\theta \; | \; \mathcal{D})}_\text{posterior belief} = \underbrace{\frac{p(\mathcal{D \; | \; \theta})}{p(\mathcal{D})}}_\text{update} \underbrace{p(\theta)}_\text{prior belief}
+    \]
+\end{mainbox}
+
+\begin{mainbox}{MLE}
+    \begin{align*}
+        \hat{\theta}_\text{MLE} &:= \mathop{\arg \max}_{\theta \in \Theta} p(\mathcal{D} \; | \; \theta) \\
+        &\overset{\text{i.i.d.}}{=} \mathop{\arg \max}_{\theta \in \Theta} \prod_{i = 1}^n p(\mathbf{x_i, y_i; \theta)} \\
+        &= \mathop{\arg \min}_{\theta \in \Theta} \sum_{i = 1}^n -\log p(\mathbf{x_i}, y_i; \theta)
+    \end{align*}
+\end{mainbox}
+
+\begin{mainbox}{MAP}
+    \begin{align*}
+        \hat{\theta}_\text{MAP} &:= \mathop{\arg \max}_{\theta \in \Theta} p(\theta \; | \; \mathcal{D}) \\
+        &= \mathop{\arg \max}_{\theta \in \Theta} p(\mathcal{D} \; | \; \theta) p(\theta) \\
+        &\overset{\text{i.i.d.}}{=} \mathop{\arg \max}_{\theta \in \Theta} \left( \prod_{i = 1}^n p(\mathbf{x_i, y_i; \theta)} \right) \cdot p(\theta) \\
+        &= \mathop{\arg \min}_{\theta \in \Theta} \sum_{i = 1}^n -\log p(\mathbf{x_i}, y_i \; | \; \theta) - \log p(\theta)
+    \end{align*}
+    For discriminative models, equivalently:
+    \[
+        \mathop{\arg \min}_{\theta \in \Theta} \sum_{i = 1}^n -\log p(y_i \; | \; \mathbf{x_i}, \theta) - \log p(\theta)
+    \]
+\end{mainbox}
+
+
+% \subsection{Gaussian Mixture Models}
+
+% \subsection{Large Language Models}
+
+
+
+
+\end{document}

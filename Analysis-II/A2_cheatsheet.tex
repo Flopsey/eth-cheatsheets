@@ -9,6 +9,9 @@
 \setlength{\columnsep}{1cm}
 \Ncolumn{3}
 
+\usepackage[T1]{fontenc}
+\renewcommand{\familydefault}{\sfdefault}
+
 % define nice looking boxes
 \usepackage[many]{tcolorbox}
 
@@ -55,7 +58,7 @@
 \usepackage{float}
 
 % Make enumerations more compact
-\usepackage{enumitem}
+\usepackage[inline]{enumitem}
 \setitemize{itemsep=0.5pt}
 \setenumerate{itemsep=0.75pt}
 
@@ -95,194 +98,181 @@
 
 \begin{document}
 
-\maketitle
+% \maketitle
 
-\input{../license.tex}
+% \input{../license.tex}
 
 \small
 
+
 \section{Gewöhnliche Differentialgleichungen}
-\begin{mainbox}{Ordnung}
-    Die \emph{Ordnung} einer Differentialgleichung ist die Ordnung der höchsten Ableitung, die in der Differentialgleichung vorkommt.
-\end{mainbox}
-\begin{mainbox}{Linearität}
-    Eine Differenzialgleichung heisst \emph{linear}, falls für je zwei Lösungen \( y_1(x) \) und \( y_2(x) \) der Differentialgleichung auch jede Linearkombination \( ay_1(x) + by_2(x) \) eine Lösung derselben Gleichung ist. Dies ist genau dann der Fall, wenn \( y \) und all Ableitungen \( y' \), \( y'' \), etc. linear vorkommen, d.h. in Ausdrücken der Form \[
+
+\begin{subbox}{Ordnung einer Differentialgleichung}
+    Ordnung der höchsten Ableitung, die in der Differentialgleichung vorkommt
+\end{subbox}
+
+\begin{subbox}{Linearität}
+    \[
         a(x)y(x) + b(x) \text{, } c(x)y'(x) + d(x) \text{, etc.}
     \]
     Es dürfen also keine nicht linearen Terme wie \( y^2 \), \( (y'')^3 \), \( \sin(y) \), \( e^{y'} \), etc. vorkommen.
-\end{mainbox}
-\begin{mainbox}{Homogenität}
-    Eine Differenzialgleichung heisst \emph{homogen}, falls keine Terme vorkommen, die rein von der Funktionsvariablen \( x \) abhängen. Sonst nennt man die Gleichung \emph{inhomogen}.
-\end{mainbox}
+\end{subbox}
+
+\begin{subbox}{Homogenität}
+    Es kommen keine Terme vor, die rein von \( x \) abhängen. Sonst nennt man die Gleichung \emph{inhomogen}.
+\end{subbox}
 
 \begin{mainbox}{Anfangswertproblem}
-    Ein \emph{Anfangswertproblem} \( n \)-ter Ordnung ist eine gewöhnliche Differentialgleichung \( n \)-ter Ordnung zusammen mit \( n \) Anfangsbedingungen
+    Ein \emph{Anfangswertproblem} \( n \)-ter Ordnung ist eine ODE \( n \)-ter Ordnung zusammen mit \( n \) Anfangsbedingungen:
     \[
-        \left\{ \begin{array}{l}
-             F(x, y(x), y'(x), y''(x), \dots, y^{(n)}(x)) = 0 \\
-             \left\{ \begin{aligned}
-                y(x_0) &= y_0, \\
-                y'(x_0) &= y_1, \\
-                y''(x_0) &= y_2, \\
-                &\vdots \\
-                y^{(n - 1)}(x_0) &= y_{n - 1}
-            \end{aligned} \right.
-        \end{array} \right.
+        \begin{array}{l}
+            F(x, y(x), y'(x), \dots, y^{(n)}(x)) = 0 \\
+            y(x_0) = y_0, \quad
+            y'(x_0) = y_1, \quad
+            \dots, \quad
+            y^{(n - 1)}(x_0) = y_{n - 1}
+        \end{array}
     \]
 \end{mainbox}
 
-\subsection{Kochrezept für separierbare, nicht-lineare ODEs}
-Der einzige Weg ist die Methode der Separation der Variablen.
-Gegeben:
-\[
-    y' = a(x) \cdot b(y)
-\] wobei \( b(y) \neq 0 \).
+
+\subsection{ODEs \emph{1. Ordnung}}
+
+\subsubsection{\emph{Homogene} ODEs 1. Ordnung}
+
+\begin{mainbox}{Separierbar}
+    \[
+        y'(x) = a(x) \cdot b(y)
+    \]
+\end{mainbox}
+
+\paragraph{Separation der Variablen}
+
 \begin{align*}
-    \frac{\mathrm{d}y}{\mathrm{d}x} &= a(x) \cdot b(y) \\
-    \frac{1}{b(y)} \, \mathrm{d}y &= a(x) \, \mathrm{d}x \\
-    \int \frac{1}{b(y)} \, \mathrm{d}y &= \int a(x) \, \mathrm{d}x \\
-    \int \frac{1}{b(y)} \, \mathrm{d}y &= A(x)
+    y' &= a(x) \cdot b(y) \\
+    \odv{y}{x} &= a(x) \cdot b(y) \\
+    \frac{1}{b(y)} \odif{y} &= a(x) \odif{x} \\
+    \int \frac{1}{b(y)} \odif{y} &= \int a(x) \odif{x} \\
+    \int \frac{1}{b(y)} \odif{y} &= A(x) + C
 \end{align*}
-Nun muss man das Integral berechnen und nach der Funktion \( y \) auflösen. Diese Methode kann auch bei linearen ODEs 1. Ordnung mit variablen (nicht konstanten) Koeffizienten verwendet werden.
 
-\subsection{Kochrezept für lineare ODEs mit konstanten Koeffizienten}
-Die Lösung des dazugehörigen homogenen Problems
-\begin{itemize}
-    \item Euler-Ansatz
-\end{itemize}
-Eine partikuläre Lösung des Problems
-\begin{itemize}
-    \item Variation der Konstanten (empfohlen nur für ODEs 1. Ordnung)
-    \item Ansatz (educated guess)
-\end{itemize}
+Falls die ODE linear ist (d.h. \( y' + ay = 0 \)) gilt
+\[
+    y = z \cdot \exp(-A(x))
+\]
 
-\begin{mainbox}{Grundprinzip für lineare, inhomogene Differetialgleichungen}
-    Eine der wichtigsten Eigenschaften linearer, inhomogener Differentialgleichungen besteht darin, dass die allgemeine Lösung folgende Form hat
+
+\subsubsection{\emph{Inhomogene} ODEs 1. Ordnung}
+
+\begin{mainbox}{}
     \[
         y(x) = y_h(x) + y_p(x)
     \]
-    wobei \( y_h(x) \) die allgemeine Lösung des dazugehörigen \emph{homogenen Problems} (d.h. die Differentialgleichung ohne den inhomogenen Term) und \( y_p(x) \) eine \emph{partikuläre Lösung} des inhomogenen Problems ist.
 \end{mainbox}
 
-\subsection{Euler-Ansatz}
-Das Einsetzen des Euler-Ansatzes \( y(x) = e^{\lambda x} \) in die Differentialgleichung liefert \[
-    a_n \lambda^n e^{\lambda x} + a_{n - 1} \lambda^{n - 1} e^{\lambda x} + \dots + a_0 e^{\lambda x} = 0 \text{.}
-\]
-Da \( e^{\lambda x} \neq 0 \), darf man den Term \( e^{\lambda x} \) einfach wegkürzen. So bekommt man eine Gleichung für den unbekannten Parameter \( \lambda \) \[
-    a_n \lambda^n + a_{n - 1} \lambda^{n - 1} + \dots + a_0 = 0 \text{,}
-\] die sogenannte \emph{charakteristische Gleichung}.
+\paragraph{Variation der Konstanten}
+Die in der homogenen Lösung auftretende Intergrationskonstante \( C \) wird einfach als von \( x \) abhängige Funktion aufgefasst: \( C \to C(x) \).
 
-\subsubsection{Mehrfache Nullstellen}
-\begin{mainbox}{}
-    Falls eine Nullstelle \( \lambda \) mehrmals vorkommt, sagen wir \( m \) mal, so sagt man, dass \emph{\( \lambda \) Vielfachheit \( m \)} hat (man sagt auch, dass \( \lambda \) eine \( m \)-fache Nullstelle ist).
-\end{mainbox}
-Betrachtet man nun nur die unterschiedlichen vorkommenden Nullstellen, so gehören zu einer \( m \)-fachen Nullstelle \( \lambda \) die \( m \) linear unabhängigen Lösungen \[
-    e^{\lambda x}, \, x \cdot e^{\lambda x}, \, \dots, \, x^{m - 1} \cdot e^{\lambda x} \text{.}
-\]
-\begin{subbox}{}
-    Zur \( m \)-fachen Nullstelle \( \lambda = 0 \) gehören die Lösungen \[
-        1, \, x, \, \dots, \, x^{m - 1} \text{.}
-    \]
-\end{subbox}
 
-\subsubsection{Fundamentalsystem}
-Hat das charakteristische Polynom die Nullstellen \( \lambda_1,\allowbreak \, \dots,\allowbreak \, \lambda_k \) mit Vielfachheiten \( m_1,\allowbreak \dots,\allowbreak \, m_k \), so besitzt die Differentialgleichung die linear unabhängigen Lösungen \begin{gather*}
+\subsection{\emph{Lineare} ODEs \emph{\texorpdfstring{\( n \)}{n}-ter Ordnung} mit \emph{konstanten Koeffizienten}}
+
+\subsubsection{Lineare, \emph{homogene} ODEs \texorpdfstring{\( n \)}{n}-ter Ordnung mit konstanten Koeffizienten}
+
+\[
+    a_n y^{(n)} + a_{n - 1} y^{(n - 1)} + \dots + a_0 y = 0
+\]
+
+Können mit dem Euler-Ansatz gelöst werden:
+\[
+    y(x) = e^{\lambda x}
+\]
+
+Das führt zum charakteristischen Polynom:
+\[
+    a_n \lambda^n + a_{n - 1} \lambda^{n - 1} + \dots + a_0 = 0
+\]
+
+Hat das charakteristische Polynom Nullstellen \( \lambda_1, \, \dots, \, \lambda_k \) mit Vielfachheiten \( m_1, \dots, \, m_k \), so besitzt die Differentialgleichung die linear unabhängigen Lösungen \begin{gather*}
     e^{\lambda_1 x}, \, x \cdot e^{\lambda_1 x}, \, \dots, \, x^{m_1 - 1} \cdot e^{\lambda_1 x} \text{,} \\
     e^{\lambda_2 x}, \, x \cdot e^{\lambda_2 x}, \, \dots, \, x^{m_2 - 1} \cdot e^{\lambda_2 x} \text{,} \\
     \vdots \\
-    e^{\lambda_k x}, \, x \cdot e^{\lambda_k x}, \, \dots, \, x^{m_k - 1} \cdot e^{\lambda_k x} \text{.} \\
+    e^{\lambda_k x}, \, x \cdot e^{\lambda_k x}, \, \dots, \, x^{m_k - 1} \cdot e^{\lambda_k x} \text{,} \\
 \end{gather*}
-Diese Lösungen bilden ein \emph{Fundamentalsystem} der Differentialgleichung. \emph{Die allgemeine Lösung ist eine Linearkombination aller Lösungen im Fundamentalsystem.} Die Koeffizienten der Linearkombination werden dann aus den Anfangsbedingungen bestimmt.
+das \emph{Fundamentalsystem}. Die allgemeine Lösung ist eine Linearkombination des Fundamentalsystems. Die Koeffizienten werden dann aus den Anfangsbedingungen bestimmt.
 
-\subsubsection{Basiswechsel}
+Wenn das charakteristische Polynom komplexe Nullstellen hat, kann man die Basis mit \( e^{ix} = \cos x + i \sin x \) umformen.
+
+
+\subsubsection{Lineare, \emph{inhomogene} ODEs \texorpdfstring{\( n \)}{n}-ter Ordnung mit konstanten Koeffizienten}
+
 \begin{mainbox}{}
-    Nach Euler gilt \( e^{ix} = \cos x + i \sin x \), daher kann man die Basis einfach umformen.
-\end{mainbox}
-\paragraph{Beispiel} mit \( y(x) = A \cdot e^{(a + bi)x} + B \cdot e^{(a - bi)x} \)
-\begin{align*}
-    y(x) &= A \cdot e^{ax + ibx} + B \cdot e^{ax - ibx} \\
-    &= \begin{aligned}
-        &A \cdot e^{ax} \cdot (\cos(bx) + i \sin(bx)) \\
-        &+ B \cdot e^{ax} \cdot (\cos(bx) - i \sin(bx))
-    \end{aligned} \\
-    &= (A + B) \cdot e^{ax} \cdot \cos(bx) + (A - B)i \cdot e^{ax} \cdot \sin(bx) \\
-    &= A^* \cdot e^{ax} \cos(bx) + B^* \cdot e^{ax} \cdot \sin(bx)
-\end{align*}
-
-
-\subsection{Variation der Konstanten}
-\begin{itemize}
-    \item Durch die Variation der Konstanten versuchen wir, einen geeigneten Ansatz für die partikuläre Lösung aus der homogenen Lösung zu bestimmen
-    \item Dieser Ansatz für die partikuläre Lösung ergibt sich aus der Kenntnis der zugehörigen homogenen Lösung
-    \item Die in der homogenen Lösung auftretende Integrationskonstante \( C \) wird einfach als eine von \( x \) abhängige Funktion aufgefasst: \[
-        C \to C(x) \text{.}
+    \[
+        y(x) = y_h(x) + y_p(x)
     \]
-    Daher kommt der Name \emph{Variation der Konstanten}.
-\end{itemize}
+\end{mainbox}
 
-\subsection{Ansatz (educated guess)}
-Es ist wichtig, dass \( y_p(x) \) \emph{eine Funktion derselben Form} wie \( b(x) \) ist. Wie sieht es aber mit \( b(x) = 5x + \sin x e^{3x} \) aus? In solchen Situationen kann man die vorigen Fälle einfach kombinieren. \( b(x) \) ist die Summe von zwei Termen: einem linearen Term und einem Produkt. Darum macht man den folgenden Ansatz
-\[
-    y_p(x) = \underbrace{Ax + B}_\text{1. Teil} + \underbrace{(C \sin x + D \cos x) e^{3x}}_\text{2. Teil}
-\]
+\paragraph{Direkter Ansatz (educated guess)}: Der Ansatz für \( y_p(x) \) hat dieselbe Form wie der inhomogene Term \( b(x) \). Es können Summen aus Ansätzen kombiniert werden. \( \sin \) kann dabei immer auch mit \( \cos \) ausgetauscht werden.
 
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|}
     \hline
     \textbf{Inhomogener Term $b(x)$} & \textbf{Ansatz für $y_p(x)$} \\ \hline
-    % $\sum_{i=0}^m b_ix^i$ & $\sum_{i=0}^m A_i x^i$ \\
-    % \hline
+    $\sum_{i=0}^m b_ix^i$ & $\sum_{i=0}^m A_i x^i$ \\
+    \hline
     $e^{\alpha x} \sum_{i=0}^m b_i x^i$ & $e^{\alpha x} \sum_{i=0}^m A_i x^i$ \\
     \hline
-    % $\begin{aligned}
-    %     &\sin(\omega x) \sum_{i=0}^m b_i x^i \\
-    %     &+ \cos(\omega x) \sum_{i=0}^m c_i x^i
-    % \end{aligned}$ & $\begin{aligned}
-    %     &\sin(\omega x) \sum_{i=0}^m A_i x^i \\
-    %     &+ \cos(\omega x) \sum_{i=0}^m B_i x^i
-    % \end{aligned}$ \\
-    % \hline
-    % $\begin{aligned}
-    %     &\sinh(\omega x) \sum_{i=0}^m b_i x^i \\
-    %     &+ \cosh(\omega x) \sum_{i=0}^m c_i x^i
-    % \end{aligned}$ & $\begin{aligned}
-    %     &\sinh(\omega x) \sum_{i=0}^m A_i x^i \\
-    %     &+ \cosh(\omega x) \sum_{i=0}^m B_i x^i
-    % \end{aligned}$ \\
-    % \hline
-    $\begin{aligned}
-        &e^{\alpha x} \sin(\omega x) \sum_{i=0}^m b_i x^i \\
-        &+ e^{\alpha x} \cos(\omega x) \sum_{i=0}^m c_i x^i
-    \end{aligned}$ & $\begin{aligned}
-        &e^{\alpha x} \sin(\omega x) \sum_{i=0}^m A_i x^i \\
-        &+ e^{\alpha x} \cos(\omega x) \sum_{i=0}^m B_i x^i
-    \end{aligned}$ \\ \hline
+    $\sin(\omega x) \sum_{i=0}^m b_i x^i$ & $\sin(\omega x) \sum_{i=0}^m A_i x^i$ \\
+    \hline
+    $\sinh(\omega x) \sum_{i=0}^m b_i x^i$ & $\sinh(\omega x) \sum_{i=0}^m A_i x^i$ \\
+    \hline
+    $e^{\alpha x} \sin(\omega x) \sum_{i=0}^m b_i x^i$ & $e^{\alpha x} \sin(\omega x) \sum_{i=0}^m A_i x^i$ \\ \hline
     \end{tabular}
 \end{table}
-Wenn es vorkommt, dass \emph{ein Teil der für \( y_p(x) \) zu wählenden Funktion bereits in der Lösung des homogenen Problems vorhanden ist}, wird der Ansatz zusätzlich \emph{mit \( x \) multipliziert}.
+
+Wenn ein Teil der für \( y_p(x) \) zu wählenden Funktion bereits in der Lösung des homogenen Problems vorhanden ist, wird der Ansatz solange mit \( x \) multipliziert bis dies nicht mehr der Fall ist.
+
 
 \section{Differentialrechnung}
 
-\subsection{Skalarwertige Funktionen}
-Die allgemeine Form mehrdimensionaler Funktionen sieht so aus:
-\[
-    f: \: \Omega \subseteq \R^n \to \R^m, \, \begin{pmatrix}
-        x_1 & \cdots & x_n
-    \end{pmatrix} \mapsto \begin{pmatrix}
-        f_1(x_1, \dots, x_n) \\
-        \vdots \\
-        f_m(x_1, \dots, x_n)
-    \end{pmatrix}
-\]
-Zuerst betrachten wir Stetigkeit und partielle Differenzierbarkeit skalarwertiger Funktionen, d.h. von Funktionen, die auf \( \R \) abbilden.
-\[
-    f: \: \Omega \subseteq \R^n \to \R, \, \begin{pmatrix}
-        x_1 & \cdots & x_n
-    \end{pmatrix} \mapsto f(x_1, \dots, x_n)
-\]
+\subsection{Stetigkeit}
 
-\subsubsection{Bestimmung der Stetigkeit}
+\begin{mainbox}{Grenzwert einer Funktion}
+    Sei \( f: \: \Omega \subseteq \R^n \to \R^m, \, x_0 \in \Omega, \, y \in \R^m \). Die Funktion \( f \) hat Grenzwert \( y \) für \( x \to x_0 \), falls \( \forall \varepsilon > 0, \exists \delta > 0 \), sodass \( \forall x \in \Omega, \, x \neq x_0, \, \| x - x_0 \| < \delta \) gilt \( \| f(x) - y \| < \varepsilon \).
+\end{mainbox}
+
+\begin{mainbox}{Konvergenz einer Folge}
+    Sei \( \left( x_k \right) \) eine Folge in \( \R^n \), sei \( y = \begin{pmatrix}
+        y_1 & \cdots & y_n
+    \end{pmatrix} \in \R^n \). Die Folge \( \left( x_k \right) \) konvergiert gegen \( y \) für \( k \to \infty \), falls \( \forall \varepsilon > 0, \, \exists N \geq 1 \), sodass \( \forall k \geq N \) gilt \( \| x_k - y \| < \varepsilon\).
+\end{mainbox}
+
+\begin{mainbox}{\( p \)-Norm}
+    Die \( p \)-Norm eines reellen oder komplexen Vektors \( x = \begin{pmatrix}
+        x_1 & \cdots & x_n
+    \end{pmatrix}^\mathsf{T} \in \K^n \) ist für reelles \( 1 \leq p < \infty \) definiert durch \( \| x \|_p = (\sum_{i=1}^n |x_i|^p)^\frac{1}{p} \).
+\end{mainbox}
+
+\begin{enumerate}
+    \item \( \| x \| > 0 \quad \forall x \neq \mathbf{0} \) (Definitheit)
+    \item \( \| t \cdot x \| = |t| \cdot \| x \| \quad t \in \R \) (absolute Homogenität)
+    \item \( \| x + y \| \leq \| x \| + \| y \| \) (Subadditivität oder Dreiecksungleichung)
+\end{enumerate}
+
+\( \| x \|_2 \) wird als \emph{Euklidische Norm (Distanz)} bezeichnet.
+
+\begin{subbox}{}
+    Sei \( (x_k) \) eine Folge in \( \R^n \), \( y = \begin{pmatrix}
+        y_1 & \cdots & y_n
+    \end{pmatrix} \in \R^n \). Folgende Aussagen sind äquivalent:
+    \begin{enumerate}
+        \item \( \lim_{k \to \infty} (x_k) = y \)
+        \item Für jedes \( 1 \leq i \leq n \) konvergiert die Folge \( (x_k)_i \) gegen \( y_i \in \R \)
+        \item \( \lim_{k \to \infty} \| x_k - y \| = 0 \)
+    \end{enumerate}
+\end{subbox}
+
 Funktionen, die immer stetig sind:
 \begin{itemize}
     \item Polynome
@@ -298,191 +288,108 @@ Funktionen, die immer stetig sind:
     Differenzierbarkeit \( \implies \) Stetigkeit \( \implies \) Integrierbarkeit
 \end{subbox}
 
-\subsubsection{Polarkoordinaten-Trick}
-Der Polarkoordinaten-Trick ist für uns das wichtigste Werkzeug, um die Stetigkeit zu überprüfen.
+Falls \( f: \: \R^2 \to \R \) stetig ist, können wir \( y_0 \) fixieren und die Funktion \( g_{y_0}(x) = f(x, y_0) \) ist stetig. Umgekehrt gilt das nicht!
+
+\begin{mainbox}{Sandwichsatz}
+    Falls \( f, g, h \) Funktionen sind mit \( f(x) < g(x) < h(x) \; \forall x \in \R^n \). Sei \( a \in \R^n \). Falls \( \lim_{x \to a} f(x) = \lim_{x \to a} h(x) = L \), dann gilt \( \lim_{x \to a} g(x) = L \).
+\end{mainbox}
+
+\paragraph{Polarkoordinaten-Trick}
 Sei \( f(x, y) \) eine Funktion. Setze \begin{align*}
     x &= r \cdot \cos \varphi \\
     y &= r \cdot \sin \varphi
 \end{align*}
-Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. egal, aus welcher Richtung wir uns \( (x_0, y_0) \) nähern, ist \( f(x, y) \) stetig.
+Falls \( \lim_{r \to 0} \) unabhängig von \( \varphi \) ist, d.h. es ist egal, aus welcher Richtung wir uns \( (x_0, y_0) \) nähern, ist \( f(x, y) \) stetig.
 
-\subsubsection{Norm}
-\begin{mainbox}{\( p \)-Norm}
-    Die \( p \)-Norm eines reellen oder komplexen Vektors \( x = \begin{pmatrix}
-        x_1 & \cdots & x_n
-    \end{pmatrix} \in \K^n \) ist für reelles \( 1 \leq p < \infty \) definiert durch \( \| x \|_p = (\sum_{i=1}^n |x_i|^p)^\frac{1}{p} \).
-\end{mainbox}
-\begin{enumerate}
-    \item \( \| x \| > 0 \quad \forall x \neq \mathbf{0} \) (Definitheit)
-    \item \( \| t \cdot x \| = |t| \cdot \| x \| \quad t \in \R \) (absolute Homogenität)
-    \item \( \| x + y \| \leq \| x \| + \| y \| \) (Subadditivität oder Dreiecksungleichung)
-\end{enumerate}
-\begin{subbox}{Euklidische Norm (\( 2 \)-Norm)}
-    \( \| x \|_2 \) wird als \emph{Euklidische Norm (Distanz)} bezeichnet.
-\end{subbox}
 
-\subsubsection{Stetigkeit}
-\begin{mainbox}{}
-    Sei \( f: \: \Omega \subseteq \R^n \to \R^m, \, x_0 \in \Omega, \, y \in \R^m \). Die Funktion \( f \) hat Limes mit dem Wert \( y \) für \( x \to x_0 \), falls \( \forall \varepsilon > 0, \exists \delta > 0 \), sodass \( \forall x \in \Omega, \, x \neq x_0, \, \| x - x_0 \| < \delta \) gilt \( \| f(x) - y \| < \varepsilon \).
-\end{mainbox}
-\begin{mainbox}{}
-    Sei \( \left( x_k \right) \) eine Folge in \( \R^n \), sei \( y = \begin{pmatrix}
-        y_1 & \cdots & y_n
-    \end{pmatrix} \in \R^n \). Die Folge \( \left( x_k \right) \) konvergiert gegen \( y \) für \( k \to \infty \), falls \( \forall \varepsilon > 0, \, \exists N \geq 1 \), sodass \( \forall k \geq N \) gilt \( \| x_k - y \| < \varepsilon\).
-\end{mainbox}
+\subsection{Partielle Ableitungen}
 
-\begin{subbox}{}
-    Sei \( (x_k) \) eine Folge in \( \R^n \), \( y = \begin{pmatrix}
-        y_1 & \cdots & y_n
-    \end{pmatrix} \in \R^n \). Folgende Aussagen sind äquivalent:
-    \begin{enumerate}
-        \item \( \lim_{k \to \infty} (x_k) = y \)
-        \item Für jedes \( 1 \leq i \leq n \) konvergiert die Folge \( (x_k)_i \) gegen \( y_i \in \R \)
-        \item \( \lim_{k \to \infty} \| x_k - y \| = 0 \)
-    \end{enumerate}
-\end{subbox}
-
-\subsubsection{Partielle Ableitungen}
 \begin{mainbox}{}
     Eine partielle Ableitung ist die Ableitung einer Funktion mit mehreren Variablen nach einer dieser Variablen (in Richtung dieser Koordinatenachse). Die Werte der übrigen Argumente werden konstant gehalten.
 \end{mainbox}
 
-\subsubsection{Partielle Differenzierbarkeit}
-\begin{mainbox}{}
+\begin{mainbox}{Partielle Differenzierbarkeit}
     Eine Funktion \( f: \: \Omega \subseteq \R^n \to \R \) heisst an der Stelle \( a \in \Omega \) nach der Variablen \( x_i \) partiell differenzierbar, falls \begin{multline*}
-        \frac{\partial f}{\partial x_i} a = \\
+        \pdv{f}{x_i} a = \\
         \lim_{h \to 0} \frac{f(a_1, \dots, a_i + h, \dots, a_n) - f(a_1, \dots, a_i, \dots, a_n)}{h}
-    \end{multline*} existiert. \( \frac{\partial f}{\partial x_i} a \) heisst partielle Ableitung von \( f \) nach \( x_i \).
+    \end{multline*} existiert.
 \end{mainbox}
-\begin{subbox}{}
-    Partielle Differenzierbarkeit ist nicht stark genug, um die Stetigkeit zu implizieren (wie im eindimensionalen Fall).
-\end{subbox}
 
-\subsubsection{Gradient}
-\begin{mainbox}{}
-    Die \( n \) partiellen Ableitungen von \( f: \: \Omega \subseteq \R^n \to \R \) lassen sich in einem Vektor anordnen:
+Nicht stark genug, um die Stetigkeit zu implizieren (wie im eindimensionalen Fall)!
+
+\begin{mainbox}{Gradient}
     \[
         \gradient(f) = \nabla f = \begin{pmatrix}
-            \frac{\partial f}{\partial x_1} \\
+            \pdv{f}{x_1} \\
             \vdots \\
-            \frac{\partial f}{\partial x_n}
+            \pdv{f}{x_n}
         \end{pmatrix}
     \]
-    Diesen Vektor nennt man \emph{Gradient} von \( f \).
 \end{mainbox}
-\begin{subbox}{}
-    Die Regeln für die Bildung von partiellen Ableitungen sind dieselben wie für die Ableitungen von Funktionen von einer Variablen.
-\end{subbox}
 
-\subsubsection{Hesse-Matrix}
-\begin{mainbox}{}
-    Zweifache partielle Ableitungen von \( f: \: \Omega \subseteq \R^n \to \R \) kann man in einer \( n \times n \) Matrix anordnen:
+\begin{mainbox}{Hesse-Matrix}
     \[
         \Hess_f = \begin{pmatrix}
-            \frac{\partial^2 f}{\partial^2 x_1} & \cdots & \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+            \pdv[order=2]{f}{x_1} & \cdots & \pdv{f}{x_1,x_n} \\
             \vdots & \ddots & \vdots \\
-            \frac{\partial^2 f}{\partial x_n \partial x_1} & \cdots & \frac{\partial^2 f}{\partial^2 x_n}
+            \pdv{f}{x_n,x_1} & \cdots & \pdv[order=2]{f}{x_n}
         \end{pmatrix}
     \]
-    Diese Matrix heisst \emph{Hesse-Matrix}.
 \end{mainbox}
-\begin{subbox}{}
-    Die Hesse-Matrix enthält die zweiten partielle Ableitungen und wird zur Bestimmung der Krümmung einer Funktion eingesetzt.
-\end{subbox}
 
-\paragraph{Anwendungsbeispiele}
-\begin{itemize}
-    \item Taylor-Entwicklung
-    \item Bestimmung der Art kritischer Punkte
-    \item Bestimmung der Konvexität
-    \begin{itemize}
-        \item Es gilt: Eine Funktion ist genau dann konvex, wenn ihre Hesse-Matrix überall in \( D \) positiv semidefinit ist. Ist die Hesse-Matrix sogar positiv definit in \( D \), dann ist die Funktion auf \( D \) strikt konvex.
-        \item Entsprechend gilt: Eine Funktion ist auf \( D \) genau dann konkav, wenn ihre Hesse-Matrix negativ semidifinit ist. Ist die Hessematrix sogar negativ definit auf \( D \), so ist die Funktion auf \( D \) strikt konkav.
-    \end{itemize}
-\end{itemize}
+
+\subsection{Der Satz von Schwarz}
+
+\begin{mainbox}{Satz von Schwarz}
+    Sei \( f \in C^2(\Omega) \), also \( f \) \( k \)-mal stetig differenzierbar, dann gilt
+    \[
+        \pdv{f}{x_i, x_j} = \pdv{f}{x_j, x_i}
+    \]
+\end{mainbox}
+
 
 \subsection{Vektorwertige Funktionen}
-\[
-    f: \: \Omega \subseteq \R^n \to \R^m, \, \begin{pmatrix}
-        x_1, \cdots, x_n
-    \end{pmatrix} \mapsto \begin{pmatrix}
-        f_1(x_1, \dots, x_n) \\
-        \vdots \\
-        f_m(x_1, \dots, x_n)
-    \end{pmatrix}
-\]
+
 \begin{mainbox}{Partielle Differenzierbarkeit}
     \( f \) heisst an der Stelle \( a \in \Omega \) partiell differenzierbar, falls jede der Komponenten \( f_i \) von \( f \) in \( a \) partiell differenzierbar ist.
 \end{mainbox}
 
-\subsubsection{Jacobi-Matrix}
-\begin{mainbox}{}
-    Die partiellen Ableitungen von \( f: \: \Omega \subseteq \R^n \to \R^m \) kann man in einer \( m \times n \) Matrix anordnen:
+\begin{mainbox}{Jacobi-Matrix}
     \[
         J_f = \begin{pmatrix}
-            \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+            \pdv{f_1}{x_1} & \cdots & \pdv{f_1}{x_n} \\
             \vdots & \ddots & \vdots \\
-            \frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+            \pdv{f_m}{x_1} & \cdots & \pdv{f_m}{x_n}
         \end{pmatrix}
     \]
-    Diese Matrix wird als \emph{Jacobi-Matrix} bezeichnet.
-\end{mainbox}
-\begin{subbox}{}
-    Für \( f: \: \R^n \to \R \) gilt: \( \nabla f(x_0) = (J_f(x_0))^\T \)
-\end{subbox}
-
-\subsubsection{Der Satz von Schwarz}
-\begin{mainbox}{}
-    Ist \( f: \: \Omega \subseteq \R^n \to \R \) \( m \)-mal partiell differenzierbar auf \( \Omega \) und sind alle partiellen Ableitungen bis zur \( m \)-ten Ordnung stetig, so spielt die Reihenfolge der Ableitungen der Ordnung \( \leq m \) keine Rolle.
 \end{mainbox}
 
-\subsubsection{Richtungsableitungen}
-Wir können Ableitungen in alle Richtungen betrachten, nicht nur entlang der Achsen.
-Wir betrachten alle möglichen Richtungen mit dem Richtungsvektor \( v \in \R^n \) und nicht nur \( e_i, \, 1 \leq i \leq n \).
-\begin{mainbox}{}
-    Die Richtungsableitung von \( f \) in Richtung \( v = (a, b) \) mit \( \| v \|_2 = 1 \) in \( \R^2 \)
+Für \( f: \: \R^n \to \R \) gilt:
+\[ \nabla f(x_0) = (J_f(x_0))^\T \]
+
+\begin{mainbox}{Divergenz}
+    Sei \( f: \Omega \subseteq \R^n \to \R^n \) ein Vektorfeld von der Klasse \( C^1 \) mit Komponenten \( f_1, f_2, f_n \).
+    \[
+        \divergenz(f) = \spur(J_f) = \frac{\partial f_1}{\partial x_1} + \frac{\partial f_2}{\partial x_2} + \dots + \frac{\partial f_n}{\partial x_n}
+    \]
+\end{mainbox}
+
+\begin{mainbox}{Richtungsableitung}
+    Die Richtungsableitung von \( f \) in Richtung \( v = (a, b) \) mit \( \| v \|_2 = 1 \) ist
     \[
         \partial_v f(\mathbf{x}) = \lim_{h \to 0} \frac{f(\mathbf{x} + h \cdot \mathbf{v}) - f(\mathbf{x})}{h}
     \]
 \end{mainbox}
-\begin{subbox}{}
-    Ist \( f \) total differenzierbar, so kann die Richtungsableitung mit Hilfe der totalen Ableitung dargestellt werden:
-    \[
-        D_f(x) \cdot \mathbf{v}
-    \]
-\end{subbox}
 
-\subsubsection{Divergenz}
-\begin{mainbox}{}
-    Gegeben sei ein Vektorfeld \( f: \Omega \subseteq \R^n \to \R^n \) von der Klasse \( C^1 \) mit Komponenten \( f_1, f_2, f_n \). Die Divergenz ist definiert als \[
-        \divergenz(f) = \frac{\partial f_1}{\partial x_1} + \frac{\partial f_2}{\partial x_2} + \dots + \frac{\partial f_n}{\partial x_n}
-    \]
-\end{mainbox}
-\begin{subbox}{}
-    Physikalisch misst die Divergenz die Quellenstärke des Vektorfeldes. Falls \( \divergenz(f) = 0 \), dann heisst das Vektorfeld \emph{quellenfrei} bzw. \emph{divergenzfrei}.
-\end{subbox}
-\begin{subbox}{}
-    Die Divergenz ist die Spur (eng.: trace) der Jacobimatrix
-    \[
-        \divergenz(f) = \spur(J_f)
-    \]
-\end{subbox}
+Falls \( f \) total differenzierbar ist:
+\[
+    D_f(x) \cdot \mathbf{v}
+\]
 
-\subsubsection{Das Differential}
-Erinnerung:
-\begin{mainbox}{}
-    \( f: \R \to \R \) ist in \( x_0 \) differenzierbar, falls man \( f \) durch die affine lineare Abbildung \( A(x) = f(x_0) + f'(x)(x - x_0) \) in der Nähe von \( x_0\) \emph{gut approximieren} kann.
-\end{mainbox}
-Was bedeutet gut approximieren?
-Es existiert die Dreigliedentwicklung \[
-    f(x) = f(x_0) + f'(x_0)(x - x_0) + R(x, x_0)
-\] und \begin{multline*}
-    \lim_{x \to x_0} \frac{\| f(x) - f(x_0) - f'(x_0)(x - x_0) \|}{\| x - x_0 \|} = \\
-    \lim_{x \to x_0} \frac{\| R(x, x_0) \|}{\| x - x_0 \|} = 0
-\end{multline*}
-Das heisst \( R(x, x_0) \) geht schneller gegen \( 0 \) als \( \| x - x_0 \| \).
 
-\begin{mainbox}{}
+\subsection{Das Differential}
+
+\begin{mainbox}{Differential}
     Sei \( X \subseteq \R^n \) offen, \( x_0 \in X \), \( f: \: X \to \R^m \). Die Funktion \( f \) heisst an der Stelle \( x_0 \) (total) differenzierbar, falls es eine lineare Abbildung \( U: \: \R^n \to \R^m \) gibt, so dass \[
         \lim_{x \to x_0} \frac{\| f(x) - f(x_0) - U(x - x_0) \|}{\| x - x_0 \|} = 0 \text{.}
     \]
@@ -490,21 +397,19 @@ Das heisst \( R(x, x_0) \) geht schneller gegen \( 0 \) als \( \| x - x_0 \| \).
 \end{mainbox}
 
 \begin{subbox}{}
-    Da \( U \) eine lineare Abbildung ist, können wir eine Matrix \( A \) finden, so dass \begin{align*}
-        U: \: \R^n &\to \R^m \\
-        \mathbf{x} &\mapsto A \mathbf{x}
-    \end{align*}
-    wobei \( A \in \R^{m \times n} \).
-\end{subbox}
-Wie sieht die Matrix \( A \) aus?
-\begin{mainbox}{}
     Sei \( f: \: X \subseteq \R^n \to \R^m \) differenzierbar in \( x_0 \in X \), dann \begin{enumerate}
         \item \( f \) ist stetig in \( x_0 \)
         \item Alle partiellen Ableitungen von \( f \) in \( x_0 \) existieren (und sie sind stetig)
         \item Die Matrix von \( \mathrm{d}f(x_o) \) bzgl. den Standardbasen ist gleich \( J_f(x_0) \).
     \end{enumerate}
-\end{mainbox}
+\end{subbox}
 
+Wenn also \( J_f(x_0) \) definiert ist, dann ist \( f \) an der Stelle \( x_0 \) differenzierbar und somit auch stetig.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Analysis-II/HEIF-Image.png}
+\end{figure}
 
 \subsubsection{Bestimmung der Differenzierbarkeit}
 \begin{subbox}{}
@@ -528,48 +433,39 @@ Wie sieht die Matrix \( A \) aus?
     \end{itemize}
 \end{subbox}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Analysis-II/HEIF-Image.png}
-\end{figure}
 
-\subsubsection{Die Kettenregel}
-Wir betrachten die Zusammensetzung \[
-    g \circ f: \: \Omega \subseteq \R^n \to \R^l, \, x \mapsto f(x) \mapsto g(f(x))
-\] der differenzierbaren Funktionen \( f: \: \Omega \subseteq \R^n \to \R^m \) und \( g: \: U \subseteq \R^m \to \R^l \) mit \( U \subseteq f(\Omega) \).
-Für das Differential gilt \[
-    \mathrm{d} (g \circ f)(x) = \mathrm{d} g(f(x)) \cdot \mathrm{d} f (x)
-\] wobei \( \cdot \) die Matrix-Multiplikation bezeichnet.
-\begin{subbox}{}
-    Das Differential (im Allgemeinen) ist keine Zahl, sondern eine lineare Abbildung gegeben durch eine Matrix \( A = J_f \).
-\end{subbox}
+\subsection{Die Kettenregel}
 
-\subsection{Taylorpolynom}
-\begin{mainbox}{Definition}
+\( f, g: \: \R \to \R \):
+\[
+    (g \circ f)' (x) = g'(f(x)) \cdot f'(x)
+\]
+
+\( f: \: \Omega \subseteq \R^n \to \R^m \) und \( g: \: U \subseteq \R^m \to \R^l \) mit \( U \subseteq f(\Omega) \):
+\[
+    \odif{(g \circ f)}(x) = \odif{g}(f(x)) \cdot \odif{f}(x)
+\]
+
+
+\subsection{Taylorpolynome}
+
+\begin{mainbox}{Taylorpolynom}
     Sei \( U \subseteq \R^m \) offen, \( f \in C^k(U, \R) \), und sei \( y \in U\).
-    Das \( k \)-te Taylorpolynom von \( f \) bei \( y \) ist definiert als:
     \[
-        T_k(x) = \sum_{|i| \leq k} \frac{\partial_i f(y) \cdot (x - y)^i}{i!}
+        T_k(x) = \sum_{|i| \leq k} \frac{\partial_i f(y) \cdot (x - y)^i}{i!} \text{,}
     \]
     wobei \( i \) ein Multiindex ist:
     \begin{itemize}
-        \item \( i \) ist ein Tupel von \( m \) nicht-negativen ganzen Zahlen.
+        \item \( i \) ist Tupel von \( m \) nicht-negativen ganzen Zahlen.
         \item  \( |i| = i_1 + \dots + i_m \)
         \item \( (x - y)^i = (x_1 - y_1)^{i_1} \dots (x_n - y_n)^{i_n} \)
     \end{itemize}
 \end{mainbox}
 
-\begin{mainbox}{}
-    Sei \( f \in C^k(U, \R), \, y \in U \). Dann gilt:
-    \[
-        f(x) = T_k f(x) + o(\| x - y \|^k)
-    \]
-\end{mainbox}
-
-Das Taylorpolynom 2. Ordnung von \( f \) bei \( \mathbf{y} \) ist:
+Das Taylorpolynom 2. Ordnung von \( f \) bei \( \mathbf{x_0} \) ist:
 \begin{multline*}
     T_2 f(\mathbf{x}) = \\
-    \underbrace{f(\mathbf{y})}_{T_0} + \underbrace{\langle \nabla f(\mathbf{y}), \mathbf{x} - \mathbf{y} \rangle}_{T_1} + \underbrace{\frac{1}{2} (\mathbf{x} - \mathbf{y})^\mathsf{T} \cdot H_f(\mathbf{y}) \cdot (\mathbf{x} - \mathbf{y})}_{T_2}
+    \underbrace{\underbrace{\underbrace{f(\mathbf{x_0})}_{T_0} + \langle \nabla f(\mathbf{x_0}), \mathbf{x} - \mathbf{x_0} \rangle}_{T_1} + \frac{1}{2} (\mathbf{x} - \mathbf{x_0})^\mathsf{T} \cdot H_f(\mathbf{x_0}) \cdot (\mathbf{x} - \mathbf{x_0})}_{T_2}
 \end{multline*}
 
 Das Taylorpolynom 3. Ordnung von \( f \) bei \( (x_0, y_0) \) ist:
@@ -601,13 +497,50 @@ Das Taylorpolynom 3. Ordnung von \( f \) bei \( (x_0, y_0) \) ist:
     \end{aligned} \quad \right\} \ T_3
 \end{multline*}
 
-\subsubsection{Tangentialraum}
-\begin{mainbox}{}
-    \( U \subset \R^n \) offen, \( f: \: U \to \R^m \) differenzierbar, \( x_0 \in U, \, A = \mathrm{df}(x_0) \). Der Tangentialraum bei \( x_0 \) des Graphen von \( f \) ist der Graph von \( g(x) = f(x_0) + A(x - x_0) \).
+\begin{mainbox}{Tayorapproximation}
+    Sei \( f \in C^k(U, \R), \, y \in U \). Dann gilt:
+    \[
+        f(x) = T_k f(x) + o(\| x - y \|^k)
+    \]
 \end{mainbox}
 
+
+\subsubsection{Landau-Notation}
+\begin{subbox}{}
+    Sei \( U \subseteq \R^m, \, h: \: U \to \R, \, y \in U \). Dann:
+    \[
+        o(h) = \left\{ f: \: U \to \R \: \middle| \: \lim_{\substack{x \to y \\ x \neq y}} \frac{f(x)}{h(x)} = 0 \right\}
+    \]
+\end{subbox}
+\begin{itemize}
+    \item \( o(h) \) beschreibt die Menge der Funktionen, die bei \( y \) schneller gegen \( 0 \) gehen als \( h \), wenn \( x \to y \).
+    \item Zum Beispiel bedeutet \( f(x) = o(x - y) \), dass \( f(x) \) schneller gegen \( 0 \) geht als \( (x - y) \).
+\end{itemize}
+
+\paragraph{Rechenregeln für \texorpdfstring{\( o(h) \)}{o(h)}}
+\begin{itemize}
+    \item \( \lambda \cdot o(h) + \mu \cdot o(h) \subseteq o(h) \quad \text{für \( \lambda, \mu \in \R \)} \)
+    \item \( g \cdot o(h) \subseteq o(g) \cdot o(h) \subseteq o(g \cdot h) \)
+    \item \( o(o(h)) \subseteq o(h) \)
+    \item \( o(\| x - y \|^d) \subseteq o(\| x - y \|^e) \quad \text{für \( e \leq d\)} \)
+\end{itemize}
+
+
+\subsubsection{Tangentialraum}
+
+\begin{mainbox}{Tangentialraum}
+    Sei \( U \subset \R^n \) offen, \( f: \: U \to \R^m \) differenzierbar, \( x_0 \in U, \, A = \mathrm{df}(x_0) = J_f(x_0) \). Der Tangentialraum bei \( x_0 \) des Graphen von \( f \) ist der Graph von \( g(x) = f(x_0) + A(x - x_0) \).
+\end{mainbox}
+
+Der Tangentialraum von \( f \) an der Stelle \( x_0 \) ist nichts anderes als das Taylorpolynom 1. Ordnung an der Stelle \( x_0 \).
+
 \subsubsection{Verknüpfung von Taylorpolynomen}
-\begin{mainbox}{}
+
+Siehe \ref{taylorreihen} für Taylorreihen von Exponentialfunktionen und trigonometrischen Funktionen.
+
+% TODO: Abschnitt kürzen
+
+\begin{subbox}{}
     Sei \( f: \: \R \to \R \) und \( g: \: \R^n \to \R \) in \( C^k, \, k \geq 1 \), und \( g(0) = 0 \). Sei \begin{align*}
         p &= T_k f(y), \quad \text{sodass } f(y) = p(y) + o(y^k) \text{, \quad und} \\
         q &= T_k g(x), \quad \text{sodass } g(x) = q(x) + o(\| x \|^k) \text{.}
@@ -616,17 +549,17 @@ Das Taylorpolynom 3. Ordnung von \( f \) bei \( (x_0, y_0) \) ist:
     \[
         f(g(x)) = p(q(x)) + o(\| x \|^k) \text{.}
     \]
-\end{mainbox}
+\end{subbox}
+
 Daraus folgt:
 \begin{multline*}
     T_k f(g(x)) = \\
     \text{\( p(q(x)) \) nach Entfernen von Monomen von Grad \( > k \)}
 \end{multline*}
-\begin{subbox}{}
-    Die Bedingung \( g(0) = 0 \) ist nötig, weil das Taylorpolynom von \( f \) nur Auskunft über \( f \) nahe bei \( 0 \) (oder allgemeiner dem Entwicklungspunkt) gibt.
-\end{subbox}
 
-\( f(y) = e^y, \quad g(x_1, x_2) = \cos(x_1) \cdot \cos(x_2), \quad k = 3 \):
+Die Bedingung \( g(0) = 0 \) ist nötig, weil das Taylorpolynom von \( f \) nur Auskunft über \( f \) nahe bei \( 0 \) (oder allgemeiner dem Entwicklungspunkt) gibt.
+
+Für \( f(y) = e^y, \quad g(x_1, x_2) = \cos(x_1) \cdot \cos(x_2), \quad k = 3 \):
 \begin{align*}
     f(y) &= 1 + y + \frac{y^2}{2} + \frac{y^3}{6} + o(y^3) \\
     g(x_1, x_2) &= \left( 1 - \frac{x_1^2}{2} + o(x_1^3) \right) \left( 1 - \frac{x_2^2}{2} + o(x_2^3) \right) \\
@@ -648,94 +581,71 @@ Egal, wie hoch man den Grad des Taylorpolynoms von \( f \) wählt: durch Einsetz
     \end{aligned}
 \end{gather*}
 
-\subsubsection{Landau-Notation}
-\begin{mainbox}{}
-    Sei \( U \subseteq \R^m, \, h: \: U \to \R, \, y \in U \). Dann:
+
+
+
+
+\subsection{Satz von der Umkehrabbildung}
+
+\begin{mainbox}{Satz von der Umkehrabbildung}
+    Ist \( \det(J_f(x_0)) \neq 0 \), so ist \( f \) lokal umkehrbar, d.h. es existieren offene Umgebungen \( U \) von \( x_0 \) und \( V \) von \( f(x_0) \), sodass \( f \) eingeschränkt auf \( U \) (\( f: \: U \to V \)) bijektiv ist. Die inverse Abbildung \( f^{-1}: \: V \to U \) ist auf \( V \) von der Klasse \( C^1 \) und für das Differential gilt:
     \[
-        o(h) = \left\{ f: \: U \to \R \: \middle| \: \lim_{\substack{x \to y \\ x \neq y}} \frac{f(x)}{h(x)} = 0 \right\}
+        \mathrm{d}(f^{-1})(y) = (\mathrm{d}f(x))^{-1} \quad \text{(Inverse von \( J_f \))}
     \]
+    wobei \( y = f(x) \).
 \end{mainbox}
-\begin{itemize}
-    \item \( o(h) \) beschreibt die Menge der Funktionen, die bei \( y \) schneller gegen \( 0 \) gehen als \( h \), wenn \( x \to y \).
-    \item Zum Beispiel bedeutet \( f(x) = o(x - y) \), dass \( f(x) \) schneller gegen \( 0 \) geht als \( (x - y) \).
-\end{itemize}
 
-\paragraph{Rechenregeln für \texorpdfstring{\( o(h) \)}{o(h)}}
-\begin{itemize}
-    \item \( \lambda \cdot o(h) + \mu \cdot o(h) \subseteq o(h) \quad \text{für \( \lambda, \mu \in \R \)} \)
-    \item \( g \cdot o(h) \subseteq o(g) \cdot o(h) \subseteq o(g \cdot h) \)
-    \item \( o(o(h)) \subseteq o(h) \)
-    \item \( o(\| x - y \|^d) \subseteq o(\| x - y \|^e) \quad \text{für \( e \leq d\)} \)
-\end{itemize}
+Siehe \ref{inverse} für das Berechnen der Inverse.
 
-\subsection{Satz von der Umkehrfunktion}
-Ist \( \det(J_f(x_0)) \neq 0 \), so ist \( f \) lokal umkehrbar, d.h. es existieren offene Umgebungen \( U \) von \( x_0 \) und \( V \) von \( f(x_0) \), sodass \( f \) eingeschränkt auf \( U \) (\( f: \: U \to V \)) bijektiv ist. Die inverse Abbildung \( f^{-1}: \: V \to U \) ist auf \( V \) von der Klasse \( C^1 \) und für das Differential gilt:
-\[
-    \mathrm{d}(f^{-1})(y) = (\mathrm{d}f(x))^{-1} \quad \text{(Inverse von \( J_f \))}
-\]
-wobei \( y = f(x) \).
-\begin{subbox}{}
-    Sei \[
-        A := \begin{pmatrix}
-            a & b \\
-            c & d
-        \end{pmatrix}
-    \]
-    Dann ist die Inverse von \( A \) gegeben durch:
-    \[
-        A^{-1} = \frac{1}{\det A} \begin{pmatrix}
-            d & -b \\
-            -c & a
-        \end{pmatrix}
-    \]
-\end{subbox}
+\begin{mainbox}{Diffeomorphismus}
+    Eine Abbildung \( f: \: \Omega \to f(\Omega) \) heisst \emph{Diffeomorphismus}, falls \( f \) invertierbar ist und \( f, f^{-1} \) von der Klasse \( C^1 \) sind. \textbf{Anders gesagt:} Ein Diffeomorphismus liegt vor, falls \( f \) umkehrbar ist und sowohl \( f \) als auch \( f^{-1} \) stetig differenzierbar sind.
+\end{mainbox}
 
-Eine Abbildung \( f: \: \Omega \to f(\Omega) \) heisst \emph{Diffeomorphismus}, falls \( f \) invertierbar ist und \( f, f^{-1} \) von der Klasse \( C^1 \) sind. \textbf{Anders gesagt:} Ein Diffeomorphismus liegt vor, falls \( f \) umkehrbar ist und sowohl \( f \) als auch \( f^{-1} \) stetig differenzierbar sind.
 
-\subsection{Kritische Punkte und Extremwerte}
+\subsection{Extremwertaufgaben}
+
 \begin{mainbox}{Kritischer Punkt}
     Ein Punkt \( x_0 \in \R^n \) ist ein kritischer Punkt einer Funktion \( f: \R^n \to \R \), wenn \( \nabla f(x_0) = 0 \).
-    Kritische Punkte können Maxima, Minima, oder Sattelpunkte einer Funktion sein.
 \end{mainbox}
 
-\subsubsection{Analyse von kritischen Punkten}
-Der Typ eines kritischen Punktes kann durch das Verhalten der zweiten Ableitung bzw. der Hesse-Matrix \( H_f(x) \) bestimmt werden.
-\paragraph{Hesse-Matrix:}
-\begin{itemize}
-    \item Die Hesse-Matrix \( H_f \) ist eine symmetrische Matrix aus den zweiten Ableitungen von \( f \).
-    \item Das Eigenwertkriterium:
-    \begin{itemize}
-        \item Alle Eigenwerte positiv: positiv definit (\( f \) hat ein Minimum)
-        \item Alle Eigenwerte negativ: negativ definit (\( f \) hat ein Maximum)
-        \item Positive und negative Eigenwerte: indefinit (Sattelpunkt)
-    \end{itemize}
-\end{itemize}
-
-\begin{subbox}{Hurwitz-Krieterium (Sylvester-Kriterium)}
-    Es seien \( A_1, \dots, A_n \) die Hauptminoren der reellen, symmetrischen \( n \times n \)-Matrix.
-    \begin{itemize}
-        \item \( \det A_1 > 0, \, \det A_2 > 0, \, \det A_3 > 0, \, \dots \) \( \iff \) pos. definit
-        \item \( \det A_1 < 0, \, \det A_2 < 0, \, \det A_3 < 0, \, \dots \) \( \iff \) neg. definit
-        \item Gilt weder \( A_1 \geq 0, \, A_2 \geq 0, \, A_3 \geq 0, \, \dots \) noch \( A_1 \leq 0, \, A_2 \leq 0, \, A_3 \leq 0, \, \dots \), so ist A indefinit.
-    \end{itemize}
+\begin{subbox}{}
+    \begin{align*}
+        H_f(x_0) \text{ pos. definit } &\implies x_0 \text{ lokales Min. von } f \\
+        H_f(x_0) \text{ neg. definit } &\implies x_0 \text{ lokales Max. von } f \\
+        H_f(x_0) \text{ indefinit } &\implies x_0 \text{ Sattelpunkt von } f
+    \end{align*}
+    \textbf{Achtung: pos. \( \implies \) Min. und neg. \( \implies \) Max.}
 \end{subbox}
 
-\subsubsection{Kochrezept für Extremwertaufgaben ohne Nebenbedingungen}
-\subparagraph{Gegeben:} \( f: \: \Omega \subset \R^n \to \R \) mit \( \Omega \) offen (ohne Rand) und \( f \) von der Klasse \( C^2 \).
-\subparagraph{Gesucht:} ein Extremum der Funktion \( f \) in \( \Omega \).
-\subparagraph{Schritt 1:} Finde kritische Punkte von \( f \), d.h. löse \[
-    \mathrm{d}f = 0
+\begin{subbox}{Eigenwert-Kriterium}
+    Alle Eigenwerte von \( H_f(x_0) \) sind \dots
+    \begin{itemize}
+        \item \dots positiv \( \iff \) \( H_f(x_0) \) ist positiv definit
+        \item \dots nicht-negativ \( \iff \) \( H_f(x_0) \) ist positiv semidefinit
+        \item \dots negativ \( \iff \) \( H_f(x_0) \) ist negativ definit
+        \item \dots nicht-positiv \( \iff \) \( H_f(x_0) \) ist negativ semidefinit
+    \end{itemize}
+    Hat \( H_f(x_0) \) sowohl positive als auch negative Eigenwerte, ist \( H_f(x_0) \) indefinit.
+\end{subbox}
+
+Die Eigenwerte einer quadratischen und symmetrischen Matrix \( A \) bestimmt man, indem man
+\[
+    \det(A - \lambda \cdot I) = 0
 \]
-Die Lösungen sind die Kandidaten für Extremalstellen von \( f \).
-\subparagraph{Schritt 2:} Um zu entscheiden, ob ein kritischer Punkt \( x_0 \) von \( f \) ein Maximum oder ien Minimum ist, muss man die Hesse-Matrix von \( f \) untersuchen:
-\begin{align*}
-    \Hess(f)(x_0) \text{ pos. definit } &\implies x_0 \text{ lokales Min. von } f \\
-    \Hess(f)(x_0) \text{ neg. definit } &\implies x_0 \text{ lokales Max. von } f \\
-    \Hess(f)(x_0) \text{ indefinit } &\implies x_0 \text{ Sattelpunkt von } f
-\end{align*}
+für \( \lambda \) löst. Eine andere Möglichkeit, um die Definitheit einer Matrix zu bestimmen, ist das Sylvester-Kriterium:
+
+\paragraph{Sylvester-Kriterium}
+Es seien \( A_1, \dots, A_n \) die Hauptminoren der reellen, symmetrischen \( n \times n \)-Matrix A.
+\begin{itemize}
+    \item \( \det A_1 > 0, \, \det A_2 > 0, \, \det A_3 > 0, \, \dots \) \( \iff \) \( A \) ist positiv definit
+    \item \( \det A_1 < 0, \, \det A_2 < 0, \, \det A_3 < 0, \, \dots \) \( \iff \) \( A \) ist negaitv definit
+    \item Sonst ist \( A \) nach diesem Kriterium indefinit
+\end{itemize}
+
 
 \subsubsection{Min-Max-Theorem}
-\begin{mainbox}{}
+
+\begin{mainbox}{Min-Max-Theorem}
     Sei \( \bar{X} \subseteq \R^n \) eine kompakte Menge, \( f: \: \bar{X} \to \R \) stetig, dann ist \( f \) beschränkt und hat sein Maximum und Minimum in \( \bar{X} \).
     D.h. \( \exists x^+ \in \bar{X} \) und \( \exists x^- \in \bar{X} \) so dass \[
         f(x^+) = \sup_{x \in \bar{X}} f(x), \quad f(x^-) = \inf_{x \in \bar{X}} f(x)
@@ -743,11 +653,12 @@ Die Lösungen sind die Kandidaten für Extremalstellen von \( f \).
 \end{mainbox}
 Wenn wir Extrema auf einer kompakten Menge suchen, müssen wir auch den Rand auf kritische Punkte untersuchen.
 
-\begin{mainbox}{Kompakte Menge}
+\begin{subbox}{Kompakte Menge}
     \[
-        \text{kompakt} = \text{abgeschlossen und beschränkt}
+        \text{kompakt} \iff \text{abgeschlossen und beschränkt}
     \]
-\end{mainbox}
+\end{subbox}
+
 
 \section{Integralrechnung}
 
@@ -759,59 +670,57 @@ Wenn wir Extrema auf einer kompakten Menge suchen, müssen wir auch den Rand auf
     \]
     wird \emph{Wegintegral} (oder Kurvenintegral) von \( \vec{v} \) längs \( \gamma \) genannt.
 \end{mainbox}
-Vektorfelder werden häufig in der Physik verwendet, um z.B. elektrische, magnetische oder Gravitationsfelder zu beschreiben. Das Wegintegral besitzt folgende physikalische Bedeutung: \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \) ist die Arbeit, welche längs \( \gamma \) unter der Wirkung von \( \vec{v} \) geleistet wird.
 
-\subsubsection{Eigenschaften}
-\paragraph{Additivität}
-\begin{mainbox}{}
-    Für \( \gamma = \gamma_1 + \gamma_2 \) gilt \[
-        \int_{\gamma_1} f(\vec{s}) \, \mathrm{d}\vec{s} + \int_{\gamma_2} f(\vec{s}) \, \mathrm{d}\vec{s} \text{.}
+\begin{itemize}
+    \item \textbf{Additivität:} Für \( \gamma = \gamma_1 + \gamma_2 \) gilt
+    \[
+        \int_{\gamma} \vec{v} \odif{\vec{s}} = \int_{\gamma_1} \vec{v} \odif{\vec{s}} + \int_{\gamma_2} \vec{v} \odif{\vec{s}} \text{.}
     \]
-\end{mainbox}
+    \item \textbf{Antisymmetrie:}
+    \[
+        \int_\gamma \vec{v} \odif{\vec{s}} = -\int_{-\gamma} \vec{v} \odif{\vec{s}}
+    \]
+    \item \textbf{Fundamentalsatz der Differential- und Integralrechnung:}
+    \[
+        \int_\gamma \vec{v} \odif{\vec{s}} = \int_\gamma \nabla g \odif{\vec{s}} = g(\gamma(b)) - g(\gamma(a))
+    \]
+    Dies gilt aber nur, falls es ein Potential gibt, bzw. wenn das Vektorfeld konservativ ist.
+\end{itemize}
+    
 Wichtig ist, dass die Kurve \( \vec{\gamma} \) nicht von der Klasse \( C^1 \) sein muss, sondern es genügt, dass \( \vec{\gamma} \) stückweise der Klasse \( C^1 \) angehört. Notiert wird: \( \vec{\gamma} \in C^1_{pw} \).
-\begin{mainbox}{Stückweise stetige Differenzierbarkeit}
+\begin{subbox}{Stückweise stetige Differenzierbarkeit}
     Eine Kurve \( \vec{\gamma}: \: [a, b] \to \R^n \) heisst \emph{stückweise stetig differenzierbar}, falls \( \vec{\gamma} \) bis auf endlich viele Stellen \( t_0 < t_1 < \dots < t_n \) stetig differenzierbar ist.
-\end{mainbox}
+\end{subbox}
 In diesem Fall gilt einfach \[
     \int_\gamma \vec{v} \, \mathrm{d}s = \sum_{i = 1}^n \int_{\gamma_i} \vec{v} \, \mathrm{d}s \text{.}
 \]
 
-\paragraph{Orientierung}
-\( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \) ist von der gewählten orientierungserhaltenden Parametrisierung unabhängig. Bei einem orientierungsumkehrenden Parameterwechsel wird die neue Kurve in der umgekehrten Richtung zur ursprünglichen Kurve durchlaufen, sodass das Wegintegral \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \) sein Vorzeichen wechselt.
-\begin{mainbox}{}
-    \[
-        \int_\gamma f(\vec{s}) \, \mathrm{d}s = - \int_{-\gamma} f(\vec{s}) \, \mathrm{d}\vec{s} \text{.}
-    \]
-\end{mainbox}
+\paragraph{Kochrezept für Wegintegrale}
 
-\subsubsection{Kochrezept für Wegintegrale}
 \subparagraph{Gegeben:} Vektorfeld \( \vec{v} \in C^1 \), Kurve \( \gamma \in C^1_{pw} \).
+
 \subparagraph{Gesucht:} Wegintegral \( \int_\gamma \vec{v} \, \mathrm{d}\vec{s} \).
+
 \subparagraph{Schritt 1:} Parametrisiere \( \gamma \), d.h. finde \[
     \vec{\gamma}: \: [a, b] \to \R^n, \, t \mapsto \vec{\gamma}(t) \text{.}
 \]
+
 \subparagraph{Schritt 2:} Berechne \( \vec{\gamma}'(t) = \frac{\mathrm{d}}{\mathrm{d}t} \, \vec{\gamma}(t)\) (jede Komponente nach dem Parameter \( t \) ableiten).
+
 \subparagraph{Schritt 3:} Benutze die Formel
 \[
     \int_\gamma \vec{v} \, \mathrm{d}\vec{s} = \int_a^b \vec{v}(\vec{\gamma}(t)) \cdot \vec{\gamma}'(t) \, \mathrm{d}t \text{.}
 \]
 
-Diese Integrale kommen oft in Rechnungen vor
-\begin{gather*}
-    \int_0^{2\pi} \cos^4 t \, \mathrm{d}t = \int_0^{2\pi} \sin^4 t \, \mathrm{d}t = \frac{3\pi}{4} \\
-    \int_0^{2\pi} \cos^3 t \, \mathrm{d}t = \int_0^{2\pi} \sin^3 t \, \mathrm{d}t = 0 \\
-    \int_0^{2\pi} \cos^2 t \, \mathrm{d}t = \int_0^{2\pi}\sin^2 t \, \mathrm{d}t = \pi \\
-    \int_0^{2\pi} \sin t \, \cos^2 t \, \mathrm{d}t = \int_0^{2\pi} \cos t \, \sin^2 t \, \mathrm{d}t = 0 \\
-    \int_0^{2\pi} \sin t \, \cos t \, \mathrm{d}t = \int_0^{2\pi} \sin t \, \mathrm{d}t = \int_0^{2\pi} \cos t \, \mathrm{d}t = 0
-\end{gather*}
+\paragraph{Wichtige Parametrisierungen}
 
-\subsubsection{Wichtige Parametrisierungen}
-\paragraph{Kreis}
+\subparagraph{Kreis}
 \[
     x^2 + y^2 = r^2
 \]
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|}
         \hline
         \multicolumn{2}{|c|}{\textbf{Im Gegenuhrzeigersinn}} \\
@@ -823,6 +732,7 @@ Diese Integrale kommen oft in Rechnungen vor
 \end{table}
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|}
         \hline
         \multicolumn{2}{|c|}{\textbf{Im Uhrzeigersinn}} \\
@@ -833,12 +743,13 @@ Diese Integrale kommen oft in Rechnungen vor
     \end{tabular}
 \end{table}
 
-\paragraph{Ellipse}
+\subparagraph{Ellipse}
 \[
     \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
 \]
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|}
         \hline
         \multicolumn{2}{|c|}{\textbf{Im Gegenuhrzeigersinn}} \\
@@ -850,6 +761,7 @@ Diese Integrale kommen oft in Rechnungen vor
 \end{table}
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|}
         \hline
         \multicolumn{2}{|c|}{\textbf{Im Uhrzeigersinn}} \\
@@ -860,10 +772,11 @@ Diese Integrale kommen oft in Rechnungen vor
     \end{tabular}
 \end{table}
 
-\paragraph{Beliebige stückweise stetige Funktion \texorpdfstring{\( f(x) \)}{f(x)}}
+\subparagraph{Beliebige stückweise stetige Funktion \texorpdfstring{\( f(x) \)}{f(x)}}
 Eine beliebige stückweise stetige Funktion \( f: \: [a, b] \to \R \)
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|}
         \hline
         $x = t$ & \multirow{2}{*}{\centering$\gamma : [a, b] \mapsto (t, f(t))$} \\
@@ -872,7 +785,7 @@ Eine beliebige stückweise stetige Funktion \( f: \: [a, b] \to \R \)
     \end{tabular}
 \end{table}
 
-\paragraph{Liniensegment}
+\subparagraph{Liniensegment}
 Ein Liniensegment in \( \R^3 \) von \( (x_0, y_0, z_0) \) nach \( (x_1, y_1, z_1) \)
 \begin{align*}
     x &= (1 - t) \cdot x_0 + t \cdot x_1 \\
@@ -884,13 +797,34 @@ Oder in der Vektornotation:
     \vec{r} = (1 - t) \begin{pmatrix} x_0 \\ y_0 \\ z_0 \end{pmatrix} + t \begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix}
 \]
 
+
 \subsubsection{Konservative Vektorfelder}
-\begin{mainbox}{}
+
+\begin{mainbox}{Konservativität}
     Sei \( \Omega \subseteq \R^n \) offen sternförmig, \( f: \: \Omega \to \R^n \) mit \( f \in C^1 \) und \[
         \frac{\partial f_i}{\partial x_j} = \frac{\partial f_j}{\partial x_i} \quad \text{für alle \( i, j = 1 \),}
     \] dann ist \( f \) konservativ.
 \end{mainbox}
-\begin{mainbox}{}
+
+\begin{subbox}{Rotation (curl)}
+    \[
+        \rot \vec{F}(x, y, z) = \nabla \times \vec{F} = \begin{pmatrix}
+            \pdv{}{x} \\ \pdv{}{y} \\ \pdv{}{z}
+        \end{pmatrix} \times \begin{pmatrix}
+            F_x \\ F_y \\ F_z
+        \end{pmatrix} = \begin{pmatrix}
+            \pdv{F_x}{y} - \pdv{F_y}{z} \\
+            \pdv{F_x}{z} - \pdv{F_z}{x} \\
+            \pdv{F_y}{x} - \pdv{F_x}{y}
+        \end{pmatrix}
+    \]
+\end{subbox}
+
+\[
+    \rot(f) = 0 \iff \pdv{f_i}{x_j} = \pdv{f_j}{x_i} \; \forall i, j \iff J_f \text{ ist symmetrisch}
+\]
+
+\begin{mainbox}{Potential}
     Es sei das Vektorfeld \( \vec{v}: \: \Omega \subset \R^n \to \R^n \) gegeben. Dann ist \( \vec{v} \) genau dann konservativ, wenn eine differenzierbare Abbildung \( \Phi: \: \Omega \to \R \) existiert mit \[
         \vec{v} = \nabla \Phi \text{.}
     \]
@@ -916,73 +850,113 @@ Wenn ein Vektorfeld konservativ ist, dann gilt
     \item Allenfalls Integrationskonstante anpassen, wenn Anfangswerte gegeben sind.
 \end{enumerate}
 
-\subsubsection{Rotation}
-\begin{mainbox}{}
-    Rotation (curl) im kartesischen Koordinatensystem is definiert als \[
-        \rot \vec{F}(x, y, z) = \nabla \times \vec{F} \text{.}
-    \]
-\end{mainbox}
-\begin{subbox}{}
+
+\subsection{Das Riemann-Integral}
+
+\begin{itemize}
+    \item \textbf{Kompatibilität:} Für \(n=1,\; U=[a,b]\) gilt
     \[
-        \rot(f) = 0 \iff \frac{\partial f_i}{\partial x_j} = \frac{\partial f_j}{\partial x_i} \quad \forall i, j \text{.}
+        \int_U f(x)\,dx
+        = \int_{[a,b]} f(x)\,dx
+        = \int_a^{b} f(x)\,dx .
     \]
-\end{subbox}
-
-\subsection{Riemannintegral \texorpdfstring{in \( \R^n \)}{im mehrdimensionalen Raum}}
-
-\subsubsection{Der Satz von Fubini}
-\begin{mainbox}{}
-    Es seien der Quader \( Q = [a_1, b_1] \times [a_2, b_2] \) und \( f: \: Q \to \R \) mit \( f \in C^0(Q) \) gegeben. Dann gilt \[
-        \int_Q f(x, y) \, \mathrm{d}\mu(x, y) = \int_{a_1}^{b_1} \int_{a_2}^{b_2} f(x, y) \, \mathrm{d}x \, \mathrm{d}y \text{.}
+    
+    \item \textbf{Linearität:} Für \(f,g:U\to\mathbb{R}\) stetig und \(a,b\in\mathbb{R}\) gilt
+    \[
+        \int_U \big(a f(x)+b g(x)\big)\,dx
+        = a\int_U f(x)\,dx + b\int_U g(x)\,dx .
     \]
-\end{mainbox}
-\begin{mainbox}{}
+    
+    \item \textbf{Positivität:} Wenn \(f\le g\), dann gilt
+    \[
+        \int_U f(x)\,dx \le \int_U g(x)\,dx ,
+    \]
+    und für \(f\ge 0\) und \(V\subset U\) kompakt gilt
+    \[
+        \int_V f(x)\,dx \le \int_U f(x)\,dx .
+    \]
+    
+    \item \textbf{Dreiecksungleichung:} Es gilt
+    \[
+        \left| \int_U f(x)\,dx \right|
+        \le \int_U |f(x)|\,dx ,
+    \]
+    und
+    \[
+        \int_U |f(x)+g(x)|\,dx
+        \le \int_U |f(x)|\,dx + \int_U |g(x)|\,dx .
+    \]
+    
+    \item \textbf{Volumen:} Es gilt
+    \[
+        \int_U 1 \, dx = \text{Volumen von } U .
+    \]
+    
+    \item \textbf{Additivität bezgl.\ Integrationsbereiche:}
+    \[
+        U_1,U_2 \subseteq \mathbb{R}^n \text{ kompakt}, \qquad
+        f: U_1 \cup U_2 \to \mathbb{R} \text{ stetig}
+    \]
+    \begin{multline*}
+        \int_{U_1 \cup U_2} f(x)\,dx
+        = \\ \int_{U_1} f(x)\,dx
+        + \int_{U_2} f(x)\,dx
+        - \int_{U_1 \cap U_2} f(x)\,dx .
+    \end{multline*}
+\end{itemize}
+
+
+\subsubsection{Integration auf Quadern}
+
+\begin{mainbox}{Satz von Fubini}
     Es seien der Quader \( Q = [a_1, b_1] \times [a_2, b_2] \times \dots \times [a_n, b_n] \) und \( f: \: Q \to \R \) mit \( f \in C^0(Q) \) gegeben. Dann gilt \begin{multline*}
-        \int_Q f(x) \, \mathrm{d}\mu(x_1, \dots, x_n) = \\
-        \int_{a_1}^{b1} \int_{a_2}^{b_2} \dots \int_{a_n}^{b_n} f(x_1, x_2, \dots, x_n) \, \mathrm{d}x_n \, \dots \, \mathrm{d}x_2 \, \mathrm{d}x_1 \text{.}
+        \int_Q f(x) \, \odif{{\mu(x_1, \dots, x_n)}} = \\
+        \int_{a_1}^{b1} \int_{a_2}^{b_2} \dots \int_{a_n}^{b_n} f(x_1, x_2, \dots, x_n) \odif{x_n} \cdots \odif{x_2} \odif{x_1} \text{.}
     \end{multline*}
 \end{mainbox}
 
-\subsubsection{Normalbereiche}
-\begin{itemize}
-    \item In der Praxis sind die meisten Bereiche, auf denen man integrieren will, komplizierter als Quader.
-    \item Das Problem liegt nicht in der Berechnung der Integrale, sondern in der Parametrisierung von Gebieten in \( \R^n \).
-    \item Das Kochrezept für Normalbereiche erlaubt uns, komplizierte Integrationsgebiete in Betracht zu ziehen.
-\end{itemize}
 
-\begin{mainbox}{}
-    \( \Omega \) heisst ein \( y \)-Normalbereich, falls sich \( \Omega \) wie folgt darstellen lässt:
+\subsubsection{Integration auf Normalbereichen}
+
+\begin{mainbox}{\( y \)-Normalbereich}
+    \( \Omega \) heisst \( y \)-Normalbereich, falls sich \( \Omega \) wie folgt darstellen lässt:
     \[
         \Omega = \left\{ (x, y) \in \R^2 \; \middle| \; a \leq x \leq b, \, f(x) \leq y \leq g(x) \right\} \text{.}
     \] wobei \( f, g \) zwei stetige Funktionen der Variablen \( x \) sind.
 \end{mainbox}
-\begin{mainbox}{}
-    \( \Omega \) heisst ein \( x \)-Normalbereich, falls sich \( \Omega \) wie folgt darstellen lässt:
+
+Sei
+\[
+    \Omega = \left\{ (x, y) \in \R^2 \; \middle| \; a \leq x \leq b, \, f(x) \leq y \leq g(x) \right\}
+\]
+mit stetigen Funktionen \( f, g \) und sei \( F \in C^0(\bar{\Omega})\). Dann gilt
+\[
+    \int_\Omega F \, \odif{\mu} = \int_a^b \int_{f(x)}^{g(x)} F(x, y) \odif{y} \odif{x}
+\]
+
+\begin{mainbox}{\( x\)-Normalbereich}
+    \( \Omega \) heisst \( x \)-Normalbereich, falls sich \( \Omega \) wie folgt darstellen lässt:
     \[
         \Omega = \left\{ (x, y) \in \R^2 \; \middle| \; c \leq y \leq d, \, h(y) \leq x \leq k(y) \right\} \text{.}
     \] wobei \( h, k \) zwei stetige Funktionen der Variablen \( y \) sind.
 \end{mainbox}
+
+Für
+\[
+    \Omega = \left\{ (x, y) \in \R^2 \middle| c \leq y \leq d, \, h(y) \leq x \leq k(y) \right\}
+\]
+gilt analog
+\[
+    \int_\Omega F \, \odif{\mu} = \int_c^d \int_{h(y)}^{k(y)} F(x, y) \, \odif{x} \, \odif{y}
+\]
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{Analysis-II/HEIF-Image 2.png}
 \end{figure}
 
-Folgendes kann man als Verallgemeinerung des Satzes von Fubini sehen
-\begin{mainbox}{}
-    Sei \[
-        \Omega = \left\{ (x, y) \in \R^2 \; \middle| \; a \leq x \leq b, \, f(x) \leq y \leq g(x) \right\}
-    \] mit stetigen Funktionen \( f, g \) und sei \( F \in C^0(\bar{\Omega})\). Dann gilt \[
-        \int_\Omega F \, \mathrm{d}\mu = \int_a^b \int_{f(x)}^{g(x)} F(x, y) \, \mathrm{d}y \mathrm{d}x \text{.}
-    \]
-\end{mainbox}
-Für \[
-    \Omega = \left\{ (x, y) \in \R^2 \middle| c \leq y \leq d, \, h(y) \leq x \leq k(y) \right\}
-\] gilt analog \[
-    \int_\Omega F \, \mathrm{d}\mu = \int_c^d \int_{h(y)}^{k(y)} F(x, y) \, \mathrm{d}x \, \mathrm{d}y \text{.}
-\]
 
-\begin{mainbox}{}
+\begin{mainbox}{Normalbereich (allgemein)}
     \( \Omega \subset \R^n \) heisst Normalbereich, falls sich \( \Omega \) folgendermassen darstellen lässt:
     \begin{multline*}
         \Omega = \{ (x_1, x_2, \dots, x_n) \in \R^n \; | \; a \leq x_1 \leq b, \\
@@ -990,12 +964,14 @@ Für \[
         f_{n - 1}(x_1, x_2, \dots, x_{n - 1}) \leq x_n \leq g_{n - 1}(x_1, x_2, \dots, x_{n - 1}) \}
     \end{multline*} mit stetigen Funktionen \( f_i, g_i \).
 \end{mainbox}
+
 Für solche Bereiche gilt die Formel \begin{multline*}
-    \int_\Omega f \, \mathrm{d}\mu = \int_a^b \int_{f_1(x_1)}^{g_1(x_1)} \dots \\ \int_{f_{n - 1}(x_1, x_2, \dots, x_{n - 1})}^{g_{n - 1}(x_1, x_2, \dots, x_{n - 1})} f(x_1, x_2, \dots, x_n) \, \mathrm{d}x_n \, \dots \, \mathrm{d}x_2 \, \mathrm{d}x_1 \text{.}
+    \int_\Omega f \, \odif{\mu} = \int_a^b \int_{f_1(x_1)}^{g_1(x_1)} \dots \\ \int_{f_{n - 1}(x_1, x_2, \dots, x_{n - 1})}^{g_{n - 1}(x_1, x_2, \dots, x_{n - 1})} f(x_1, x_2, \dots, x_n) \odif{x_n} \dots \odif{x_2} \odif{x_1}
 \end{multline*}
 
-\subsection{Vernachlässigbare Mengen}
-\begin{mainbox}{}
+
+\subsubsection{Vernachlässigbare Mengen}
+\begin{subbox}{Vernachlässigbare Menge}
     \begin{enumerate}
         \item Für \( 1 \leq m \leq n \) ist eine parametrisierte \( m \)-Menge in \( \R^n \) eine stetige Funktion \[
             f: \: [a_1, b_1] \times \dots \times [a_m, b_m] \to \R^n \text{,}
@@ -1005,7 +981,7 @@ Für solche Bereiche gilt die Formel \begin{multline*}
             B \subset \mathrm{Bild}(f_1) \cup \dots \cup \textrm{Bild}(f_k)
         \] für \( m_i \)-Mengen \( f_i \) mit \( m_i < n \).
     \end{enumerate}
-\end{mainbox}
+\end{subbox}
 
 \begin{subbox}{}
     Ist \( U \subset \R^n \) kompakt und vernachlässigbar, dann
@@ -1013,98 +989,86 @@ Für solche Bereiche gilt die Formel \begin{multline*}
         \int_U f(x) \, \mathrm{d}x = 0 \quad \text{für alle } f \in C^0(U, \R) \text{.}
     \]
 \end{subbox}
-\begin{subbox}{}
-    \( \R^m \subset \R^n \) ist vernachlässigbar für \( m < n \) .
-\end{subbox}
-\begin{subbox}{}
-    \( \mathrm{Bild}(\gamma) \) ist vernachlässigbar für einen \( C^1 \)-Weg \( \gamma \) in \( \R^n \), \( n \geq 2 \).
-\end{subbox}
 
-\subsection{Uneigentliche Integrale}
+\begin{itemize}
+    \item \( \R^m \subset \R^n \) ist vernachlässigbar für \( m < n \) .
+    \item \( \mathrm{Bild}(\gamma) \) ist vernachlässigbar für einen \( C^1 \)-Weg \( \gamma \) in \( \R^n \), \( n \geq 2 \).
+\end{itemize}
+
+
+\subsubsection{Uneigentliche Integrale}
 Wir betrachten zwei Arten von uneigentlichen Integralen in \( R^n \):
 \begin{enumerate}
     \item \( f: \: [a, \infty) \times I \to \R \)
     \item \( f: \: \R^2 \to \R \)
 \end{enumerate}
-\begin{mainbox}{Uneigentliches Integral 1. Art}
+\begin{subbox}{Uneigentliches Integral 1. Art}
     Sei \( I \subseteq \R \) ein kompaktes Intervall, \( a \in \R \), und \( f: \: [a, \infty) \times I \to \R \) stetig. Dann
     \[
-        \int_{[a, \infty) \times I} f(x, y) \, \mathrm{d}x \, \mathrm{d}y := \lim_{b \to \infty} \int_{[a, b] \times I} f(x, y) \, \mathrm{d}x \, \mathrm{d}y
-    \]
-\end{mainbox}
-
-Ein uneigentliches Integral 1. Art konvergiert oder konvergiert nicht, je nachdem, ob der Grenzwert existiert. Für \( f \geq 0 \) folgt aus dem Satz von Fubini:
-\begin{align*}
-    \int_{[a, \infty) \times I} f(x, y) \, \mathrm{d}x \, \mathrm{d}y &= \int_a^\infty \left( \int_I f(x, y) \, \mathrm{d}y \right) \, \mathrm{d}x \\
-    &= \int_I \left( \int_a^\infty f(x, y) \, \mathrm{d}x \right) \, \mathrm{d}y
-\end{align*}
-\paragraph{Vorsicht:} \[
-    \int_I \left( \int_a^\infty f(x, y) \, \mathrm{d}x \right) \, \mathrm{d}y
-\] ergibt für uns nur Sinn, falls \[
-    g(y) = \int_a^\infty f(x, y) \, \mathrm{d}x
-\] stetig ist und \( g(y) \neq \infty \) für alle \( y \in I \).
-
-Des Weiteren folgt aus dem Satz von Fubini
-\begin{mainbox}{Uneigentliches Integral 2. Art}
-\begin{align*}
-    \int_{\R^2} f(x, y) \, \mathrm{d}x \, \mathrm{d}y &= \int_{-\infty}^\infty \left( \int_{-\infty}^\infty f(x, y) \, \mathrm{d}x \right) \, \mathrm{d}y \\
-    &= \int_{-\infty}^\infty \left( \int_{-\infty}^\infty f(x, y) \, \mathrm{d}y \right) \, \mathrm{d}x
-\end{align*}
-\end{mainbox}
-\begin{subbox}{}
-    Es gilt
-    \[
-        \int_{\R^2} f(x, y) \, \mathrm{d}x \, \mathrm{d}y = \lim_{R \to \infty} \int_{B_R(0)} f(x, y) \, \mathrm{d}x \, \mathrm{d}y
+        \int_{[a, \infty) \times I} f(x, y) \, \odif{x} \, \odif{y} := \lim_{b \to \infty} \int_{[a, b] \times I} f(x, y) \, \odif{x} \, \odif{y}
     \]
 \end{subbox}
 
-\subsection{Transformationsformel}
-\begin{mainbox}{}
-    Es gilt
-    \begin{multline*}
-        \int_\Omega f(\mathbf{x}) \, \mathrm{d}\mu(\Omega) = \\
-        \int_{\Phi^{-1}(\Omega)} f(\Phi(\mathbf{x})) \cdot \left| \det(J_\Omega) \right| \, \mathrm{d}\mu(\Phi^{-1}(\Omega))
-    \end{multline*}
-    oder anders ausgedrückt
+Ein uneigentliches Integral 1. Art konvergiert oder konvergiert nicht, je nachdem, ob der Grenzwert existiert. Für \( f \geq 0 \) folgt aus dem Satz von Fubini:
+\begin{align*}
+    \int_{[a, \infty) \times I} f(x, y) \, \odif{x} \, \odif{y} &= \int_a^\infty \left( \int_I f(x, y) \, \odif{y} \right) \, \odif{x} \\
+    &= \int_I \left( \int_a^\infty f(x, y) \, \odif{x} \right) \, \odif{y}
+\end{align*}
+\paragraph{Vorsicht:} \[
+    \int_I \left( \int_a^\infty f(x, y) \, \odif{x} \right) \, \odif{y}
+\] ergibt für uns nur Sinn, falls \[
+    g(y) = \int_a^\infty f(x, y) \, \odif{x}
+\] stetig ist und \( g(y) \neq \infty \) für alle \( y \in I \).
+
+\begin{subbox}{Uneigentliches Integral 2. Art}
+\begin{align*}
+    \int_{\R^2} f(x, y) \, \odif{x} \, \odif{y} &= \int_{-\infty}^\infty \left( \int_{-\infty}^\infty f(x, y) \, \odif{x} \right) \, \odif{y} \\
+    &= \int_{-\infty}^\infty \left( \int_{-\infty}^\infty f(x, y) \, \odif{y} \right) \, \odif{x} \\
+    &= \lim_{R \to \infty} \int_{B_R(0)} f(x, y) \, \odif{x} \, \odif{y}
+\end{align*}
+\end{subbox}
+
+
+\subsubsection{Transformationsformel}
+
+\begin{mainbox}{Transformationsformel}
+    Sei \( (x, y) = (g(u, v), h(u, v)) = \Phi(u, v) \) eine Substitution, wobei \( \Phi \) ein \( C^1 \)-Diffeomorphismus ist, d.h. bijektiv und \( \Phi, \Phi^{-1} \in C^1 \), dann gilt
     \[
-        \int_{\Phi(\hat{\Omega})} f(\mathbf{x}) \, \mathrm{d}\mu(\Phi(\hat{\Omega})) = \int_{\hat{\Omega}} f(\Phi(\mathbf{x})) \cdot \left| \det(J_\Omega) \right| \, \mathrm{d}\mu(\hat{\Omega})
+        \int_\Omega f(x, y) \, \odif{x,y} = \int_{\hat{\Omega}} f(g(u, v), h(u, v)) \left| \det \odif{\Phi} \right| \odif{u, v}
+    \]
+    Hier ist
+    \[
+        \odif{\Phi} = J_\Phi
     \]
 \end{mainbox}
 
-\[
-    \int_\Omega f(x, y) \, \mathrm{d}x \, \mathrm{d}y = \int_{\hat{\Omega}} f(g(u, v)) \cdot \left| \det \mathrm{d}\Phi \right| \, \mathrm{d}u \, \mathrm{d}v
-\]
-Die Determinante \( \left| \det \mathrm{d}\Phi \right| \) gibt an, wie sich das Volumen bei der durch die Matrix beschriebenen linearen Abbildung ändert.
-Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenelement \( \mathrm{d}x \, \mathrm{d}y \) durch das Flächenelement im \( (u, v) \)-Koordinatensystem \[
-    \left| \det \begin{pmatrix}
-        \frac{\partial g}{\partial u} & \frac{\partial g}{\partial v} \\
-        \frac{\partial h}{\partial u} & \frac{\partial h}{\partial v}
-    \end{pmatrix} \right| \, \mathrm{d }u \, \mathrm{d}v
-\] ersetzt.
+In \( \R^3 \) ist es analog mit \[ (x, y, z) = (g_1(u, v, w), g_2(u, v, w), g_3(u, v, w)) = \Phi(u, v, w) \] und \( \odif{\Phi} \in \R^{3 \times 3} \).
 
 \paragraph{Koordinatentransformationen in \texorpdfstring{\( \R^2 \)}{2 Dimensionen}} \
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|c|}
         \hline
         \multicolumn{3}{|c|}{\textbf{Polarkoordinaten}} \\
         \hline
         Definition & Max. Def'bereich & Volumenelement \\
         \hline
-        \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{2}{*}{\centering \( \mathrm{d}x \, \mathrm{d}y = r \, \mathrm{d}r \, \mathrm{d}\varphi \)} \\
+        \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{2}{*}{\centering \( \odif{x, y} = r \odif{r, \varphi} \)} \\
         \( y = r \sin \varphi \) & \( 0 \leq \varphi < 2 \pi \) & \\
         \hline
     \end{tabular}
 \end{table}
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|c|}
         \hline
         \multicolumn{3}{|c|}{\textbf{Elliptlische Koordinaten}} \\
         \hline
         Definition & Max. Def'bereich & Volumenelement \\
         \hline
-        \( x = ra \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{2}{*}{\centering \( \mathrm{d}x \, \mathrm{d}y = abr \, \mathrm{d}r \, \mathrm{d}\varphi \)} \\
+        \( x = ra \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{2}{*}{\centering \( \odif{x, y} = abr \odif{r, \varphi} \)} \\
         \( y = rb \sin \varphi \) & \( 0 \leq \varphi < 2 \pi \) & \\
         \hline
     \end{tabular}
@@ -1113,13 +1077,14 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
 \paragraph{Koordinatentransformationen in \texorpdfstring{\( \R^3 \)}{3 Dimensionen}} \
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|c|}
         \hline
         \multicolumn{3}{|c|}{\textbf{Zylinderkoordinaten}} \\
         \hline
         Definition & Max. Def'bereich & Volumenelement \\
         \hline
-        \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \begin{array}{l} \mathrm{d}x \, \mathrm{d}y \, \mathrm{d}z = \\ r \, \mathrm{d}r \, \mathrm{d}\varphi \, \mathrm{d}z \end{array} \)} \\
+        \( x = r \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \odif{x, y, z} = r \odif{r, \varphi, z} \)} \\
         \( y = r \sin \varphi \) & \( 0 \leq \varphi < 2 \pi \) & \\
         \( z = z \) & \( -\infty < z < \infty \) & \\
         \hline
@@ -1127,18 +1092,40 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
 \end{table}
 \begin{table}[H]
     \centering
+    \footnotesize
     \begin{tabular}{|c|c|c|}
         \hline
         \multicolumn{3}{|c|}{\textbf{Kugelkoordinaten}} \\
         \hline
         Definition & Max. Def'bereich & Volumenelement \\
         \hline
-        \( x = r \sin \theta \, \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \begin{array}{l} \mathrm{d}x \, \mathrm{d}y \, \mathrm{d}z = \\ r^2 \, \mathrm{d}r \, \sin \theta \, \mathrm{d}\theta \, \mathrm{d}\varphi \end{array} \)} \\
+        \( x = r \sin \theta \, \cos \varphi\) & \( 0 \leq r < \infty \) & \multirow{3}{*}{\centering \( \odif{x, y, z} = r^2 \sin \theta \odif{r, \theta, \varphi} \)} \\
         \( y = r \sin \theta \, \sin \varphi \) & \( 0 \leq \theta \leq \pi \) & \\
         \( z = r \cos \theta \) & \( 0 \leq \varphi < 2 \pi \) & \\
         \hline
     \end{tabular}
 \end{table}
+
+\subsection{Flächeninhalte mit dem Satz von Green}
+\begin{mainbox}{Satz von Green}
+    Es seien \( \vec{v} = (v_1, v_2) \) ein stetig differenzierbares Vektorfeld auf einem Gebiet \( \Omega \subset \R^2 \) und \( C \subset \Omega \) ein beschränkter Bereich mit \( C^1_{pw} \)-Rand \( \pdif{C} \).
+    Dann gilt:
+    \[
+        \int_{\partial C} \vec{v} \, \mathrm{d}\vec{s} = \int_C \rot(\vec{v}) \odif{x, y} = \int_C \left( \frac{\partial v_2}{\partial x} - \frac{\partial v_1}{\partial y} \right) \odif{x, y}
+    \]
+\end{mainbox}
+
+\paragraph{Kochrezept für Flächeninhalte mit dem Satz von Green}
+\subparagraph{Gegeben:} \( C \subset \R^2 \) beschränkt mit \( C^1_{pw} \)-Rand \( \partial C \).
+\subparagraph{Gesucht:} \( \mu(C) \).
+\subparagraph{Schritt 1:} Parametrisiere den Rand von \( C \) mit der Kurve \[
+    \gamma: \: [a, b] \to \R^2 \text{.}
+\]
+\subparagraph{Schritt 2:} Berechne \( \gamma' \) (jede Komponente nach dem Parameter \( t \) ableiten).
+\subparagraph{Schritt 3:} Wende den Satz von Green an:
+\[
+    \int_C 1 \odif{{\mu(x, y)}} = \int_C \vec{v} \odif{x, y} = \int_{\gamma = \pdif{C}} \vec{v} \odif{\vec{s}} = \mu(C) \text{,}
+\] mit \( \vec{v} = (0, x) \).
 
 \subsection{Anwendungen des Integrals}
 \begin{enumerate}
@@ -1152,43 +1139,439 @@ Bei der Substitution \( x = g(u, v), \, y = h(u, v) \) wird also das Flächenele
         y_S &= \frac{1}{m} \int_\Omega y \rho(x, y, z) \, \mathrm{d}\mu(x, y, z), \\
         z_S &= \frac{1}{m} \int_\Omega z \rho(x, y, z) \, \mathrm{d}\mu(x, y, z)
     \end{align*}
+    \item Volumen ohne den Satz von Gauss
+    \begin{subbox}{}
+        Sei \( U \subset \R^n \). Das Volumen von \( U \) ist definiert als
+        \[
+            \mathrm{vol}(U) = \int_U 1 \, \mathrm{d}x_1 \, \dots \, \mathrm{d}x_n
+        \]
+    \end{subbox}
+    \begin{enumerate}
+        \item Man kann das Volumen von dreidimensionalen Körpern mit uns schon bekannten Methoden berechnen, auch ohne den Satz von Gauss.
+        \item Dazu verwenden wir das Prinzip von Cavalieri und den Satz von Fubini oder die Parametrisierung als Normalbereich (falls es Hyperparameter gibt), um die Grenzen der Integrale zu bestimmen.
+    \end{enumerate}
 \end{enumerate}
 
-\subsection{Satz von Green}
-Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsintegralen und Wegintegralen.
-\begin{mainbox}{Satz von Green}
-    Es seien \( \vec{v} = (v_1, v_2) \) ein stetig differenzierbares Vektorfeld auf einem Gebiet \( \Omega \subset \R^2 \) und \( C \subset \Omega \) ein beschränkter Bereich mit \( C^1_{pw} \)-Rand \( \partial C \).
-    Dann gilt:
-    \[
-        \int_{\partial C} \vec{v} \, \mathrm{d}\vec{s} = \int_C \left( \frac{\partial v_2}{\partial x} - \frac{\partial v_1}{\partial y} \right) \, \mathrm{d}x \, \mathrm{d}y
-    \]
-\end{mainbox}
-\begin{subbox}{}
-    \[
-        \rot(\vec{v}) = \frac{\partial v_2}{\partial x} - \frac{\partial v_1}{\partial y}
-    \]
-\end{subbox}
+\section{HS23}
+\scriptsize
+{
+\setenumerate{label=(\Alph*)}
 
-\subsubsection{Kochrezept für Flächeninhalte mit dem Satz von Green}
-\subparagraph{Gegeben:} \( C \subset \R^2 \) beschränkt mit \( C^1_{pw} \)-Rand \( \partial C \).
-\subparagraph{Gesucht:} \( \mu(C) \).
-\subparagraph{Schritt 1:} Parametrisiere den Rand von \( C \) mit der Kurve \[
-    \gamma: \: [a, b] \to \R^2 \text{.}
-\]
-\subparagraph{Schritt 2:} Berechne \( \gamma' \) (jede Komponente nach dem Parameter \( t \) ableiten).
-\subparagraph{Schritt 3:} Wende den Satz von Green an:
-\[
-    \int_C 1 \, \mathrm{d}\mu(x, y) = \int_C \vec{v} \, \mathrm{d}x \, \mathrm{d}y = \int_{\gamma = \partial C} \vec{v} \, \mathrm{d}\vec{s} = \mu(C) \text{,}
-\] mit \( \vec{v} = (0, x) \).
+\subsection{Aufgabe 1}
 
-\subsubsection{Volumen ohne den Satz von Gauss}
-\begin{mainbox}{}
-    Sei \( U \subset \R^n \). Das Volumen von \( U \) ist definiert als \( \mathrm{vol}(U) = \int_U 1 \, \mathrm{d}x_1 \, \dots \, \mathrm{d}x_n \).
-\end{mainbox}
-\begin{enumerate}
-    \item Man kann das Volumen von dreidimensionalen Körpern mit uns schon bekannten Methoden berechnen, auch ohne den Satz von Gauss.
-    \item Dazu verwenden wir das Prinzip von Cavalieri und den Satz von Fubini oder die Parametrisierung als Normalbereich (falls es Hyperparameter gibt), um die Grenzen der Integrale zu bestimmen.
-\end{enumerate}
+\paragraph{MC1} Sei \( f: \R^4 \to \R \) eine differenzierbare Funktion. Welche der folgenden Aussagen muss nicht unbedingt gelten?
+\begin{enumerate*}
+    \item An jedem Punkt ist die Jacobimatrix von \( f \) gleich der Matrix des Differentials von \( f \) bezüglich der Standardbasis.
+    \item Alle Richtungsableitungen von \( f \) existieren.
+    \item \( \partial_1 f \) ist bei \( (0, 0, 0, 0) \) stetig.
+    \item \( f \) ist bei \( (0, 0, 0, 0) \) stetig.
+\end{enumerate*}
+\textbf{Lösung:} (C) nach den Sätzen und Beispielen aus der Vorlesung.
+
+\paragraph{MC2} Welche der folgenden Teilmengen von \( \R^2 \) ist nicht offen?
+\begin{enumerate*}
+    \item \( \{ (0, y) \mid 0 < y < 1 \} \)
+    \item \( (0, 1) \times \R \)
+    \item \( \{ (x, y) \mid 0 < x < y < 1 \} \)
+    \item \( \R \)
+\end{enumerate*}
+\textbf{Lösung:} (A). Verändert man die \( x \)-Koordinate eines Punkts dieser Menge, so erhält man einen Punkt ausserhalb der Menge.
+
+\paragraph{MC3} Sei \( f: \: \R^2 \to \R^2 \) eine stetig differenzierbare Funktion mit
+\(
+    f(1, 1) = (1, 2) \text{ und } J_f(1, 1) = \begin{psmallmatrix} 1 & 0 \\ 2 & -1 \end{psmallmatrix} \text{.}
+\)
+Folgt es dann, dass \( f \) bei \( (1, 1) \) lokal umkehrbar ist?
+\begin{enumerate*}
+    \item Ja, dies folgt, und die lokale Umkehrfunktion \( g \) erfüllt
+    \(
+        J_g(1, 2) = \begin{psmallmatrix} 1 & 0 \\ 2 & -1 \end{psmallmatrix} \text{.}
+    \)
+    \item Ja, dies folgt, und die lokale Umkehrfunktion \( g \) erfüllt
+    \(
+        J_g(1, 2) = \begin{psmallmatrix} 1 & 2 \\ 0 & -1 \end{psmallmatrix} \text{.}
+    \)
+    \item Ja, dies folgt, aber für die lokale Umkehrfunktion \( g \) lässt sich \( J_g(1, 2) \) im Allgemeinen nicht bestimmen.
+    \item Nein, das folgt im Allgemeinen nicht.
+\end{enumerate*}
+\textbf{Lösung:} (A). Die Voraussetzungen des Umkehrsatzes sind erfüllt; dieser impliziert \( J_g(1, 2) = J_f(1, 1)^{-1} \).
+
+\paragraph{MC4} Sei \( f \) die Lösung des Anfangswertproblems
+\(
+    y' = \frac{y}{x} + 1, \quad y(1) = 1 \text{.}
+\)
+Welchen Wert hat \( f(2) \)?
+\begin{enumerate*}
+    \item \( -2 - 2 \ln(2) \)
+    \item \( 2 - 2 \ln(2) \)
+    \item \( -2 + 2 \ln(2) \)
+    \item \( 2 + 2 \ln(2) \)
+\end{enumerate*}
+\textbf{Lösung:} (D). Es handelt sich um eine inhomogene lineare ODE erster Ordnung. Mit Hilfe von Separation der Variablen findet man die homogene Lösung \( y = x \). Mit Hilfe der Variation der Konstanten findet man als eine partikuläre Lösung \( x \ln(x) \). Die allgemeine Lösung ist als \( cx + x \ln(x) \). Einsetzen der Anfangsbedingung ergibt \( c = 1 \). Die Lösung ist also \( f(x) = x + x \ln(x) \).
+
+\paragraph{MC5} Betrachten Sie die gewöhnliche Differentialgleichung \( y'' = xy \). Welche Dimension hat der Vektorraum der Lösungen mit \( y(0) = 0 \)?
+\begin{enumerate*}
+    \item \( 2 \)
+    \item \( 1 \)
+    \item \( 0 \)
+    \item Diese Lösungen bilden gar keinen Vektorraum.
+\end{enumerate*}
+\textbf{Lösung:} (B). Dies ist eine homogene lineare ODE zweiter Ordnung mit stetigen Koeffizienten. Nach Satz 2.2.3 ist der Lösungsraum also ein zwei-dimensionaler Vektorraum. Die Bedingung \( y(0) = 0 \) bleibt unter Addition und Skalarmultiplikation erhalten, und ist durch die triviale Funktion erfüllt; also bilden die Funktionen, die die Bedingung erfüllen, einen Untervektorraum. Einerseits ist dieser Untervektorraum nicht der ganze Vektorraum, da jedes AWP eine Lösung hat, und es folglich Funktionen gibt, die nicht in diesem Untervektorraum liegen (z.B. Lösungen zum AWP \( y(0) = y'(0) = 1 \)). Andererseits ist dieser Untervektorraum nicht trivial, da er z.B. Lösungen zum AWP \( y(0) = 0, y'(0) = 1 \) enthält. Also ist der Untervektorraum eindimensional.
+
+\paragraph{MC6} Ist das Vektorfeld \( f: \: \R^2 \to \R^2 \),
+\(
+    f(x, y) = \left( \frac{x}{x^2 +y^2 + 1}, \frac{y}{x^2 + y^2 + 1} \right)
+\)
+konservativ?
+\begin{enumerate*}
+    \item Es ist konservativ.
+    \item Es ist nicht konservativ.
+\end{enumerate*}
+\textbf{Lösung:} (A). Da \( \R^2 \) sternförmig ist, folgt dies daraus, dass \( \partial_y f_x = \partial_x f_y \). Diese partiellen Ableitungen sind gleich \( \frac{-2xy}{(x^2 + y^2 + 1)^2} \). Alternativ kann man auch ein Potential finden, z.B. \( \log(x^2 + y^2 + 1) / 2 \).
+
+\paragraph{MC7} Sei \( h: \: \R^4 \to \R \) eine stetige Funktion und \( s > 0 \). Dann ist das Integral
+\(
+    \int_{[0, s]^4} h(x) \odif{x}
+\)
+gleich
+\begin{enumerate*}
+    \item \( s^{-4} \int_{[0, 1]^4} h(x/s) \odif{x} \)
+    \item \( s^{-4} \int_{[0, 1]^4} h(sx) \odif{x} \)
+    \item \( s^4 \int_{[0, 1]^4} h(x/s) \odif{x} \)
+    \item \( s^4 \int_{[0, 1]^4} h(sx) \odif{x} \)
+\end{enumerate*}
+\textbf{Lösung:} (D) Dies folgt aus der Transformationsformel.
+
+\paragraph{MC8} Die Menge \( A = \{ (x, y, z) \in \R^3 \mid x = y = 0 \rightarrow z = 0 \} \) ist
+\begin{enumerate*}
+    \item nicht wegzusammenhängend
+    \item wegzusammenhängen, aber nicht sternförmig
+    \item sternförmig, aber nicht konvex
+    \item konvex
+\end{enumerate*}
+\textbf{Lösung:} (C). \( A \) ist gleich \( \R^3 \) ohne die \( z \)-Achse, aber mit dem Ursprung. Die Menge ist sternförmig, da die Strecke zwischen einem beliebigen Punkt und dem Ursprung in \( A \) enthalten ist. Die Menge ist aber nicht konvex, da z.B. \( (-1, 0, 1), (1, 0, 1) \in A \), aber die Strecke zwischen diesen beiden Punkten durch \( (0, 0, 1) \notin A \) verläuft.
+
+\paragraph{MC9} Sei \( T \subset \R^2 \) das Dreieck mit Endpunkten \( (0, 0), (-2 \pi, \pi), (\pi, \pi) \). Welchen Wert hat das Integral
+\(
+    \int_T \cos(x + y) \odif{x, y} \text{?}
+\)
+\begin{enumerate*}
+    \item \( - 1\)
+    \item \( 0 \)
+    \item \( 1 \)
+    \item \( 2 \)
+\end{enumerate*}
+\textbf{Lösung:} (D). Mit dem Satz von Fubini berechnet man
+\(
+    \int_T \cos(x + y) \odif{x, y} = \int_0^\pi \int_{-2y}^y \cos(x + y) \odif{x, y} = \int_0^\pi \left[ \sin(x + y) \right]_{-2y}^y \odif{y} = \int_0^\pi \sin(2y) - \sin(-y) \odif{y} = \int_0^\pi \sin(y) \odif{y} = \left[ -\cos(y) \right]_0^\pi = 2 \text{.}
+\)
+
+\paragraph{MC10} Was ist das Volumen eines regelmässigen Oktaeders \( O \) mit Seitenlänge \( a \)? \textit{Hinweis:} \( O \) entsteht z.B. aus zwei gleichen Pyramiden, die entlang ihrer quadratischen Grundfläche verklebt werden. Alle Seitenlängen sind gleich \( a \).
+\begin{enumerate*}
+    \item \( \frac{2}{3} a^3 \)
+    \item \( \frac{1}{3} a^3 \)
+    \item \( \frac{\sqrt{2}}{3} a^3 \)
+    \item \( \frac{\sqrt{2}}{6} a^3 \)
+\end{enumerate*}
+\textbf{Lösung:} Eine solche Pyramide hat eine quadratische Grundseite mit Seitenlänge \( a \). Die Höhe der Pyramide berechnet man mit dem Satz des Pythagoras als \( a / \sqrt{2} \). Setzen wir die Spitze der Pyramide in den Ursprung, also auf \( z = 0 \). Dann besteht der Querschnitt der Pyramide auf Höhe \( z \) aus einem Quadrat. Dieses hat Seitenlänge \( 0 \) bei \( z = 0 \) und \( a \) bei \( z = a / \sqrt{2} \). Da sich die Seitenlänge linear mit der Höhe ändert, ist die Seitenlänge auf Höhe \( z \) gleich \( \sqrt{2} z \). Nun folgt mit Cavalieri, dass die Pyramide folgendes Volumen hat:
+\(
+    \int_0^{a / \sqrt{2}} \left(\sqrt{2} z \right)^2 \odif{z} = \left[ \frac{2}{3} z^3 \right]_0^{a / \sqrt{2}} = \frac{a^3}{3 \sqrt{2}} \text{.}
+\)
+
+}
+
+
+\subsection{Aufgabe 2}
+
+Finden Sie eine auf ganz \( \R \) definierte Lösung der Differentialgleichung \( y' = e^{x - y} \).
+\textbf{Lösung:} Mit dem Ansatz der Separation der Variablen berechnet man:
+\(
+    y' = e^{x - y} \implies y' e^y = e^x \implies \int e^y \odif{y} = \int e^x \odif{x} \implies e^y = e^x + c \implies y = \ln(\lvert e^x + c \rvert) \text{.}
+\)
+Damit \( y \) auf ganz \( \R \) definiert ist, wählt man \( c \geq 0 \) und erhält die Lösung \( y = \ln(e^x + c) \). Am einfachsten ist es, \( c = 0 \) und die Lösung \( y = x \) zu wählen.
+
+Berechnen Sie das Integral
+\(
+    \int_{\R^2} (x^2 + y^2) e^{-(x^2 + y^2)^2} \odif{x, y} \text{.}
+\)
+\textbf{Lösung:} Mit Hilfe von Polarkoordinaten findet man
+\(
+    \int_{\R^2} (x^2 + y^2) e^{-(x^2 + y^2)^2} \odif{x, y} = \int_0^\infty \int_0^{2 \pi} e^{-r^4} r^3 \odif{\varphi, r} = \lim_{R \to \infty} 2 \pi \left[ -e^{-r^4} / 4 \right]_0^R = \pi / 2 \text{.}
+\)
+
+Bestimmen Sie ein Potential des Vektorfelds \( f: \: \R^3 \to \R^3 \),
+\(
+    f(x, y, z) = \left( \frac{z^2}{x}, \frac{z^2}{y}, 2z \ln(xy) \right) \text{.}
+\)
+\textbf{Lösung:} Wir suchen \( g: \: \R^3 \to \R \) sodass \( \nabla g = f \). Es folgt, dass \( \partial_x g = z^2 / x \). Integrieren nach \( x \) ergibt \( g = z^2 \ln(x) + a(y, z) \). Ableiten nach \( y \) ergibt:
+\(
+    \partial_y a(y, z) = \frac{z^2}{y} \implies a(y, z) = z^2 \ln(y) + b(z) \text{.}
+\)
+Ableiten nach \( z \) ergibt
+\(
+    \partial_z g = \partial_z z^2 \ln(x) + z^2 \ln(y) = 2z \ln(x) + 2z \ln(y) = 2z \ln(xy) \text{.}
+\)
+Also ist \( z^2 \ln(x) + z^2 \ln(y) \) eine Lösung (die man zu \( z^2 \ln(xy) \) vereinfachen kann).
+
+Bestimmen Sie die Hessische Matrix der Funktion
+\(
+    f(x, y) = \frac{1 + e^x}{1 - xy}
+\)
+bei \( (0, 0) \).
+\textbf{Lösung:} Es gilt \( 1 + e^x = 2 + x + x^2/2 + o(x^2) \) und \( 1/(1 - xy) = 1 + xy + o(\lVert (x, y) \rVert^2) \) (geometrische Reihe!), also
+\(
+    f(x, y) = 2 + x + 2xy + x^2/2 + o(\lVert (x, y) \rVert^2) \text{.}
+\)
+Das zweite Taylorpolynom von \( f \) ist also \( 2 + x + 2xy + x^2/2 \). Davon kann man die Hessische ablesen: \( \begin{psmallmatrix} 1 & 2 \\ 2 & 0 \end{psmallmatrix} \).
+
+Sei \( f: \: \R^3 \to \R \) beliebig oft differenzierbar, und \( \nabla f(0, 1, 0) = (1, 2, 3) \). Berechnen Sie \( \partial f / \partial \theta \) am Punkt \( (r, \theta, \varphi) = (1, \pi / 2, \pi / 2) \). Hier sind \( (r, \theta, \varphi) \) die Kugelkoordinaten
+\(
+    (x, y, z) = K(r, \theta, \varphi) = (r \cos(\theta) \sin(\varphi), r \sin(\theta) \sin(\varphi), r \cos(\varphi)) \text{.}
+\)
+\textit{Hinweis:} Mit \( \partial f / \partial \theta \) ist \( \partial (f \circ K) / \partial \theta \) gemeint.
+\textbf{Lösung:} Man bemerkt \( K(1, \pi / 2, \pi / 2) = (0, 1, 0) \). Nach der Kettenregel ist also
+\(
+    J_{f \circ K}(1, \pi / 2, \pi / 2) = J_f(0, 1, 0) \cdot J_K(1, \pi / 2, \pi / 2) \text{.}
+\)
+Nun ist \( \partial(f \circ K) / \partial \theta \) der zweite Eintrag in \( J_{f \circ K} \). Dies ist gleich dem Skalarprodukt von \( \nabla_f(0, 1, 0) \) mit der zweiten Spalte von \( J_K(1, \pi / 2, \pi / 2) \). Diese zweite Spalte ist für allgemeine \( r, \theta, \varphi \) gleich
+\(
+    (-r \sin(\theta) \sin(\varphi), r \cos(\theta) \sin(\varphi), 0)^\mathsf{T} \text{,}
+\)
+bei den gegebenen Koordinaten also gleich \( (-1, 0, 0) \). Somit ist das Ergebnis \( -1 \).
+
+
+\subsection{Aufgabe 3}
+
+Finden Sie alle reellwertigen Lösungen der Differentialgleichung
+\(
+    y''' - 3y'' + y' + 5y = 0 \text{.}
+\)
+Welche darunter sind nicht-trivial und beschränkt?
+\textit{Hinweis:} Erraten Sie eine Nullstelle des charakteristischen Polynoms.
+\textbf{Lösung:} Das charakteristische Polynom \( t^3 - 3t^2 + t + 5 \) hat \( t_1 = -1 \) als Nullstelle. Mit Polynomdivision lässt sich das Polynom dann als \( (t + 1)(t^2 - 4t + 5) \) faktorisieren. Die Lösungsformel für quadratische Gleichungen liefert schliesslich \( t_2 = 2 + i \) und \( t_3 = 2 - i \) als weitere Nullstellen. Somit ist die allgemeine Lösung von der Form
+\(
+    c_1 e^{-x} + c_2 e^{2x} \sin(x) + c_3 e^{2x} \cos(x)
+\)
+mit \( c_1, c_2, c_3 \in \R \). Keine dieser Lösungen ist nicht-trivial und beschränkt.
+
+Finden Sie eine reellwertige Lösung der Differentialgleichung
+\(
+    y''' - 3y'' + y' +5y = 25x^2 - 32 + 32 \cos(x) \text{.}
+\)
+\textbf{Lösung:}
+\begin{enumerate*}
+    \item Geeigneten Ansatz zur Lösung inhomogener Differentialgleichungen wählen (Polynom und zusätzlich trigonometrische Funktionen).
+    Eine solche Partikulärlösung lässt sich mit der Methode der unbestimmten Koeffizienten finden; man findet je eine Partikulärlösung für die Inhomogenitäten \( 25x^2 - 32 \) und \( 32 \cos(x) \).
+    \item Für \( x^3 \) ergibt der Ansatz \( y = px^2 + qx + r \), eingesetzt in die ODE, die Gleichung
+    \(
+        -6p + 2px + q + 5px^2  + 5qx + 5r = 25x^2 - 32 \text{.}
+    \)
+    Koeffizientenvergleich führt zum linearen Gleichungssystem
+    \(
+        \begin{aligned}
+            -6p + q + 5r &= -32 \\
+            2p + 5q &= 0 \\
+            5p &= 25
+        \end{aligned} \text{,}
+    \)
+    mit der Lösung \( p = 5, q = -2, r = 0 \), was der Partikulärlösung \( y = 5x^2 - 2x \) entspricht.
+    Für die Inhomogenität \( 32 \cos(x) \) braucht man den Ansatz \( P \cos(x) + Q \sin(x) \), der eingesetzt zur Gleichung
+    \(
+        8P \cos(x) + 8Q \sin(x) = 32 \cos(x) \text{,}
+    \)
+    und mithin zu \( P = 4, Q = 0 \), also zur Partikulärlösung \( y = 4 \cos(x) \) führt.
+    Insgesamt findet man die Partikulärlösung \( y = 5x^2 - 2x + 4 \cos(x) \).
+\end{enumerate*}
+
+Finden sie eine Lösung \( f \) der Differetialgleichung in der vorherigen Aufgabe, die \( f(0) = f'(0) = 0 \) erfüllt.
+\textbf{Lösung:}
+\begin{enumerate*}
+    \item Aus der Kombination der ersten zwei Teilaufgaben ergibt sich, dass die allgemeine Lösung der Differentialgleichung von der Form
+    \(
+        y = c_1 e^{-x} + c_2 e^{2x} \sin(x) + c_3 e^{2x} \cos(x) + 5x^2 - 2x + 4 \cos(x)
+    \)
+    ist. Man findet \( y(0) = c_1 + c_3 + 4 \), und
+    \(
+        y' = -c_1 e^{-x} + c_2 e^{2x} (2 \sin(x) + \cos(x)) + c_3 e^{2x} (2 \cos(x) - \sin(x)) + 10x - 2 - \sin(x) / 8 \text{,}
+    \)
+    also \( y'(0) = -c_1 + c_2 + 2c_3 - 2 \). Folglich ergibt \( y(0) = y'(0) = 0 \) das lineare Gleichungssystem
+    \(
+        \begin{aligned}
+            c_1 + c_3 + 4 &= 0 \\
+            -c_1 + c_2 + 2c_3 - 2 &= 0
+        \end{aligned}
+    \)
+    \item Dieses Gleichungssystem hat unendlich viele Lösungen; eine mögliche Lösung ist z.B. \( c_1 = 0, c_2 = 10, c_3 = -4 \), die der Antwort
+    \(
+        f(x) = 10e^{2x} \sin(x) - 4e^{2x} \cos(x) + 5x^2 - 2x + 4 \cos(x)
+    \)
+    entspricht.
+\end{enumerate*}
+
+
+\subsection{Aufgabe 4}
+
+Sei \( f: \: (-2, 2) \times (-2, 2) \to \R \) die Funktion
+\(
+    f(x, y) = e^{\sin(x + y)} + x^2 \text{.}
+\)
+
+Begründen Sie, warum \( f \) eine \( C^\infty \)-Funktion ist.
+\textbf{Lösung:} Da Polynome, \( \sin \) und \( \exp \) \( C^\infty \) sind, und \( C^\infty \) erhalten bleibt unter Multiplikation und Subtraktion, ist auch \( f \) \( C^\infty \).
+
+Berechnen Sie für alle Punkte im Definitionsbereich den Gradienten und die Hessische von \( f \).
+\textbf{Lösung:}
+\begin{enumerate*}
+    \item \( \nabla f(x, y) = (\cos(x + y) e^{\sin(x + y)} + 2x, \cos(x + y) e^{\sin(x + y)}) \)
+    \item \(
+        H_f(x, y) = \begin{psmallmatrix} g + 2 & g \\ g & g \end{psmallmatrix}
+    \)
+    für \( g(x, y) = e^{\sin(x + y)} (\cos(x + y)^2 - \sin(x + y)) \).
+\end{enumerate*}
+
+Finden Sie die kritischen Punkte von \( f \).
+\textbf{Lösung:} Die kritischen Punkte sind die Nullstellen des Gradienten. Ist der zweite Eintrag des Gradienten gleich \( 0 \), so folgt, dass der erste Eintrag gleich \( 2x \) ist. Ist also auch der erste Eintrag des Gradienten gleich \( 0 \), so folgt \( x = 0\). Dann ist der zweite Eintrag gleich \( \cos(y) e^{sin(y)} \). Dieser Eintrag ist genau dann \( 0 \), wenn einer der Faktoren \( 0 \) ist. Da \( \exp \) keine Nullstellen hat, folgt \( \cos(y) = 0 \). Weil \( y \in (-2, 2) \), gilt dies genau dann wenn \( y = \pm \pi/2 \). Also gibt es zwei kritische Punkte: \( (0, \pi/2) \) und \( (0, -\pi/2) \).
+
+Entscheiden Sie für jeden kritischen Punkt, ob es sich um ein lokales Minimum, ein lokales Maximum oder einen Sattelpunkt handelt.
+\textbf{Lösung:} Um diese Entscheidung zu treffen, verwenden wir das Hesse-Kriterium, und entscheiden die Definitheit der \( 2 \times 2\)-Hesse-Matrizen m.H. von Determinante und Spur. Die Hessische hat Determinante \( (g + 2)g - g^2 = 2g \) und Spur \( 2g + 2 \). Man berechnet \( g(0, \pi/2) = -e \) und \( g(0, -\pi/2) = 1/e \). Bei \( (0, \pi/2) \) hat die Hessische also negative Determinante \( = -2e \), somit handelt es sich um einen Sattelpunkt. Bei \( (0, -\pi/2) \) hat die Hessische positive Determinante \( = 2/e \), und positive Spur \( = 2/e + 2 \), somit handelt es sich um ein lokales Minimum.
+
+
+\subsection{Aufgabe 5}
+
+Sei \( A \subset \R^2 \) das kompakte Gebiet, welches vom Weg \( \gamma: \: [0, 2\pi] \to \R^2 \) umschlossen wird, für
+\(
+    \gamma(t) = \begin{cases}
+        (t, \sin(t) & \text{falls } 0 \leq t < \pi \\
+        (2\pi - t, 0) & \text{falls } \pi \leq t \leq 2\pi
+    \end{cases} \text{.}
+\)
+Sei das Vektorfeld \( f: \: \R^2 \to \R^2 \) gegeben durch
+\(
+    f(x, y) = \left( \sqrt{1 + (\ln(1 + x^2))^2}, -e^x + \sqrt{1 + y^2} \right) \text{.}
+\)
+
+Bestimmen Sie Volumen und Schwerpunkt von \( A \).
+\textbf{Lösung:}
+\begin{enumerate*}
+    \item Das Volumen von \( X \) ist gleich \( \int_0^\pi \sin(x) \odif{x} = \left[ -\cos(x) \right]_0^\pi = 2 \).
+    \item Entweder: Die Menge \( A \) ist symmetrisch bezüglich der Achse \( x = \pi / 2 \). Deshalb ist die \( x \)-Koordinate des Schwerpunktes von \( A \) aus Symmetriegründen \( x = \pi/2\).
+    Oder: Man berechnet die \( x \)-Koordinate des Schwerpunktes mitehilfe des Integrals
+    \(
+        \frac{1}{\operatorname{vol}(A)} \int_0^\pi \int_0^{\sin(x)} x \odif{y, x}
+    \)
+    \item Also erhält man die \( y \)-Koordinate des Schwerpunktes als
+    \(
+        \frac{1}{\operatorname{vol}(A)} \int_0^\pi \int_0^{\sin(x)} y \odif{y, x} = \frac{1}{2} \int_0^\pi \left[ \frac{1}{2} y^2 \right]_0^{\sin(x)} \odif{x} = \frac{1}{2} \int_0^\pi \frac{1}{2} \sin^2(x) \odif{x} = \frac{1}{2} \left[ \frac{x}{4} - \frac{1}{4} \sin(x) \cos(x) \right]_0^\pi = \frac{\pi}{8} \text{.}
+    \)
+    Der Schwerpunkt ist also bei \( (\pi/2, \pi/8) \).
+\end{enumerate*}
+
+Berechnen Sie mit Hilfe des Satzes von Green das Wegintegral
+\(
+    \int_\gamma f \cdot \odif{\vec{s}}
+\)
+\textbf{Lösung:}
+\begin{enumerate*}
+    \item Man beachte, dass \( \gamma \) im Uhrzeigersinn verläuft, d.h. \( A \) liegt rechts von \( \gamma \). Dies ändert das Vorzeichen im Satz von Green.
+    \item Also ist
+    \(
+        \int_\gamma f \cdot \odif{\vec{s}} = \int_A \odv{f_1}{y} - \odv{f_2}{x} \odif{x, y} = \int_A y \odif{x, y} = \int_0^\pi \int_0^{\sin(x)} e^x \odif{y, x} = \int_0^\pi \sin(x) e^x \odif{x} = \left[ \frac{1}{2}(\sin(x) - \cos(x)) e^x \right]_0^\pi = \frac{e^\pi + 1}{2} \text{.}
+    \)
+\end{enumerate*}
+
+Sei \( g: \: \R^2 \to \R^2 \) das Vektorfeld gegeben durch \( g(x, y) = (0, e^x) \). Berechnen Sie unter Verwendung des Wegintegrals
+\(
+    \int_\gamma g \cdot \odif{\vec{s}} \text{.}
+\)
+Zeigen Sie, dass \( f + g \) konservativ ist, und schliessen Sie daraus erneut auf den Wert von \( \int_\gamma f \cdot \odif{\vec{s}} \).
+\textbf{Lösung:}
+\begin{enumerate*}
+    \item Nach der Definition des Wegintegrals ist
+    \(
+        \int_\gamma g \cdot \odif{\vec{s}} = \int_0^{2\pi} \left\langle \gamma'(t), g(\gamma(t)) \right\rangle \odif{t} = \int_0^\pi \left\langle \begin{psmallmatrix} 1 \\ \cos(t) \end{psmallmatrix}, \begin{psmallmatrix} 0 \\ e^t \end{psmallmatrix} \right\rangle \odif{t} + \int_\pi^{2\pi} \left\langle \begin{psmallmatrix} -1 \\ 0 \end{psmallmatrix}, \begin{psmallmatrix} 0 \\ e^{2\pi - t} \end{psmallmatrix} \right\rangle \odif{t} = \int_0^\pi e^t \cos(t) \odif{t} = \left[ \frac{1}{2}(\sin(t) + \cos(t)) e^t \right]_0^\pi \odif{t} = -\frac{e^\pi + 1}{2}
+    \)
+    \item Für das Vektorfeld \( f + g \) gilt
+    \(
+        \odv{(f+g)_1}{y} = \odv{(f + g)_2}{x} = 0
+    \)
+    und \( A \) ist sternförmig (notwendig für den Punkt). Folglich ist \( f + g \) konservativ.
+    \item Also ist
+    \(
+        \int_\gamma f \cdot \odif{\vec{s}} = \int_\gamma f + g \odif{\vec{s}} - \int_\gamma g \cdot \odif{\vec{s}} = 0 - \left( - \frac{e^\pi + 1}{2} \right) = \frac{e^\pi + 1}{2} \text{.}
+    \)
+\end{enumerate*}
+
+
+\section{Aufgabe 6}
+
+Sei \( a \in \R \) ein reeller Parameter. Die Funktion
+\(
+    f(x, y) = \ln \left(a \sin(y) + \sqrt{1 + 2x} \right)
+\)
+nach \( \R \) sei auf dem Teilgebiet von \( \R^2 \) definiert, auf dem sich der Ausdruck auf der rechten Seite auswerten lässt.
+
+Bestimmen Sie in Abhängigkeit von \( a \) das zweite Taylorpolynom von \( f \) bei \( 0, 0 \).
+\textbf{Lösung 1:}
+\begin{enumerate*}
+    \item Das Taylorpolynom kann als Verknüpfung der Taylorpolynome der Funktionen \( \sin(t) \), \( \sqrt{1 + t} \) und \( \ln(1 + t) \) berechnet werden.
+    \item Unter Verwendung der bekannten Taylorreihen für \( \sin(t) \), \( \sqrt{1 + t} \) und \( \ln(1 + t) \) findet man
+    \(
+        \ln \left(a \sin(y) + \sqrt{1 + 2x} \right) = \ln \left( ay + o(y^2) + 1 + x - x^2/2 + o(x^2) \right) = \ln \left( 1 + (x + ay - x^2/2 + o( \lVert (x, y) \rVert^2 )) \right) = (x + ay - x^2/2) - \frac{1}{2}(x + ay - x^2/2)^2 + o( \lVert (x, y) \rVert^2) = x + ay - x^2 - axy - a^2y^2/2 + o( \lVert (x, y) \rVert^2)) \text{.}
+            
+    \)
+\end{enumerate*}
+\textbf{Lösung 2:}
+\begin{enumerate*}
+    \item Die ersten Ableitungen lauten
+    \(
+        \partial_x f(x, y) = \frac{1}{\sqrt{1 + 2x} (a \sin(y) + \sqrt{1 + 2x}}
+    \)
+    und
+    \(
+        \partial_y f(x, y) = \frac{a \cos(y)}{a \sin(y) + \sqrt{1 + 2x}} \text{.}
+    \)
+    Die zweiten Ableitungen lauten
+    \(
+        \partial_x^2 f(x, y) = \frac{-a \sin(y) - 2\sqrt{1 + 2x}}{\sqrt{1 + 2x}^3 (a \sin(y) + \sqrt{1 + 2x})^2}
+    \)
+    \(
+        \partial_y^2 f(x, y) = \frac{a \sin(y) (a \sin(y) + \sqrt{1 + 2x}) + a^2 \cos^2(y)}{(a \sin(y) + \sqrt{1 + 2x})^2}
+    \)
+    \(
+        \partial_x \partial_y f(x, y) = \partial_y \partial_x f(x, y) = \frac{-a \cos(y)}{\sqrt{1 + 2x} (a \sin(y) + \sqrt{1 + 2x})^2}
+    \)
+\end{enumerate*}
+
+Bestimmen Sie eine Gleichung, welche die Tangentialebene des Graphen von \( f \) bei \( (0, 0) \) beschreibt. Für welche \( a \in \R \) enthält diese Ebene die \( y \)-Achse?
+\textbf{Lösung:} Vom ersten Taylorpolynom von \( f \) liest man ab, dass die Tangentialebene durch \( z = x + ay \) gegeben ist. Die \( y \)-Achse ist in dieser Ebene enthalten, wenn alle Punkte auf der \( y \)-Achse, also alle Punkte der Form \( (0, y, 0) \), diese Gleichung erfüllen. Einsetzen ergibt \( 0 = 0 + ay \) für alle \( y \). Dies ist genau dann erfüllt, wenn \( a = 0 \).
+
+Sei \( g: \: (0, 1) \to \R^2 \) die Funktion \( g(t) = ((t^2 - 1)/2, \arcsin(t)) \). Berechnen Sie für alle \( t \in (0, 1) \) das Produkt der Jacobimatrizen
+\(
+    J_f(g(t)) \cdot J_g(t)
+\)
+in Abhängigkeit von \( a > 0 \).
+\textbf{Lösung 1:} Nach der Kettenregel ist \( J_f(g(t)) \cdot J_g(t) = J_{f \circ g}(t) \). Da \( f \circ g \) eine Funktion \( (0, 1) \to \R \) ist, ist \( J_{f \circ g}(t) \) einfach die \( 1 \times 1 \) Matrix mit Eintrag \( (f \circ g)'(t) \). Man berechnet \( (f \circ g)(t) = \ln((a + 1) t) \), und erhält so als Antwort
+\(
+    \left( \frac{a + 1}{at + t} \right) = \left( 1/t \right) \text{.}
+\)
+\textbf{Lösung 2:} Es ist
+\(
+    J_f(x, y) = \begin{psmallmatrix} \frac{1}{\sqrt{1 + 2x} (a \sin(y) + \sqrt{1 + 2x})} & \frac{a \cos(y)}{a \sin(y) + \sqrt{1 + 2x}} \end{psmallmatrix} \text{.}
+\)
+Dementsprechend erhalten wir
+\(
+    J_f(g(t)) = \begin{psmallmatrix} \frac{1}{t(at + t)} & \frac{a \cos(\arcsin(t)}{at + t} \end{psmallmatrix} = \begin{psmallmatrix} \frac{1}{t(at + t)} & \frac{a \sqrt{1 - t^2})}{at + t} \end{psmallmatrix}
+\)
+wobei wir verwendet haben, dass \( \cos(\arcsin(t)) = \sqrt{1 - t^2} \).
+Weiterhin ist
+\(
+    J_g(t) = \begin{psmallmatrix} t \\ \frac{1}{\sqrt{1 - t^2}} \end{psmallmatrix}
+\)
+Also erhalten wir
+\(
+    J_f(g(t)) \cdot J_g(t) = \begin{psmallmatrix} \frac{1}{t(at + t)} & \frac{a \sqrt{1 - t^2}}{at + t} \end{psmallmatrix} \begin{psmallmatrix} t \\ \frac{1}{\sqrt{1 - t^2}} \end{psmallmatrix} = \left( \frac{a + 1}{at + t} \right) = \left( 1/t \right) \text{.}
+\)
+
 
 \section{Appendix}
 \footnotesize
@@ -1227,7 +1610,7 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
     %     \end{algorithm}    
 \end{itemize}
 
-\subsection{Inverse}
+\subsection{Inverse} \label{inverse}
 \begin{itemize}
     \item Für \(2 \times 2 \)-Matrize \( A := \begin{pmatrix}
         a & c \\
@@ -1252,15 +1635,15 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
     \end{pmatrix}
 \]
 
-\subsection{Einheitskreis}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{Analysis-II/Unit_circle_angles_color.svg.png}
-\end{figure}
+% \subsection{Einheitskreis}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.75\linewidth]{Analysis-II/Unit_circle_angles_color.svg.png}
+% \end{figure}
 
 \subsection{Ableitungs- und Stammfunktionen}
 
-\paragraph{Basics}
+\paragraph{Basics} \
 \begin{align*}
     u(x) + v(x) &= u' + v' \\
     u(x) \cdot v(x) &= u'v + v'u \\
@@ -1351,10 +1734,18 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
     \begin{tabular}{cc}
           \( f(x)\) & \( F(x)\) \\
           \hline \hline
+          \(\sin(x)\) & \(-\cos(x)\) \\
+          \hline
+          \(\cos(x)\) & \(\sin(x)\) \\
+          \hline
+          \(a \cos(x)\) & \(\sin(ax)\) \\
+          \hline
+          \(\sin(ax)\) & \(\frac{\cos(ax)}{a}\) \\
+          \hline
           \(\tan(x) = \frac{\sin(x)}{\cos(x)}\) & \(\ln(\sec(x))\)    \\     
           \hline
          \( \cot(x)=\frac{\cos(x)}{\sin(x)} \) & \( -\ln(\sec(x)) \) \\
-                  \hline
+          \hline
          \( \sin^2(x) \) & \(\frac{1}{2}(x-\sin(x)\cos(x)) = \frac{1}{2}x - \frac{1}{4}\sin(2x))  \) \\
                   \hline
          \( \cos^2(x) \) & \( \frac{1}{2}(x+\sin(x)\cos(x)) = \frac{1}{2}x + \frac{1}{4}\sin(2x)) \) \\
@@ -1413,6 +1804,30 @@ Der Satz von Green zeigt den Zusammenhang zwischen zweidimensionalen Gebietsinte
         \(\)&\(\)\\
     \end{tabular}
 \end{table}
+
+\paragraph{Häufige Integrale}
+\begin{gather*}
+    \int_0^{2\pi} \cos^4 t \, \mathrm{d}t = \int_0^{2\pi} \sin^4 t \, \mathrm{d}t = \frac{3\pi}{4} \\
+    \int_0^{2\pi} \cos^3 t \, \mathrm{d}t = \int_0^{2\pi} \sin^3 t \, \mathrm{d}t = 0 \\
+    \int_0^{2\pi} \cos^2 t \, \mathrm{d}t = \int_0^{2\pi}\sin^2 t \, \mathrm{d}t = \pi \\
+    \int_0^{2\pi} \sin t \, \cos^2 t \, \mathrm{d}t = \int_0^{2\pi} \cos t \, \sin^2 t \, \mathrm{d}t = 0 \\
+    \int_0^{2\pi} \sin t \, \cos t \, \mathrm{d}t = \int_0^{2\pi} \sin t \, \mathrm{d}t = \int_0^{2\pi} \cos t \, \mathrm{d}t = 0
+\end{gather*}
+
+
+\subsection{Wichtige Taylorreihen} \label{taylorreihen}
+
+\begin{align*}
+    e^x &= \sum_{n=0}^\infty \frac{x^n}{n!} &\quad \text{für alle } x \in \R \\
+    \ln(x) &= \sum_{n=1}^\infty \frac{(-1)^{n+1}}{n} (x - 1)^n &\quad \text{für } 0 < x \leq 2 \\
+    \sin(x) &= \sum_{n=0}^\infty (-1)^n \frac{x^{2n+1}}{(2n + 1)!} &\quad \text{für alle } x \\
+    \cos(x) &= \sum_{n=0}^\infty (-1)^n \frac{x^{2n}}{(2n)!} &\quad \text{für alle } x \\
+    \tan(x) &= \sum_{n=1}^\infty \frac{B_{2n} (-4)^n (1-4^n)}{(2n)!} x^{2n-1} &\quad \text{für } \lvert x \rvert < \frac{\pi}{2} \\
+    \arcsin(x) &= \sum_{n=0}^\infty \frac{(2n)!}{4^n (n!)^2 (2n +1)} x^{2n + 1} &\quad \text{für } \lvert x \rvert < 1 \\
+    \arccos(x)& = \frac{\pi}{2} - \arcsin(x) &\quad \text{für } \lvert x \rvert \leq 1 \\
+    \arctan(x) &=\sum_{n=0}^\infty (-1)^n \frac{1}{2n + 1} x^{2n + 1} &\quad \text{für } \lvert x \rvert \leq 1
+\end{align*}
+Hierbei ist \(  B_{2n} \) die \( 2n \)-te Bernoulli-Zahl.
 
 % \paragraph{Grenzwerte, Reihen, Folgen} \
 % \begin{table}[H]

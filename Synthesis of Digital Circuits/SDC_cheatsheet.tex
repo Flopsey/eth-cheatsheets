@@ -1,0 +1,516 @@
+% Basic stuff
+\documentclass[a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+% \usepackage[fontsize=5pt]{fontsize}
+
+% 5 column landscape layout with fewer margins
+\usepackage{geometry}
+\geometry{paper=a4paper,left=4.5mm, right=4.5mm, top=4.5mm, bottom=6mm, landscape, nohead, nofoot}
+\usepackage{flowfram}
+\ffvadjustfalse
+\setlength{\columnsep}{1cm}
+\Ncolumn{4}
+
+\usepackage[dvipsnames]{xcolor}
+
+% define nice looking boxes
+\usepackage[many]{tcolorbox}
+
+% a base set, that is then customised
+\tcbset {
+	base/.style={
+		boxrule=0mm,
+		leftrule=1mm,
+		left=1.75mm,
+		arc=0mm, 
+		fonttitle=\bfseries, 
+		colbacktitle=black!10!white, 
+		coltitle=black, 
+		toptitle=0.75mm, 
+		bottomtitle=0.25mm,
+		title={#1}
+	}
+}
+
+\definecolor{color-sdc}{RGB}{255, 142, 132}
+\newtcolorbox{mainbox}[1]{
+	colframe=color-sdc, 
+	base={#1}
+}
+
+\newtcolorbox{subbox}[1]{
+	colframe=black!20!white,
+	base={#1}
+}
+
+\usepackage[small,compact]{titlesec}
+
+% Mathematical typesetting & symbols
+\usepackage{amsthm, mathtools, amssymb} 
+\usepackage{marvosym, wasysym}
+\usepackage{cancel}
+\allowdisplaybreaks
+% \addtolength{\arraycolsep}{-4pt}
+
+% algorithms
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\algsetup{linenodelimiter=}
+
+% Tables
+\usepackage{tabularx, multirow}
+\usepackage{makecell}
+\usepackage{booktabs}
+% \renewcommand*{\arraystretch}{2}
+
+% Make enumerations more compact
+\usepackage[inline]{enumitem}
+\setlist{nolistsep}
+\setlistdepth{20}
+\renewlist{itemize}{itemize}{20}
+\setlist[itemize]{label=$\cdot$}
+\setlist[itemize,1]{label=\textbullet}
+\setlist[itemize,2]{label=--}
+\setlist[itemize,3]{label=$\ast$}
+\setlist[itemize,4]{label=$\circ$}
+\setlist[itemize,5]{label=$\triangleright$}
+\setlist[itemize,6]{label=$\diamond$}
+\setitemize{leftmargin=0.2cm}
+\newcommand{\ipro}{\item[+]}
+\newcommand{\icon}{\item[-]}
+\newcommand{\ides}[1]{\item \textbf{#1}}
+
+% To include sketches & PDFs
+\usepackage{graphicx}
+
+% For hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true
+}
+
+% Metadata
+\title{Cheatsheet\\ Synthesis of Digital Circuits}
+\author{Florian Affolter}
+\date{\vspace{-10pt}Spring Semester 2026}
+
+% Math helper stuff
+\def\limxo{\lim_{x\to 0}}
+\def\limxi{\lim_{x\to\infty}}
+\def\limxn{\lim_{x\to-\infty}}
+\def\R{\mathbb{R}}
+\def\P{\mathbb{P}}
+\def\F{\mathcal{F}}
+\def\E{\mathbb{E}}
+\DeclareMathOperator{\Var}{\text{Var}}
+
+\newcommand{\norm}[1]{\left| \!\:\! \left| #1 \right| \!\:\! \right|}
+\newcommand{\transpose}{\mathsf{T}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\bigO}{\mathcal{O}}
+
+\raggedright
+
+
+\begin{document}
+
+% \maketitle
+
+% \input{../license.tex}
+
+\small
+
+\section{From Software Program to Efficient IR}
+
+\subsection{Compiler IR}
+
+\paragraph{DFG}
+Producer--consumer relations among IR operations
+
+\paragraph{CFG}
+Basic blocks and control flow edges
+
+\paragraph{CDFG}
+Each BB contains a DFG of operations. Variables propagated across BBs: \emph{live ins} and \emph{live outs}.
+
+\subsection{Variable Liveness}
+
+A var is \emph{live} if it holds a value that may be needed in the future.
+
+\begin{subbox}{Live ins of $B$}
+    \begin{itemize}
+        \item Vars used in $B$ and not defined in $B$ prior to use
+        \item Vars passing through $B$ to some succ
+        \item (Vars defined in $\Phi$s of $B$)
+    \end{itemize}
+\end{subbox}
+
+\begin{subbox}{Live outs of $B$}
+    \begin{itemize}
+        \item Live in of any succ $S$, (but not defined in a $\Phi$ of $S$
+        \item (Vars used in a $\Phi$ of $S$ when coming from $B$)
+    \end{itemize}
+\end{subbox}
+
+\subsection{SSA}
+
+\begin{itemize}
+    \item Phi ($\Phi$) functions
+\end{itemize}
+
+\subsection{CFG Dominance}
+
+\paragraph{Dominance}
+Node $d$ \emph{dominates} node $n$ if every path from \emph{entry node} to $n$ must go through $d$. Written as $d = \text{Dom}(n)$ or $d >> n$; $d$ is also called \emph{dominator} of $n$. By def., every node dominates itself.
+
+Var defs dominate var uses.
+
+\paragraph{Postdominance}
+Node $z$ \emph{post-dominates} node $n$ if all paths to \emph{exit node} starting at $n$ must go through $z$. Postdominance on a CFG is equivalent to dominance of reverse CFG. Written as $z = \text{PDom}(n)$.
+
+\subsection{IR Optimizations}
+
+\begin{itemize*}
+    \item Common sub-expression elimination
+    \item Dead-code elimination
+    \item Operator-strength reduction
+    \item Constant and variable propagation
+    \item Tree-height reduction
+    \item Code motion
+    \item Induction variable reduction
+    \item Loop unrolling
+    \item If-conversion
+\end{itemize*}
+
+\section{Scheduling}
+
+\subsection{Unconstrained Scheduling}
+
+\paragraph{ASAP Scheduling}
+
+\begin{itemize}
+    \item Sched. ops in the earlies possible time slot
+    \item Goal: min. latency
+    \item No resource constraints
+    \item Resources bound by number of concurrent ops
+\end{itemize}
+
+\paragraph{ALAP Scheduling}
+
+\begin{itemize}
+    \item Sched. ops in the latest possible time slot
+    \item Goal: min. latency
+    \item Latency-constrained problem
+    \item No resource constraints
+\end{itemize}
+
+\begin{subbox}{}
+    ASAP and ALAP achieve the same latency.
+\end{subbox}
+
+\paragraph{Slack:} Difference in start times computed by ASAP and ALAP. Use slack to min. resources under a latency constraint
+
+\subsection{Resource-Constrained Scheduling}
+
+\begin{itemize}
+    \item Minimize latency for a \emph{fixed resource bound}
+    \item Trade off area and latency
+    \item Heuristic and exact algos
+\end{itemize}
+
+\begin{mainbox}{Hu's algorithm}
+    \begin{itemize}
+        \item In each step, schedule \emph{as many ops as possible} (given resource constraint) among those whose preds have been scheduled. Select verts with largest labels first.
+        \item Assumptions:
+        \begin{itemize}
+            \item All ops of same type and take a single time unit
+            \item Each op labelled with weight of the longest path to the sink
+        \end{itemize}
+        \item Optimal for tree graphs with single-cycle and single-type ops
+    \end{itemize}
+\end{mainbox}
+
+\begin{mainbox}{List scheduling}
+    Priority of ops based on \emph{urgency}:
+    \begin{itemize}
+        \item Length of the path from the operation to the sink (longer path $\rightarrow$ higher urgency)
+        \item Slack (lower slack $\rightarrow$ higher urgency)
+    \end{itemize}
+    List scheduling does not guarantee minimum latency.
+\end{mainbox}
+
+\subsection{Latency-Constrained Scheduling}
+
+\begin{mainbox}{List Scheduling under latency constraint}
+    \begin{itemize}
+        \item \emph{Min. resources} using slack: difference between latest possible start time (ALAP) of ready ops and current time step
+        \item Initially: one resource of each type
+        \item Does not guarantee minimal resources
+    \end{itemize}
+\end{mainbox}
+
+\begin{mainbox}{Force-directed scheduling}
+    Reward uniform distribution fo ops across time steps
+    \begin{itemize}
+        \item \emph{Forces} as priority function: attract ops into specific time steps based on op concurrency
+        \item Resource- or latency-constrained scheduling
+    \end{itemize}
+\end{mainbox}
+
+\subsection{ILP-Based Scheduling}
+
+\subparagraph{Variables}
+\begin{itemize}
+    \item $x_{op, l}$: $op$ starts in time step $l$
+\end{itemize}
+
+\subparagraph{Constraints}
+\begin{itemize}
+    \item $\sum_l x_{op, l}, \quad op = 0, 1, \dots, n$
+    \item $t_{op_1} \geq t_{op_2} + d_{op_2} \quad \forall op_1, op_2 \in E$, $d_{op}$: op latency
+    \item $\sum_{\text{ops of type } k} x_{op, l} \leq a_k, \quad k = 1, \dots n_{res}, \ l 0 0, \dots, t_n$
+\end{itemize}
+
+\subparagraph{Objective Function}
+Minimize $\mathbf{c}^\mathsf{T} \mathbf{t}$:
+\begin{itemize}
+    \item Minimize total latency: $\mathbf{c} = [0, 0, \dots, 1]^\mathsf{T}$
+    \item Find earliest start times of all ops: $\mathbf{c} = [1, 1, \dots, 1]^\mathsf{T}$
+\end{itemize}
+
+\paragraph{Long-latency operations}
+\begin{itemize}
+    \item \textbf{Pipelined:} Ops cannot \emph{start} on the same resource at the same time: $\sum_{\text{ops of type } k} x_{op, l} \leq a_k$ for $k = 1, \dots, n_{res}$, $l = 0, \dots, t_n$
+    \item \textbf{Sequential:} Ops cannot \emph{execute} on the same resource at the same time: $\sum_{\text{ops of type } k} \sum_{m = l - d_k + 1}^l x_{op, m} \leq a_k$ for $k = 1, \dots, n_{res}$, $l = 0, \dots, t_n$ (also account for the ops that started in the preceding $d_k - 1$ steps ($d_k$: latency of op of type $k$))
+\end{itemize}
+
+\section{Polyhedral Analysis and Resource Sharing}
+
+\subsection{Polyhedral Analysis}
+
+\paragraph{Static Control Parts (SCoPs)} are regions of a program in which all control flow decisions and memory accesses are known at compile time. Loops of a SCoP must have affine exprs in induction vars and params for loop bounds, control flow conds, and mem accesses.
+
+\paragraph{Iteration domain} describes loop dimensions and bounds
+
+\paragraph{Schedule} maps statements to times in which they execute (can contain multiple induction vars, order given lexicographically)
+
+Linear transformations to reorder loop iterations:
+\begin{itemize*}
+    \item reversal
+    \item skewing
+    \item interchange
+    \item fusion
+    \item distribution
+    \item peeling
+    \item shifting
+\end{itemize*}
+
+Program semantics are preserved if the memory dependencies are preserved.
+
+\subsection{Resource Sharing and Binding}
+
+\subparagraph{Compatibility graph:} edges denote compatible op pairs
+
+\subparagraph{Conflict graph:} edges denote conflicting op pairs. Complement of compatibility graph
+
+\subsection{Left-Edge Algorithm}
+
+\begin{itemize}
+    \item Input: Set of exec intervals for each res. with left and right edge
+    \item Rationale:
+    \begin{itemize}
+        \item Sort intervals by left edge
+        \item Assign non-overlapping intervals to first color using sorted list
+        \item When possible intervals are exhausted, increase color counter and repeat
+    \end{itemize}
+\end{itemize}
+
+\subsection{ILP for Resource Binding}
+
+\subparagraph{Input (result of scheduling)}
+\begin{itemize}
+    \item $x_{op, l}$ indicating whether op starts in time step $l$
+\end{itemize}
+
+\subparagraph{Variables}
+\begin{itemize}
+    \item $b_{op, r}$ indicating whether op is bound to resource $r$
+\end{itemize}
+
+\subparagraph{Constraints}
+\begin{itemize}
+    \item $\sum_{r=1}^a b_{op, r} = 1, \quad op = 1, \dots n$
+    \item $\sum_{op = 1}^n b_{op, r} \cdot x_{op, l} \leq 1, \quad l = 1, \dots, lat, \ r = 1, \dots, a$ (pipelined)
+    \item $\sum_{op = 1}^n \sum_{m = l - d_{op} + 1}^l x_{op, m} \leq 1, \quad l = 1, \dots, lat, \ r = 1, \dots, a, \ d_{op}$: op latency (sequential)
+\end{itemize}
+
+\section{FPGA Synthesis, Placement, and Routing}
+
+\subsection{Logic Synthesis}
+
+$$f = a'b'c' + a'b'c + ab'c + abc + abc'$$
+
+\paragraph{Karnaugh map}
+\
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c|c|c|}
+         & 00 & 01 & 11 & 10\\\hline
+        0 & a'b'c' & a'b'c & a'bc & a'bc'\\\hline
+        1 & ab'c' & ab'c & abc & abc'\\\hline
+    \end{tabular}
+\end{table}
+
+\paragraph{Minterm:} Product of all input variables implying a function value of $1$. Vertex in Boolean space.
+
+\paragraph{Implicant:} Product implying a function value of $1$. Subset of minterms of the function (and of its don't cares)
+$$00\mathord{*}, \mathord{*}01, 1\mathord{*}1, 11\mathord{*}$$
+
+\paragraph{Prime implicant:} Imlicant that is not contained by any other implicant. A term that cannot be further reduced.
+$$\mathbf{\alpha} = 00\mathord{*}, \ \mathbf{\beta} = \mathord{*}01 \ \mathbf{\gamma} = 1\mathord{*}1, \ \mathbf{\delta} = 11\mathord{*}$$
+
+\paragraph{Cover:} Set of implicants that covers its minterms
+
+\paragraph{Minimum cover:} Cover of minimum cardinality
+
+\subsubsection{Exact Logic Minimization}
+
+Compute a minimum cover: Minimize number of product terms and inputs $\rightarrow$ fewer and smaller gates in the circuit
+
+\paragraph{Prime implicant table}
+\
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccc}
+         & $\mathbf{\alpha}$ & $\mathbf{\beta}$ & $\mathbf{\gamma}$ & $\mathbf{\delta}$\\
+        $000$ & $1$ & $0$ & $0$ & $0$\\
+        $001$ & $1$ & $1$ & $0$ & $0$\\
+        $101$ & $0$ & $1$ & $1$ & $0$\\
+        $111$ & $0$ & $0$ & $1$ & $1$\\
+        $110$ & $0$ & $0$ & $0$ & $1$\\
+    \end{tabular}
+\end{table}
+$$A = \begin{bmatrix}
+    1&0&0&0\\1&1&0&0\\0&1&1&0\\0&0&1&1\\0&0&0&1
+\end{bmatrix}$$
+
+\begin{mainbox}{Quine-McCluskey method}
+    Find a binary vector $\mathbf{x}$ representing a set of primes with minimum cardinality $\lvert \mathbf{x} \rvert$ (\# non-zero elements) such that $\mathbf{Ax} \geq \mathbf{1}$ (all elements of $\mathbf{Ax} \geq 1$, where $\mathbf{A}$ represents the \emph{prime implicant table}.
+
+    \begin{itemize}
+        \item For $\mathbf{x_1} = [1100]^\mathsf{T} \rightarrow \{\mathbf{\alpha}, \mathbf{\beta}\} \rightarrow \mathbf{Ax_1} = [12100]^\mathsf{T} < \mathbf{1}$
+        \item For $\mathbf{x_2} = [1101]^\mathsf{T} \rightarrow \{\mathbf{\alpha}, \mathbf{\beta}, \mathbf{\delta}\} \rightarrow \mathbf{Ax_2} = [12111]^\mathsf{T} \geq \mathbf{1}$
+        \item For $\mathbf{x_3} = [1111]^\mathsf{T} \rightarrow \{\mathbf{\alpha}, \mathbf{\beta}, \mathbf{\gamma}, \mathbf{\delta}\} \rightarrow \mathbf{Ax_3} = [12221]^\mathsf{T} \geq \mathbf{1}$
+    \end{itemize}
+    Minimum cover of $f$ for $x = [1101]^\mathsf{T}$ is $\{\mathbf{\alpha}, \mathbf{\beta}, \mathbf{\delta}\}$
+\end{mainbox}
+
+\begin{mainbox}{Petrick's method}
+Write implicants in PoS form and transform into SoP. A minimum cover is any product term of the SoP with the fewest literals
+
+\textbf{PoS:} $(\mathbf{\alpha}) \cdot (\mathbf{\alpha} + \mathbf{\beta}) \cdot (\mathbf{\gamma} + \mathbf{\delta}) \cdot (\mathbf{\delta})$
+
+\textbf{SoP:} $\mathbf{\alpha} \mathbf{\beta} \mathbf{\delta} + \mathbf{\alpha} \mathbf{\gamma} \mathbf{\delta} = 1$
+
+Two possible minimum covers: $\{\mathbf{\alpha}, \mathbf{\beta}, \mathbf{\delta}\}$ and $\{\mathbf{\alpha}, \mathbf{\gamma}, \mathbf{\delta}\}$
+\end{mainbox}
+
+\subsubsection{Heuristic Logic Minimization}
+
+\subparagraph{Typical operators:}
+\begin{itemize*}
+    \item \textbf{Expand:} Make a cover prime and minimal with respect to single-implicant containment (i.e., no implicant is contained in any other implicant). Process implicants one at a time. Expand each non-prime implicant to a prime (i.e., replace it by a prime implicant that contains it). Delete all other implicants covered by the expanded implicant.
+    \item \textbf{Reduce:} Transform a cover into a non-prime cover with the same cardinality. Process implicants one at a time. Attempt to replace each implicant with another that is contained in it, subject to the condition that the reduced implicants, along with the remaining ones, still cover the function.
+    \item \textbf{Reshape:} Modify the cover while preserving the cardinality. Process implicants in pairs. Expand one implicant while the other is reduced subject to the condition that the reshaped implicants, along with the remaining ones, still cover the function.
+    \item \textbf{Irredundant:} Makes a cover irredundant. Select a minimal subset of implicants such that no single implicant in that subset is covered by the remaining ones in that subset.
+\end{itemize*}
+
+\subsection{Other Logic Function Representations}
+
+\paragraph{Binary Decision Diagrams (BDDs)}
+\begin{itemize}
+    \item Reduced ordered BDD: \emph{unique repr} of a Boolean function (given a particual var order)
+    \item Proving \emph{equivalence} between Boolean functions
+\end{itemize}
+
+\paragraph{And-Inverter Graphs (AIGs)}
+\begin{itemize}
+    \item Nodes are \emph{2-input AND gates}, edges represent optional \emph{inversions}
+    \item Synthesis, formal verification, Boolean satisfiability, mapping, placement, \dots
+\end{itemize}
+
+\subsection{Sequential Logic}
+
+\subsubsection{Retiming}
+
+\paragraph{Retiming rules:}
+\begin{itemize}
+    \item Remove one register from each node input and add one to each node output
+    \item Remove one register from each node output and add one to each node input
+\end{itemize}
+
+\subsection{Technology Mapping}
+
+A subfunction of \emph{at most $k$ inputs and exactly $1$ output} can be mapped onto a single LUT.
+
+\subsubsection{Cut Definitions}
+
+\paragraph{Cut of node $n$:} Set $C$ of nodes such that any path from a primary input to $n$ must pass through at least one node in $C$.
+\begin{itemize}
+    \item Node $n$ itself forms a \emph{trivial cut}.
+    \item A cut of $n$ is \emph{irredundant} if no subset of it is a cut.
+\end{itemize}
+
+\paragraph{$K$-input ($K$-feasible) cut:} Irredundant cut containing $k$ or fewer nodes
+\begin{itemize}
+    \item Can be mapped onto a \emph{$K$-input LUT}.
+\end{itemize}
+
+\begin{subbox}{Cut enumeration}
+    \begin{enumerate}
+        \item Process nodes topologically from PIs to POs
+        \item Merge cut sets of children nodes and add the trivial cut
+        \item Remove redundant cuts and cuts that are not $K$-feasible
+    \end{enumerate}
+\end{subbox}
+
+\subsection{Placement}
+
+\subparagraph{Objectives:}
+\begin{itemize}
+    \item Minimize wiring
+    \item Balance wiring density across FPGA
+    \item Maximize frequency
+\end{itemize}
+
+\subparagraph{Typical approaches:}
+\begin{itemize}
+    \item Simulated annealing
+    \item min-cut placement, analytical placement
+\end{itemize}
+
+\subsection{Routing}
+
+\subparagraph{Goal:} Find \emph{feasible routing} for all signals using routing network. No \emph{congestion} allowed.
+
+\subparagraph{Optimize} delay for \emph{critical signals} while finding a feasible routing for all signals.
+
+\begin{mainbox}{PathFinder routing algorithm}
+    In every iteration:
+    \begin{enumerate}
+        \item For every signal, calculate cost of all routing paths and choose path with lowest cost
+        $$\text{cost}_{path} = (\text{delay}_\text{path} + h_n) * p_n$$
+        \item Gradually increase the cost values based on congestion
+        \item Terminate when no routing resource is overutilized
+    \end{enumerate}
+
+    \begin{itemize*}
+        \item $\text{cost}_\text{path}$: cost of routing through path $p$
+        \item $\text{delay}_\text{path}$: delay of routing through path $p$
+        \item $h_n$: number of prior congestions through $n$
+        \item $p_n$: $1 + (\text{\# signals currently routed through } n \text{, if } n \text{ congested}) * 0.1$
+    \end{itemize*}
+\end{mainbox}
+
+\end{document}
